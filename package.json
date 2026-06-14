@@ -1,0 +1,12 @@
+{
+  "name": "datasciencebaguio",
+  "version": "1.0.0",
+  "description": "DICT Data Science Seminar — Baguio (Day 1 materials)",
+  "private": true,
+  "scripts": {
+    "start": "serve . -l ${PORT:-3000}"
+  },
+  "dependencies": {
+    "serve": "^14.2.4"
+  }
+}
