@@ -26,6 +26,12 @@ shared HTML dataset.
   messiness pattern (weather/schools have nulls + 1 duplicate; tourism clean). Served live at
   `…up.railway.app/car_data1`, `/car_data2`, `/car_data3`. Generated with fixed random seeds
   (2026/2027/2028) — regenerate with the same seeds to reproduce.
+- `forest_data.html`, `wildlife_data.html`, `airquality_data.html` — **Activity 3 themed
+  datasets** (single table each, ~40 rows, clean). Same generic shape: ID, Name, Location,
+  Province, a Category column, two numeric columns, a 0-5 score, a status column. Served at
+  `…/forest_data`, `/wildlife_data`, `/airquality_data`. Activity 3 is **generic/config-driven** —
+  students set 8 labels (DATA_URL, GROUP_COL, TYPE_COL, MAIN_NUM, SECOND_NUM, SCORE_COL,
+  NAME_COL, ID_COL) and the rest runs unchanged. Seeds 11/22/33.
 - `README.md` — participant-facing overview.
 
 ## How activities connect
