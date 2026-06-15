@@ -11,7 +11,9 @@ beginners learning **Data Science / Data Analysis** and **Data Engineering**. De
 ## Folder structure
 
 ```
-index.html            Hub page — links to Day 1 / 2 / 3
+index.html            ATTENDANCE GATE — name/email/contact + IP/geo, then -> home.html
+home.html             Hub page — links to Day 1 / 2 / 3 + per-day Google Drive links
+attendance/AppsScript_Attendance.gs   Apps Script that logs sign-ins to a Google Sheet
 serve.json            Backward-compatible URL rewrites (see below)
 package.json          `serve .` static hosting
 datasets/             Shared, live-served data (portals + csv/)
@@ -64,6 +66,15 @@ When adding Day 2 / Day 3 content, mirror the Day 1 layout (its own `index.html`
 The portals moved under `datasets/`, so live URLs are now `…/datasets/car_data`, `/datasets/forest_data`,
 etc. `serve.json` keeps the **old short URLs** (`/car_data`, `/forest_data`, …) working via rewrites,
 so already-downloaded notebooks don't break. If you move a dataset, add/adjust its rewrite.
+
+## Attendance gate
+
+`index.html` is a sign-in form (full name, email, contact). On submit it fetches IP + city/region/country
+from `ipapi.co`, stamps the time, and POSTs everything to a Google Apps Script web app
+(`ATTENDANCE_ENDPOINT` placeholder in index.html — the user deploys `attendance/AppsScript_Attendance.gs`
+and pastes the `/exec` URL). Uses `mode:'no-cors'` to avoid CORS. Sets `localStorage.dict_attendance`
+so a returning device skips straight to `home.html`. The site still works if the endpoint is unset (it just
+doesn't log). Per-day **Google Drive** links live on `home.html` and each day page.
 
 ## Conventions to preserve
 

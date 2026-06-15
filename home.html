@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Science Seminar — Baguio | DICT</title>
+<style>
+  :root{--bg:#0f172a;--card:#1e293b;--line:#334155;--accent:#38bdf8;--accent2:#a78bfa;--good:#34d399;--text:#e2e8f0;--muted:#94a3b8;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:6vh 6vw}
+  .badge{display:inline-block;background:rgba(52,211,153,.15);color:var(--good);border:1px solid var(--good);border-radius:999px;padding:.2rem .8rem;font-size:.8rem;font-weight:700;margin-bottom:1.2rem}
+  .kicker{color:var(--accent);font-weight:700;letter-spacing:.15em;text-transform:uppercase;font-size:.8rem;margin-bottom:.8rem}
+  h1{font-size:clamp(2rem,5vw,3.4rem);line-height:1.1;margin-bottom:.8rem}
+  .accent{color:var(--accent)}
+  .sub{color:var(--muted);font-size:clamp(1rem,2vw,1.3rem);max-width:60ch;margin-bottom:2.5rem}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.4rem}
+  a.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.8rem;text-decoration:none;color:var(--text);transition:.2s}
+  a.card:hover{border-color:var(--accent);transform:translateY(-4px)}
+  a.card.soon{opacity:.75}
+  .day{font-size:2rem;font-weight:800;color:var(--accent2);line-height:1;margin-bottom:.5rem}
+  .card h3{font-size:1.4rem;color:#fff;margin-bottom:.5rem}
+  .card p{color:var(--muted);font-size:1rem;line-height:1.5}
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;border-radius:999px;padding:.15rem .7rem;margin-top:1rem}
+  .pill.ready{background:rgba(52,211,153,.15);color:var(--good);border:1px solid var(--good)}
+  .pill.wip{background:rgba(148,163,184,.15);color:var(--muted);border:1px solid var(--line)}
+  h2{font-size:1.05rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin:2.6rem 0 1rem;font-weight:700}
+  .drive{display:flex;flex-wrap:wrap;gap:1rem}
+  a.drivelink{display:flex;align-items:center;gap:.5rem;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:.8rem 1.2rem;text-decoration:none;color:var(--text);font-weight:600;transition:.2s}
+  a.drivelink:hover{border-color:var(--good);color:#fff}
+  a.drivelink .ic{font-size:1.2rem}
+  footer{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
+</style>
+</head>
+<body>
+  <div class="badge">3-Day Seminar</div>
+  <div class="kicker">Department of Information and Communications Technology</div>
+  <h1>Data Science Seminar — <span class="accent">Baguio</span></h1>
+  <p class="sub">Pick a day to open its materials — presentation, notebooks, guides, and datasets. Everything runs in Google Colab; no installs needed.</p>
+
+  <div class="grid">
+    <a class="card" href="day1/index.html">
+      <div class="day">Day 1</div><h3>Foundations</h3>
+      <p>Data Science with Google Forms, Web Scraping + cleaning, and Exploratory Data Analysis.</p>
+      <span class="pill ready">Ready ✓</span>
+    </a>
+    <a class="card" href="day2/index.html">
+      <div class="day">Day 2</div><h3>Automation &amp; AI</h3>
+      <p>Stock data pipeline (n8n + Polygon.io), document signature AI, and an IoT mushroom-farm app.</p>
+      <span class="pill ready">Ready ✓</span>
+    </a>
+    <a class="card soon" href="day3/index.html">
+      <div class="day">Day 3</div><h3>Coming up</h3>
+      <p>Day 3 materials will appear here.</p>
+      <span class="pill wip">In preparation</span>
+    </a>
+  </div>
+
+  <h2>Day materials (Google Drive)</h2>
+  <div class="drive">
+    <a class="drivelink" href="https://drive.google.com/drive/folders/1GIg20iuYOqzCEVQ7T0-HYiHLJhxnLTdN?usp=sharing" target="_blank" rel="noopener"><span class="ic">📁</span> Day 1 Drive</a>
+    <a class="drivelink" href="https://drive.google.com/drive/folders/1WhnX-_lmVox6YiiqerHRVZ7eYLtTq8d2?usp=sharing" target="_blank" rel="noopener"><span class="ic">📁</span> Day 2 Drive</a>
+    <a class="drivelink" href="https://drive.google.com/drive/folders/14VxxNTGVbvwBAC8VqxDoJmDSyHwf1G_n?usp=sharing" target="_blank" rel="noopener"><span class="ic">📁</span> Day 3 Drive</a>
+  </div>
+
+  <footer>
+    DICT Data Science Seminar · Cordillera Administrative Region · June 2026<br>
+    Note: all datasets are simulated sample data for training, not official statistics.
+  </footer>
+</body>
+</html>
