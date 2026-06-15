@@ -10,7 +10,6 @@
   h1{font-size:2rem;color:#0b69a3;border-bottom:3px solid #0b69a3;padding-bottom:.4rem}
   h2{font-size:1.35rem;color:#0b69a3;margin-top:2rem;border-left:5px solid #38bdf8;padding-left:.6rem}
   h3{font-size:1.1rem;margin-top:1.4rem;color:#111}
-  .part{background:#0b69a3;color:#fff;padding:.5rem .9rem;border-radius:6px;font-weight:700;margin-top:1.8rem}
   .kicker{color:#7c3aed;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.8rem}
   code,pre{font-family:"Consolas","Courier New",monospace}
   pre{background:#0f172a;color:#e2e8f0;padding:14px 16px;border-radius:8px;overflow-x:auto;
@@ -29,20 +28,18 @@
 <h1>Activity 2 — Web Scraping with Python</h1>
 
 <h2>What you'll learn</h2>
-<p><b>Web scraping</b> means pulling data straight off web pages with code. You'll do it two ways:
-first from a <b>live website</b> (Hacker News headlines), then from a <b>prepared data file</b> (the CAR-region
-dataset), and you'll turn both into tables and charts.</p>
+<p><b>Web scraping</b> means pulling data straight off a web page with code. You'll scrape the
+<b>CAR Region Open Data Portal</b> — a live web page with three tables (weather stations, schools,
+and tourism sites) — turn them into clean tables, and build an analysis dashboard.</p>
+<div class="note"><b>The page we scrape:</b> <code>https://datasciencebaguio-production.up.railway.app/car_data</code><br>
+<b>Honest note:</b> this portal holds <b>simulated sample data</b> made for this workshop. The numbers are realistic but invented — not official government figures. What's real is the <b>skill</b>.</div>
 
 <h2>Before you start</h2>
 <ul>
   <li>A <b>Google account</b> to use Google Colab.</li>
-  <li>For Part B you'll need <b>car_data.html</b> — either upload it (Step 8) or download it with code (optional cell below).</li>
+  <li>An <b>internet connection</b> (we pull the page live — no file to upload).</li>
 </ul>
-<div class="note"><b>Honest note:</b> the CAR dataset is <b>simulated sample data</b> made for this workshop. The numbers are realistic but invented — not official government figures. What's real is the <b>skill</b>.</div>
-
 <p>Run each cell with <b>Shift + Enter</b>, top to bottom.</p>
-
-<div class="part">PART A — Scraping a Live Website (Hacker News)</div>
 
 <h3>Step 1 — Install the scraping tools</h3>
 <div class="copy">Copy this code</div>
@@ -55,19 +52,18 @@ dataset), and you'll turn both into tables and charts.</p>
 from bs4 import BeautifulSoup
 import pandas as pd
 import matplotlib.pyplot as plt
-from collections import Counter
 from IPython.display import display
 
 print("Libraries loaded.")</pre>
 <div class="see"><b>You should see:</b> <code>Libraries loaded.</code></div>
 
 <h3>Step 3 — Download the web page</h3>
-<p><code>requests.get</code> fetches the raw page. A status of <b>200</b> means success.</p>
+<p><code>requests.get</code> fetches the raw page from the portal. A status of <b>200</b> means success.</p>
 <div class="copy">Copy this code</div>
-<pre>url = 'https://news.ycombinator.com'
+<pre>url = 'https://datasciencebaguio-production.up.railway.app/car_data'
 
 try:
-    response = requests.get(url, timeout=10)
+    response = requests.get(url, timeout=15)
     print(f"Status code: {response.status_code}")
     if response.status_code == 200:
         print("Page downloaded successfully.")
@@ -78,95 +74,31 @@ except Exception as e:
     print("Check your internet connection and try again.")</pre>
 <div class="see"><b>You should see:</b> <code>Status code: 200</code> and "Page downloaded successfully."</div>
 
-<h3>Step 4 — Parse the HTML and grab the headlines</h3>
-<p><code>BeautifulSoup</code> turns the raw HTML into something we can search. We pick out the headline links.</p>
+<h3>Step 4 — Parse the HTML and look at the page</h3>
+<p><code>BeautifulSoup</code> turns the raw HTML into something we can search. We read the page heading,
+the notice, and count how many tables are on the page.</p>
 <div class="copy">Copy this code</div>
 <pre>soup = BeautifulSoup(response.text, 'html.parser')
-titles = soup.select('.titleline > a')
 
-print(f"Found {len(titles)} headlines.")
-print("\nFirst 3 as a preview:")
-for t in titles[:3]:
-    print(" -", t.text)</pre>
-<div class="see"><b>You should see:</b> "Found 30 headlines." (give or take) and a 3-headline preview.</div>
+print("Page heading:", soup.find('h1').text)
 
-<h3>Step 5 — Put the headlines into a table</h3>
-<div class="copy">Copy this code</div>
-<pre>rows = []
-for rank, t in enumerate(titles, start=1):
-    rows.append({'Rank': rank, 'Headline': t.text, 'Link': t.get('href', '')})
+notice = soup.find('p')
+if notice:
+    print("\nNotice on the page:")
+    print(" ", notice.text.strip())
 
-df_news = pd.DataFrame(rows)
-print(f"Collected {len(df_news)} headlines into a table.")
-display(df_news.head(10))</pre>
-<div class="see"><b>You should see:</b> a table with Rank, Headline, and Link columns.</div>
+tables_on_page = soup.find_all('table')
+print(f"\nThis page has {len(tables_on_page)} tables.")
 
-<h3>Step 6 — How long are the headlines?</h3>
-<p>A first analysis: measure each headline's length in characters.</p>
-<div class="copy">Copy this code</div>
-<pre>df_news['Length'] = df_news['Headline'].str.len()
+print("\nSection titles found:")
+for h2 in soup.find_all('h2'):
+    print(" -", h2.text)</pre>
+<div class="see"><b>You should see:</b> the page heading, the "simulated data" notice, "This page has 3 tables", and the three section titles.</div>
 
-print(f"Average length: {df_news['Length'].mean():.1f} characters")
-print(f"Shortest: {df_news['Length'].min()} | Longest: {df_news['Length'].max()}")
-
-plt.figure(figsize=(10, 5))
-plt.hist(df_news['Length'], bins=15, color='skyblue', edgecolor='black', alpha=0.8)
-plt.title('Distribution of Headline Lengths', fontweight='bold')
-plt.xlabel('Characters')
-plt.ylabel('Number of headlines')
-plt.grid(axis='y', alpha=0.3)
-plt.show()</pre>
-<div class="see"><b>You should see:</b> the average length and a histogram.</div>
-
-<h3>Step 7 — Which words show up most?</h3>
-<p>We split every headline into words, drop tiny filler words, and count the rest.</p>
-<div class="copy">Copy this code</div>
-<pre>text = ' '.join(df_news['Headline']).lower()
-stop_words = {'the','a','an','and','or','but','in','on','at','to','for','of',
-              'with','by','is','are','was','were','from','this','that','as'}
-words = [w.strip('.,:;!?()[]"\'') for w in text.split()]
-words = [w for w in words if len(w) > 3 and w not in stop_words]
-
-top = Counter(words).most_common(10)
-words_df = pd.DataFrame(top, columns=['Word', 'Count'])
-
-plt.figure(figsize=(10, 6))
-bars = plt.barh(words_df['Word'], words_df['Count'], color='lightcoral')
-plt.gca().invert_yaxis()  # most common on top
-for bar, c in zip(bars, words_df['Count']):
-    plt.text(bar.get_width() + 0.1, bar.get_y() + bar.get_height()/2,
-             str(c), va='center', fontweight='bold')
-plt.title('Most Common Words in Headlines Today', fontweight='bold')
-plt.xlabel('Times used')
-plt.tight_layout()
-plt.show()</pre>
-<div class="see"><b>You should see:</b> a horizontal bar chart of the top 10 words.</div>
-
-<div class="part">PART B — Scraping the CAR Region Dataset</div>
-
-<h3>Step 8 — Get the data file into Colab</h3>
-<p>Click the <b>folder icon</b> on the left of Colab, then the <b>upload icon</b>, and upload <b>car_data.html</b>.
-Then run this cell to confirm Colab can see it.</p>
-<div class="copy">Copy this code</div>
-<pre>import os
-if os.path.exists('car_data.html'):
-    print("Found car_data.html, you're ready.")
-else:
-    print("car_data.html not found yet.")
-    print("Upload it using the folder icon on the left, then re-run this cell.")</pre>
-<div class="tip"><b>Can't upload?</b> Easier alternative — run this cell to download the file directly into Colab, then run Step 8 to confirm:</div>
-<div class="copy">Download instead of upload</div>
-<pre>import urllib.request
-urllib.request.urlretrieve(
-    "https://datasciencebaguio-production.up.railway.app/car_data",
-    "car_data.html")
-print("Downloaded car_data.html")</pre>
-<div class="see"><b>You should see:</b> <code>Found car_data.html, you're ready.</code></div>
-
-<h3>Step 9 — Scrape all three tables at once</h3>
+<h3>Step 5 — Scrape all three tables at once</h3>
 <p><code>pd.read_html</code> reads every table on the page into a list. This page has three.</p>
 <div class="copy">Copy this code</div>
-<pre>tables = pd.read_html('car_data.html')
+<pre>tables = pd.read_html(response.text)
 print(f"Scraped {len(tables)} tables from the page.\n")
 
 weather_df = tables[0]
@@ -178,7 +110,7 @@ print(f"Schools: {len(schools_df)} rows")
 print(f"Tourism sites: {len(tourism_df)} rows")</pre>
 <div class="see"><b>You should see:</b> Weather <b>46</b>, Schools <b>50</b>, Tourism <b>40</b> rows.</div>
 
-<h3>Step 10 — Look at what we scraped</h3>
+<h3>Step 6 — Look at what we scraped</h3>
 <p>Always eyeball your data before analyzing it.</p>
 <div class="copy">Copy this code</div>
 <pre>print("WEATHER STATIONS (first 5):")
@@ -189,7 +121,7 @@ print("TOURISM SITES (first 5):")
 display(tourism_df.head())</pre>
 <div class="see"><b>You should see:</b> the first 5 rows of each table.</div>
 
-<h3>Step 11 — Quick summary numbers</h3>
+<h3>Step 7 — Quick summary numbers</h3>
 <div class="copy">Copy this code</div>
 <pre>print("WEATHER")
 print(f"  Average temperature: {weather_df['Temperature_C'].mean():.1f} C")
@@ -204,7 +136,7 @@ print(f"  Total annual visitors: {tourism_df['Annual_Visitors'].sum():,}")
 print(f"  Average rating: {tourism_df['Rating'].mean():.2f} out of 5")</pre>
 <div class="see"><b>You should see:</b> headline figures for each table (e.g. avg temperature ~24 C).</div>
 
-<h3>Step 12 — The analysis dashboard</h3>
+<h3>Step 8 — The analysis dashboard</h3>
 <p>Six charts in one figure, pulling from all three scraped tables.</p>
 <div class="copy">Copy this code</div>
 <pre>fig, axes = plt.subplots(2, 3, figsize=(18, 10))
@@ -257,8 +189,8 @@ print("Dashboard built from the scraped CAR data.")</pre>
 <h2>Tips &amp; common errors</h2>
 <ul>
   <li>Run cells <b>top to bottom</b> with Shift + Enter.</li>
-  <li><b>Step 4 found 0 headlines?</b> The live site's layout may have changed — re-run, or try again later.</li>
-  <li><b>FileNotFoundError in Step 9?</b> car_data.html isn't loaded — do Step 8 (upload or the optional download cell) first.</li>
+  <li><b>Status not 200, or a connection error?</b> Check your internet and re-run Step 3. The portal may be waking up — try once more.</li>
+  <li><b>KeyError on a column?</b> Column names are spelling- and case-sensitive (e.g. <code>Temperature_C</code>, <code>Annual_Visitors</code>). Use them exactly.</li>
   <li>Always check a site's <b>terms</b> before scraping it, and always be clear whether data is <b>real or simulated</b>.</li>
 </ul>
 
