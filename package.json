@@ -1,12 +1,16 @@
 {
   "name": "datasciencebaguio",
   "version": "1.0.0",
-  "description": "DICT Data Science Seminar — Baguio (Day 1 materials)",
+  "description": "DICT Data Science Seminar — Baguio (static site + attendance API)",
   "private": true,
   "scripts": {
-    "start": "serve . -l ${PORT:-3000}"
+    "start": "node server.js"
   },
   "dependencies": {
-    "serve": "^14.2.4"
+    "express": "^4.22.2",
+    "pg": "^8.21.0"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }

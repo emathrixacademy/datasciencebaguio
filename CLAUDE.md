@@ -11,11 +11,11 @@ beginners learning **Data Science / Data Analysis** and **Data Engineering**. De
 ## Folder structure
 
 ```
-index.html            ATTENDANCE GATE — name/email/contact + IP/geo, then -> home.html
+index.html            ATTENDANCE GATE — name/email/contact + IP/geo, POSTs to /api/attendance
 home.html             Hub page — links to Day 1 / 2 / 3 + per-day Google Drive links
-attendance/AppsScript_Attendance.gs   Apps Script that logs sign-ins to a Google Sheet
-serve.json            Backward-compatible URL rewrites (see below)
-package.json          `serve .` static hosting
+server.js             Express server: serves the site + /api/attendance -> Postgres
+package.json          Node app: `node server.js` (express + pg)
+attendance/RAILWAY_POSTGRES_SETUP.md   How to attach Railway Postgres (DATABASE_URL)
 datasets/             Shared, live-served data (portals + csv/)
 day1/  index.html · presentation.html · notebooks/ · guides/
 day2/  index.html · notebooks/ · guides/   (Automation & AI)
@@ -67,14 +67,19 @@ The portals moved under `datasets/`, so live URLs are now `…/datasets/car_data
 etc. `serve.json` keeps the **old short URLs** (`/car_data`, `/forest_data`, …) working via rewrites,
 so already-downloaded notebooks don't break. If you move a dataset, add/adjust its rewrite.
 
-## Attendance gate
+## Attendance gate + Postgres
 
 `index.html` is a sign-in form (full name, email, contact). On submit it fetches IP + city/region/country
-from `ipapi.co`, stamps the time, and POSTs everything to a Google Apps Script web app
-(`ATTENDANCE_ENDPOINT` placeholder in index.html — the user deploys `attendance/AppsScript_Attendance.gs`
-and pastes the `/exec` URL). Uses `mode:'no-cors'` to avoid CORS. Sets `localStorage.dict_attendance`
-so a returning device skips straight to `home.html`. The site still works if the endpoint is unset (it just
-doesn't log). Per-day **Google Drive** links live on `home.html` and each day page.
+from `ipapi.co`, stamps the time, and POSTs JSON to the **same-origin** `/api/attendance` endpoint in
+`server.js`, which inserts a row into **Railway Postgres** (`attendance` table, auto-created on boot).
+Sets `localStorage.dict_attendance` so a returning device skips straight to `home.html`. The site still
+works before the DB is attached — `/api/attendance` returns `{stored:false}`.
+
+`server.js` (Express) also serves all static pages, replicates the old clean-URLs + `/car_data`→
+`/datasets/...` rewrites, exposes `/api/health`, and `/admin/attendance.csv?token=ADMIN_TOKEN` for export.
+Env vars: `DATABASE_URL` (required to store), `DATABASE_SSL=true` only for the public PG URL,
+`ADMIN_TOKEN` for the CSV export. Setup steps: `attendance/RAILWAY_POSTGRES_SETUP.md`.
+Per-day **Google Drive** links live on `home.html` and each day page.
 
 ## Conventions to preserve
 

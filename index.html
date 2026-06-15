@@ -56,9 +56,7 @@
   </div>
 
 <script>
-  // ===== CONFIG: paste your Google Apps Script Web App URL (see attendance/AppsScript_Attendance.gs) =====
-  const ATTENDANCE_ENDPOINT = 'PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
-  // =====================================================================================================
+  // Attendance is stored in Railway Postgres via this site's own /api/attendance endpoint.
 
   // Already signed in on this device? Go straight in.
   if (localStorage.getItem('dict_attendance')) {
@@ -98,16 +96,14 @@
       userAgent: navigator.userAgent
     };
 
-    // Best-effort log to the Google Sheet (no-cors so it works cross-origin)
-    if (ATTENDANCE_ENDPOINT && !ATTENDANCE_ENDPOINT.includes('PASTE_')) {
-      try {
-        await fetch(ATTENDANCE_ENDPOINT, {
-          method: 'POST', mode: 'no-cors',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify(payload)
-        });
-      } catch (e) { /* keep going even if logging fails */ }
-    }
+    // Record the sign-in in Railway Postgres (same-origin API)
+    try {
+      await fetch('/api/attendance', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    } catch (e) { /* keep going even if logging fails */ }
 
     localStorage.setItem('dict_attendance', '1');
     localStorage.setItem('dict_attendee', JSON.stringify({ fullName: payload.fullName, email: payload.email }));
