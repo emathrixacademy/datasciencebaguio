@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Activity 1 Guide — Data Science with Google Colab</title>
+<style>
+  body{font-family:"Segoe UI",system-ui,sans-serif;color:#1a202c;line-height:1.6;
+    max-width:820px;margin:0 auto;padding:40px 28px}
+  h1{font-size:2rem;color:#0b69a3;border-bottom:3px solid #0b69a3;padding-bottom:.4rem}
+  h2{font-size:1.35rem;color:#0b69a3;margin-top:2rem;border-left:5px solid #38bdf8;padding-left:.6rem}
+  h3{font-size:1.1rem;margin-top:1.4rem;color:#111}
+  .kicker{color:#7c3aed;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.8rem}
+  code,pre{font-family:"Consolas","Courier New",monospace}
+  pre{background:#0f172a;color:#e2e8f0;padding:14px 16px;border-radius:8px;overflow-x:auto;
+    font-size:.9rem;white-space:pre-wrap;word-break:break-word}
+  .copy{font-size:.78rem;font-weight:700;color:#0b69a3;text-transform:uppercase;letter-spacing:.05em;margin:1rem 0 .3rem}
+  .see{background:#ecfdf5;border-left:4px solid #34d399;padding:.6rem .9rem;border-radius:6px;margin:.6rem 0;font-size:.95rem}
+  .tip{background:#fffbeb;border-left:4px solid #f59e0b;padding:.6rem .9rem;border-radius:6px;margin:.6rem 0;font-size:.95rem}
+  .note{background:#eff6ff;border-left:4px solid #3b82f6;padding:.6rem .9rem;border-radius:6px;margin:.6rem 0}
+  ul{margin:.4rem 0 .4rem 1.2rem}
+  .foot{margin-top:2.5rem;border-top:1px solid #cbd5e1;padding-top:1rem;color:#64748b;font-size:.85rem}
+  @media print{body{padding:0}h2{break-after:avoid}pre{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="kicker">DICT Data Science Seminar · Baguio · Day 1</div>
+<h1>Activity 1 — Data Science with Google Colab</h1>
+
+<h2>What you'll learn</h2>
+<p>You'll connect <b>your own Google Form survey</b> to Google Colab and turn the responses into charts —
+the same thing a data analyst does, just with smaller data. By the end you'll have bar charts, pie charts,
+a comparison between two questions, and a full survey dashboard built from data <b>you</b> collected.</p>
+
+<h2>Before you start</h2>
+<ul>
+  <li>A <b>Google account</b> (the same one you'll use in Colab).</li>
+  <li>A short <b>Google Form</b> (4–6 questions, mostly multiple choice) with a <b>linked response Sheet</b>.</li>
+  <li><b>5–6 responses</b> in your form, so your charts aren't empty. <i>Pwede kayong mag-sagutan ng katabi nyo.</i></li>
+  <li>Your <b>Sheet ID</b> (you'll copy it from the Sheet's URL — see Step&nbsp;4).</li>
+</ul>
+<div class="note"><b>Make your form first.</b> Go to <b>forms.google.com</b> → create a form → Responses tab → green Sheets icon → <b>Create spreadsheet</b>. Fill it out 5–6 times. Use the <b>same Google account</b> that owns the form when you log into Colab — <i>magkaiba ang account, hindi gagana.</i></div>
+
+<p>Run each cell in Colab by clicking it and pressing <b>Shift + Enter</b>. Go in order, top to bottom.</p>
+
+<h3>Step 1 — Install the tools</h3>
+<p>This installs the libraries that let Colab talk to Google Sheets. Run it once.</p>
+<div class="copy">Copy this code</div>
+<pre>!pip install gspread google-auth</pre>
+<div class="see"><b>You should see:</b> installation messages, ending with no errors (or "Requirement already satisfied").</div>
+
+<h3>Step 2 — Load the libraries</h3>
+<p>This brings in pandas (tables), matplotlib (charts), and the Google connection tools.</p>
+<div class="copy">Copy this code</div>
+<pre>import pandas as pd
+import matplotlib.pyplot as plt
+import gspread
+from google.auth import default
+from google.colab import auth
+
+print("Setup complete!")</pre>
+<div class="see"><b>You should see:</b> <code>Setup complete!</code></div>
+
+<h3>Step 3 — Log in to Google</h3>
+<p>A popup will ask you to choose your Google account and allow access. Pick the account that <b>owns your form</b>,
+and click through every <b>Allow</b> / <b>Continue</b> screen.</p>
+<div class="copy">Copy this code</div>
+<pre>auth.authenticate_user()
+creds, _ = default()
+gc = gspread.authorize(creds)
+
+print("Connected to Google!")
+print("Ready to open your Google Sheet.")</pre>
+<div class="tip"><b>Popup hiding?</b> It sometimes appears behind the window or gets blocked. Check your address bar for a blocked-popup icon, or look behind the browser. <i>Sariling account nyo, hindi ang account ng trainer.</i></div>
+<div class="see"><b>You should see:</b> <code>Connected to Google!</code></div>
+
+<h3>Step 4 — Connect to YOUR sheet</h3>
+<p>Open your linked Google Sheet and look at the URL:
+<br><code>https://docs.google.com/spreadsheets/d/</code><b>1AbCdEf...1234567890</b><code>/edit</code>
+<br>The <b>bold part between <code>/d/</code> and <code>/edit</code></b> is your Sheet ID. Paste it between the quotes below.</p>
+<div class="tip"><b>The ID below is only an example placeholder</b> — it will fail until you replace it with <b>your own</b> Sheet ID.</div>
+<div class="copy">Copy this code</div>
+<pre># ==== PASTE YOUR OWN SHEET ID BETWEEN THE QUOTES ====
+SHEET_ID = "PASTE_YOUR_SHEET_ID_HERE"
+# =====================================================
+
+# Connect and pull the data once
+try:
+    sheet = gc.open_by_key(SHEET_ID).get_worksheet(0)
+    data = sheet.get_all_values()
+
+    if len(data) > 1:
+        df = pd.DataFrame(data[1:], columns=data[0])
+        print(f"SUCCESS! Connected to your survey.")
+        print(f"Responses found: {len(df)}")
+        print(f"Questions (columns): {len(df.columns)}")
+        print("\nYour questions:")
+        for i, col in enumerate(df.columns):
+            short = col[:60] + "..." if len(col) > 60 else col
+            print(f"  Column {i}: {short}")
+    else:
+        print("Connected, but no responses yet.")
+        print("Go fill out your form a few times, then run this cell again.")
+
+except Exception as e:
+    print(f"Connection failed: {e}")
+    print("\nCheck these:")
+    print("1. Is your SHEET_ID pasted correctly (no extra spaces)?")
+    print("2. Are you logged in with the account that owns the form?")
+    print("3. Did you run Step 3 first?")</pre>
+<div class="see"><b>You should see:</b> <code>SUCCESS!</code>, the number of responses, and a numbered list of your questions. Remember those <b>Column numbers</b> — you'll use them to pick which question to chart.</div>
+
+<h3>Step 5 — See your full data table</h3>
+<p>Shows everything you collected as a clean table.</p>
+<div class="copy">Copy this code</div>
+<pre>if len(data) > 1:
+    print(f"Rows (responses): {len(df)}")
+    print(f"Columns (questions): {len(df.columns)}")
+    print("\nYour complete data:")
+    from IPython.display import display
+    display(df)
+else:
+    print("No responses yet. Fill out your form first, then re-run Step 4.")</pre>
+<div class="see"><b>You should see:</b> your full survey as a table.</div>
+
+<h3>Step 6 — Bar chart of one question</h3>
+<p>Counts how many people picked each answer. Change <code>question_column</code> to chart a different question (use the Column numbers from Step 4).</p>
+<div class="copy">Copy this code</div>
+<pre>question_column = 1   # change this number to chart a different question
+
+if len(data) > 1 and question_column < len(df.columns):
+    question_name = df.columns[question_column]
+    answer_counts = df.iloc[:, question_column].value_counts()
+
+    print(f"Bar chart for: {question_name}")
+
+    plt.figure(figsize=(12, 6))
+    bars = plt.bar(answer_counts.index.astype(str), answer_counts.values)
+
+    for bar, count in zip(bars, answer_counts.values):
+        plt.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.05,
+                 str(count), ha='center', va='bottom', fontweight='bold')
+
+    plt.title(f'{question_name}', fontsize=14, fontweight='bold')
+    plt.xlabel('Answers')
+    plt.ylabel('Number of people')
+    plt.xticks(rotation=45, ha='right')
+    plt.grid(axis='y', alpha=0.3)
+    plt.tight_layout()
+    plt.show()
+
+    print(f"Most popular answer: '{answer_counts.index[0]}' ({answer_counts.iloc[0]} people)")
+else:
+    print("No data, or that question number does not exist. Check Step 4.")</pre>
+<div class="see"><b>You should see:</b> a bar chart with counts on each bar. <b>Try it:</b> change the number to <code>2</code> and re-run — that one line is the whole trick.</div>
+
+<h3>Step 7 — Pie chart of one question</h3>
+<p>Same counts shown as percentages of the whole.</p>
+<div class="copy">Copy this code</div>
+<pre>question_column = 2   # change this number to chart a different question
+
+if len(data) > 1 and question_column < len(df.columns):
+    question_name = df.columns[question_column]
+    answer_counts = df.iloc[:, question_column].value_counts()
+
+    print(f"Pie chart for: {question_name}")
+
+    plt.figure(figsize=(8, 6))
+    plt.pie(answer_counts.values,
+            labels=answer_counts.index.astype(str),
+            autopct=lambda p: f'{p:.0f}%\n({int(round(p*answer_counts.sum()/100))})',
+            startangle=90)
+    plt.title(f'{question_name}', fontsize=14, fontweight='bold')
+    plt.axis('equal')
+    plt.tight_layout()
+    plt.show()
+
+    print(f"Most people answered: '{answer_counts.index[0]}'")
+else:
+    print("No data, or that question number does not exist. Check Step 4.")</pre>
+<div class="see"><b>You should see:</b> a pie chart with percentages and counts.</div>
+
+<h3>Step 8 — Compare two questions (crosstab)</h3>
+<p>A crosstab shows how answers to one question relate to another, as a grouped bar chart.</p>
+<div class="copy">Copy this code</div>
+<pre>question_a = 1   # first question
+question_b = 2   # second question
+
+if len(data) > 1 and question_a < len(df.columns) and question_b < len(df.columns):
+    name_a = df.columns[question_a]
+    name_b = df.columns[question_b]
+
+    # Build the crosstab: counts of each combination
+    crosstab = pd.crosstab(df.iloc[:, question_a], df.iloc[:, question_b])
+
+    print(f"How '{name_a}' relates to '{name_b}':\n")
+    display(crosstab)
+
+    crosstab.plot(kind='bar', figsize=(12, 6))
+    plt.title(f'{name_a}  vs  {name_b}', fontsize=13, fontweight='bold')
+    plt.xlabel(name_a)
+    plt.ylabel('Number of people')
+    plt.xticks(rotation=45, ha='right')
+    plt.legend(title=name_b, bbox_to_anchor=(1.02, 1), loc='upper left')
+    plt.grid(axis='y', alpha=0.3)
+    plt.tight_layout()
+    plt.show()
+
+    print("Each group of bars is one answer to the first question.")
+    print("The colors show how those people answered the second question.")
+else:
+    print("No data, or one of those question numbers does not exist. Check Step 4.")</pre>
+<div class="see"><b>You should see:</b> a table and a grouped bar chart comparing two questions.</div>
+
+<h3>Step 9 — Full dashboard</h3>
+<p>Puts a pie chart for each question into one picture — a quick overview of your whole survey.</p>
+<div class="copy">Copy this code</div>
+<pre>if len(data) > 1:
+    question_cols = list(range(1, len(df.columns)))  # skip timestamp at column 0
+    n = len(question_cols)
+
+    cols = 3
+    rows = (n + cols - 1) // cols
+    fig, axes = plt.subplots(rows, cols, figsize=(6*cols, 5*rows))
+    fig.suptitle('Survey Results Dashboard', fontsize=16, fontweight='bold')
+
+    axes_flat = axes.flatten() if n > 1 else [axes]
+
+    for i, qcol in enumerate(question_cols):
+        counts = df.iloc[:, qcol].value_counts()
+        axes_flat[i].pie(counts.values,
+                         labels=counts.index.astype(str),
+                         autopct='%1.0f%%',
+                         startangle=90)
+        title = df.columns[qcol]
+        title = title[:30] + "..." if len(title) > 30 else title
+        axes_flat[i].set_title(title, fontsize=10, fontweight='bold')
+
+    # turn off any leftover empty boxes
+    for j in range(n, len(axes_flat)):
+        axes_flat[j].axis('off')
+
+    plt.tight_layout()
+    plt.show()
+    print(f"Dashboard created for {n} questions.")
+else:
+    print("No data to build a dashboard yet. Fill out your form first.")</pre>
+<div class="see"><b>You should see:</b> a dashboard of pie charts, one per question.</div>
+
+<h2>Tips &amp; common errors</h2>
+<ul>
+  <li>Run cells <b>top to bottom</b> with Shift + Enter. If Step 4 fails, you probably skipped Step 3.</li>
+  <li><b>Connection failed?</b> Check the Sheet ID for typos/extra spaces, and confirm you logged in with the account that <b>owns the form</b>.</li>
+  <li><b>Empty charts?</b> You have no responses yet — fill out your form, then re-run Step 4.</li>
+  <li>To chart a different question, just change the <b>question number</b> and re-run that cell.</li>
+</ul>
+
+<h2>What's next</h2>
+<p>In <b>Activity 2</b> you'll collect data a different way — by <b>scraping it off the web</b> with code.</p>
+
+<div class="foot">DICT Data Science Seminar · Cordillera Administrative Region · June 2026 ·
+To save as PDF: press <b>Ctrl + P</b> → Destination <b>Save as PDF</b> → Save.</div>
+</body>
+</html>

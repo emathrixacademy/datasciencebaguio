@@ -1,6 +1,6 @@
 # DICT Hands-On Seminar — Data Science, Web Scraping & EDA
 
-**Emathrix Training Center** · Baguio (CAR Region) · June 14, 2026
+**DICT** · Baguio (CAR Region) · June 14, 2026
 
 A three-activity, hands-on workshop introducing **Data Science / Data Analysis** and
 **Data Engineering** through Google Colab. Participants go from collecting their own data,
@@ -16,8 +16,20 @@ to scraping data off the web, to running a full exploratory data analysis.
 | `Activity2_WebScraping_Colab.ipynb` | Activity 2 | Web Scraping — live website + local HTML dataset (Data Engineering) |
 | `Activity3_EDA_Colab.ipynb` | Activity 3 | Exploratory Data Analysis on the scraped tourism data |
 | `car_data.html` | shared dataset | Simulated CAR-region data (weather, schools, tourism) |
+| `Day1_Presentation.html` | slides | Intro slide deck for Day 1 |
+| `guides/` | student guides | Step-by-step copy-paste guides (HTML + PDF) for each activity |
 
 All notebooks are designed to run in **Google Colab**. Run cells top to bottom with **Shift + Enter**.
+
+### Student guides (PDF)
+
+Printable, beginner-friendly walkthroughs with the exact code to copy-paste:
+
+- `guides/Activity1_Guide.pdf` — Data Science with Google Colab
+- `guides/Activity2_Guide.pdf` — Web Scraping with Python
+- `guides/Activity3_Guide.pdf` — Exploratory Data Analysis
+
+The matching `.html` versions can be re-printed to PDF (Ctrl + P → Save as PDF) after any edit.
 
 ---
 
