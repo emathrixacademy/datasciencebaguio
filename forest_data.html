@@ -3,10 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <title>CAR Forest Resources - Open Data Portal (Sample)</title>
+  <style>
+    body{font-family:"Segoe UI",system-ui,sans-serif;margin:24px;color:#1a202c}
+    table{border-collapse:collapse;margin-top:10px}
+    th,td{border:1px solid #cbd5e1;padding:4px 8px;font-size:13px;text-align:left}
+    th{background:#0b69a3;color:#fff}
+    .notice{background:#fffbeb;border-left:4px solid #f59e0b;padding:8px 12px;border-radius:6px}
+    .dlbtn{display:inline-block;margin:14px 0;background:#0b69a3;color:#fff;text-decoration:none;
+      font-weight:700;padding:10px 18px;border-radius:8px}
+    .dlbtn:hover{background:#075488}
+  </style>
 </head>
 <body>
   <h1>CAR Forest Resources - Open Data Portal (Sample)</h1>
   <p class="notice"><strong>Note:</strong> SIMULATED sample data for a data science training workshop. The numbers are generated for practice and do not represent official statistics.</p>
+  <a class="dlbtn" href="/data/forest.csv" download>⬇️ Download this data as CSV</a>
+
   <h2>Forest Reserves</h2>
   <table id="forest" class="data-table">
     <thead><tr><th>Forest ID</th><th>Forest Name</th><th>Location</th><th>Province</th><th>Forest_Type</th><th>Area_Hectares</th><th>Carbon_Tons</th><th>Biodiversity_Score</th><th>Protection_Status</th></tr></thead>

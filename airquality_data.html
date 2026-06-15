@@ -3,10 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <title>CAR Air Quality Monitoring - Open Data Portal (Sample)</title>
+  <style>
+    body{font-family:"Segoe UI",system-ui,sans-serif;margin:24px;color:#1a202c}
+    table{border-collapse:collapse;margin-top:10px}
+    th,td{border:1px solid #cbd5e1;padding:4px 8px;font-size:13px;text-align:left}
+    th{background:#0b69a3;color:#fff}
+    .notice{background:#fffbeb;border-left:4px solid #f59e0b;padding:8px 12px;border-radius:6px}
+    .dlbtn{display:inline-block;margin:14px 0;background:#0b69a3;color:#fff;text-decoration:none;
+      font-weight:700;padding:10px 18px;border-radius:8px}
+    .dlbtn:hover{background:#075488}
+  </style>
 </head>
 <body>
   <h1>CAR Air Quality Monitoring - Open Data Portal (Sample)</h1>
   <p class="notice"><strong>Note:</strong> SIMULATED sample data for a data science training workshop. The numbers are generated for practice and do not represent official statistics.</p>
+  <a class="dlbtn" href="/data/airquality.csv" download>⬇️ Download this data as CSV</a>
+
   <h2>Air Quality Stations</h2>
   <table id="air" class="data-table">
     <thead><tr><th>Station ID</th><th>Station Name</th><th>Location</th><th>Province</th><th>Area_Type</th><th>PM25_Level</th><th>AQI</th><th>Air_Quality_Score</th><th>Health_Risk</th></tr></thead>
