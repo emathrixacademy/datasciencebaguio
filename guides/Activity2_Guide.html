@@ -180,7 +180,33 @@ print(f"  Total annual visitors: {tourism_df['Annual_Visitors'].sum():,}")
 print(f"  Average rating: {tourism_df['Rating'].mean():.2f} out of 5")</pre>
 <div class="see"><b>You should see:</b> headline figures for each table (e.g. avg temperature ~24 C).</div>
 
-<h3>Step 10 — The analysis dashboard</h3>
+<h3>Step 10 — Correlation between two variables</h3>
+<p>A <b>correlation</b> tells us if two number columns move together. It ranges from <b>−1 to +1</b>: near <b>+1</b> they rise together, near <b>−1</b> one rises as the other falls, near <b>0</b> there's no clear relationship. We check <b>elevation</b> vs <b>temperature</b> in the weather data.</p>
+<div class="tip">In real life we'd expect higher places to be cooler (a negative correlation). Our data is randomly simulated, so don't over-read the exact number — the point is learning <i>how</i> to measure a relationship.</div>
+<div class="copy">Copy this code</div>
+<pre>x = 'Elevation_m'
+y = 'Temperature_C'
+
+r = weather_df[x].corr(weather_df[y])
+print(f"Correlation between {x} and {y}: {r:.3f}")
+
+if r > 0.5:
+    print("That's a fairly strong POSITIVE relationship.")
+elif r < -0.5:
+    print("That's a fairly strong NEGATIVE relationship.")
+else:
+    print("That's a weak relationship (close to zero).")
+
+plt.figure(figsize=(8, 5))
+plt.scatter(weather_df[x], weather_df[y], alpha=0.6, color='purple')
+plt.title(f'{x} vs {y}  (correlation = {r:.2f})', fontweight='bold')
+plt.xlabel('Elevation (m)')
+plt.ylabel('Temperature (C)')
+plt.grid(alpha=0.3)
+plt.show()</pre>
+<div class="see"><b>You should see:</b> a correlation value (somewhere around −0.4 on this sample) and a scatter plot of the two variables.</div>
+
+<h3>Step 11 — The analysis dashboard</h3>
 <p>Six charts in one figure, pulling from all three scraped tables.</p>
 <div class="copy">Copy this code</div>
 <pre>fig, axes = plt.subplots(2, 3, figsize=(18, 10))
