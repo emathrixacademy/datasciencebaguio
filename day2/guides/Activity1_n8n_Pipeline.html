@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 2 · Activity 1 — n8n Stock Pipeline Guide</title>
+<style>
+  body{font-family:"Segoe UI",system-ui,sans-serif;color:#1a202c;line-height:1.6;max-width:840px;margin:0 auto;padding:40px 28px}
+  h1{font-size:2rem;color:#0b69a3;border-bottom:3px solid #0b69a3;padding-bottom:.4rem}
+  h2{font-size:1.3rem;color:#0b69a3;margin-top:2rem;border-left:5px solid #38bdf8;padding-left:.6rem}
+  h3{font-size:1.05rem;margin-top:1.3rem}
+  .kicker{color:#7c3aed;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.8rem}
+  code,pre{font-family:"Consolas","Courier New",monospace}
+  pre{background:#0f172a;color:#e2e8f0;padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:.85rem;white-space:pre-wrap;word-break:break-word}
+  .copy{font-size:.78rem;font-weight:700;color:#0b69a3;text-transform:uppercase;letter-spacing:.05em;margin:1rem 0 .3rem}
+  .warn{background:#fef2f2;border-left:4px solid #ef4444;padding:.7rem 1rem;border-radius:6px;margin:1rem 0}
+  .note{background:#eff6ff;border-left:4px solid #3b82f6;padding:.7rem 1rem;border-radius:6px;margin:1rem 0}
+  ul,ol{margin:.4rem 0 .4rem 1.3rem}
+  .flow{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin:1rem 0}
+  .node{background:#e0f2fe;border:1px solid #0b69a3;border-radius:8px;padding:.4rem .8rem;font-size:.9rem}
+  .arrow{color:#0b69a3;font-weight:700}
+  .foot{margin-top:2.5rem;border-top:1px solid #cbd5e1;padding-top:1rem;color:#64748b;font-size:.85rem}
+  @media print{body{padding:0}h2,h3{break-after:avoid}pre{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="kicker">DICT Data Science Seminar · Baguio · Day 2</div>
+<h1>Activity 1 — n8n Stock Data Pipeline</h1>
+
+<p>This guide covers the <b>automation half</b> of Activity 1: an <b>n8n</b> workflow that fetches daily
+stock data from <b>Polygon.io</b>, analyzes it, logs it to a <b>Google Sheet</b>, and emails an alert.
+The <b>analysis half</b> (reading that sheet in Colab) is in the companion notebook.</p>
+
+<div class="flow">
+  <span class="node">Polygon.io API</span><span class="arrow">→</span>
+  <span class="node">Code: analyze</span><span class="arrow">→</span>
+  <span class="node">Format row</span><span class="arrow">→</span>
+  <span class="node">Append to Sheet</span><span class="arrow">→</span>
+  <span class="node">IF moved &gt;0.1%</span><span class="arrow">→</span>
+  <span class="node">Email alert</span>
+</div>
+
+<h2>Before you start</h2>
+<ul>
+  <li>A free <b>Polygon.io</b> account and API key.</li>
+  <li>An <b>n8n</b> instance (cloud or self-hosted).</li>
+  <li>A <b>Google Sheet</b> (and Gmail) connected to n8n.</li>
+</ul>
+
+<div class="warn"><b>API key safety:</b> never share or commit your Polygon key. In the URL below, replace
+<code>YOUR_POLYGON_API_KEY</code> with your own key inside n8n only. If a key is ever exposed publicly,
+<b>rotate it</b> in your Polygon dashboard.</div>
+
+<h2>Data source — Polygon.io</h2>
+<p>Previous-day aggregate for a ticker:</p>
+<pre>https://api.polygon.io/v2/aggs/ticker/AAPL/prev?adjusted=true&amp;apikey=YOUR_POLYGON_API_KEY</pre>
+<p>Tickers used in the demo: <b>AAPL</b> (Apple), <b>META</b> (Meta), <b>MSFT</b> (Microsoft),
+<b>GOOGL</b> (Google), <b>TSLA</b> (Tesla).</p>
+
+<h2>Step 1 — Code node: analyze the stock data</h2>
+<p>Extracts open/close/high/low/volume, computes daily return and volatility, and produces a trading signal.</p>
+<div class="copy">n8n Code node (JavaScript)</div>
+<pre>// Get the stock data from previous node
+const stockData = $input.first().json;
+const results = stockData.results[0]; // Polygon.io structure
+
+// Extract key metrics (Polygon.io format)
+const openPrice = results.o;
+const closePrice = results.c;
+const highPrice = results.h;
+const lowPrice = results.l;
+const volume = results.v;
+
+// Calculate daily return percentage (open to close)
+const dailyReturn = ((closePrice - openPrice) / openPrice) * 100;
+
+// Calculate volatility (high-low range as % of close)
+const volatility = ((highPrice - lowPrice) / closePrice) * 100;
+
+// Generate simple trading signals
+let signal = "HOLD";
+let confidence = "LOW";
+
+if (dailyReturn > 2) {
+  signal = "STRONG BUY"; confidence = "HIGH";
+} else if (dailyReturn > 0.5) {
+  signal = "BUY"; confidence = "MEDIUM";
+} else if (dailyReturn < -2) {
+  signal = "STRONG SELL"; confidence = "HIGH";
+} else if (dailyReturn < -0.5) {
+  signal = "SELL"; confidence = "MEDIUM";
+}
+
+// Risk assessment
+const riskLevel = volatility > 3 ? "HIGH" : volatility > 1.5 ? "MEDIUM" : "LOW";
+
+return [{
+  json: {
+    symbol: "AAPL",
+    date: new Date().toISOString().split('T')[0],
+    timestamp: new Date().toISOString(),
+    prices: { open: openPrice, close: closePrice, high: highPrice, low: lowPrice },
+    volume: volume,
+    analysis: {
+      dailyReturn: Math.round(dailyReturn * 100) / 100,
+      volatility: Math.round(volatility * 100) / 100,
+      signal: signal, confidence: confidence, riskLevel: riskLevel
+    },
+    recommendation: `${signal} with ${confidence} confidence. Risk level: ${riskLevel}`
+  }
+}];</pre>
+
+<h2>Step 2 — Code node: shape the row for the Sheet</h2>
+<div class="copy">n8n Code node (JavaScript)</div>
+<pre>const data = $input.first().json;
+
+return [{
+  json: {
+    DATE: data.date,
+    SYMBOL: data.symbol,
+    CLOSE_PRICE: data.prices.close,
+    DAILY_RETURN: data.analysis.dailyReturn + "%",
+    SIGNAL: data.analysis.signal,
+    RISK_LEVEL: data.analysis.riskLevel
+  }
+}];</pre>
+<p>Then add a <b>Google Sheets → Append row</b> node that writes these columns to your sheet.</p>
+
+<h2>Step 3 — IF node: only alert on real movement</h2>
+<pre>{{ $json.analysis.dailyReturn }}   is greater than   0.1</pre>
+
+<h2>Step 4 — Email subject (HTML)</h2>
+<pre>STOCK ALERT: {{ $('Append row in sheet').item.json.SYMBOL }} {{ $('Append row in sheet').item.json.DATE }}</pre>
+
+<h2>Step 5 — Email body (HTML)</h2>
+<pre>&lt;h2&gt;STOCK MOVEMENT ALERT&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Symbol:&lt;/strong&gt; {{ $('Append row in sheet').item.json.SYMBOL }}&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Current Price:&lt;/strong&gt; ${{ $('Append row in sheet').item.json['CLOSE PRICE'] }}&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Daily Return:&lt;/strong&gt; {{ $('Append row in sheet').item.json['DAILY RETURN %'] }} %&lt;/p&gt;
+
+&lt;h3&gt;SIGNAL: {{ $('Append row in sheet').item.json.SIGNAL }}&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Confidence:&lt;/strong&gt; {{ $('Code').item.json.analysis.confidence }}&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Risk Level:&lt;/strong&gt; {{ $('Append row in sheet').item.json['RISK LEVEL'] }}&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Recommendation:&lt;/strong&gt; {{ $('Code').item.json.recommendation }}&lt;/p&gt;
+
+&lt;hr&gt;
+&lt;p&gt;&lt;em&gt;Automated by n8n Data Pipeline&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;Generated at:&lt;/em&gt; {{ $('Append row in sheet').item.json.DATE }}&lt;/p&gt;</pre>
+
+<div class="note"><b>Next:</b> let the pipeline run for a while so the sheet fills with rows, then open the
+<b>Activity 1 Colab notebook</b> and point it at your sheet to analyze the collected data.</div>
+
+<div class="foot">DICT Data Science Seminar · Day 2 · June 2026 · replace all API keys/IDs with your own.</div>
+</body>
+</html>

@@ -16,9 +16,21 @@ serve.json            Backward-compatible URL rewrites (see below)
 package.json          `serve .` static hosting
 datasets/             Shared, live-served data (portals + csv/)
 day1/  index.html · presentation.html · notebooks/ · guides/
-day2/  index.html     (placeholder — in preparation)
+day2/  index.html · notebooks/ · guides/   (Automation & AI)
 day3/  index.html     (placeholder — in preparation)
 ```
+
+## Day 2 notebooks (`day2/notebooks/`)
+
+- `Activity1_StockAnalysis_Colab.ipynb` — analyzes stock data an **n8n + Polygon.io** pipeline writes
+  to a Google Sheet (loads the sheet via CSV-export URL, falls back to sample data). The n8n workflow
+  itself is documented in `day2/guides/Activity1_n8n_Pipeline.html` (5 JS Code-node steps).
+- `Activity2_SignatureDetection_Colab.ipynb` — runs a **Teachable Machine** SavedModel over a Google
+  Drive folder to classify signed/unsigned documents, saves a results CSV, then does EDA on confidence.
+
+**SECURITY:** the source material contained a live Polygon.io API key — it is **NOT** in the repo;
+all API keys / Sheet IDs are placeholders (`YOUR_POLYGON_API_KEY`, `PASTE_YOUR_SHEET_ID_HERE`).
+Never commit real keys; if one is pasted in, replace with a placeholder before committing.
 
 When adding Day 2 / Day 3 content, mirror the Day 1 layout (its own `index.html`, `notebooks/`,
 `guides/`, and reuse `datasets/` or add new ones there). Update the hub `index.html` cards.
