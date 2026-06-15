@@ -30,7 +30,8 @@
 <h2>What you'll learn</h2>
 <p><b>Web scraping</b> means pulling data straight off a web page with code. You'll scrape the
 <b>CAR Region Open Data Portal</b> — a live web page with three tables (weather stations, schools,
-and tourism sites) — turn them into clean tables, and build an analysis dashboard.</p>
+and tourism sites) — do a <b>first pass of data cleaning</b> (handle missing values and duplicates),
+and build an analysis dashboard.</p>
 <div class="note"><b>The page we scrape:</b> <code>https://datasciencebaguio-production.up.railway.app/car_data</code><br>
 <b>Honest note:</b> this portal holds <b>simulated sample data</b> made for this workshop. The numbers are realistic but invented — not official government figures. What's real is the <b>skill</b>.</div>
 
@@ -108,7 +109,7 @@ tourism_df = tables[2]
 print(f"Weather stations: {len(weather_df)} rows")
 print(f"Schools: {len(schools_df)} rows")
 print(f"Tourism sites: {len(tourism_df)} rows")</pre>
-<div class="see"><b>You should see:</b> Weather <b>46</b>, Schools <b>50</b>, Tourism <b>40</b> rows.</div>
+<div class="see"><b>You should see:</b> Weather <b>47</b>, Schools <b>51</b>, Tourism <b>40</b> rows. (The weather and schools counts look a little high — there's a duplicate row hiding in each. We'll catch it in Step 7.)</div>
 
 <h3>Step 6 — Look at what we scraped</h3>
 <p>Always eyeball your data before analyzing it.</p>
@@ -121,7 +122,50 @@ print("TOURISM SITES (first 5):")
 display(tourism_df.head())</pre>
 <div class="see"><b>You should see:</b> the first 5 rows of each table.</div>
 
-<h3>Step 7 — Quick summary numbers</h3>
+<h3>Step 7 — Check the data quality</h3>
+<p>Real scraped data is rarely perfect. Before analyzing, check each table for <b>missing values</b> (empty cells) and <b>duplicate rows</b>.</p>
+<div class="copy">Copy this code</div>
+<pre>for name, df in [('WEATHER', weather_df), ('SCHOOLS', schools_df), ('TOURISM', tourism_df)]:
+    print(f"{name}: {df.isnull().sum().sum()} missing cells, {df.duplicated().sum()} duplicate rows")
+
+print("\nMissing cells per column (weather):")
+print(weather_df.isnull().sum()[weather_df.isnull().sum() > 0])
+
+print("\nMissing cells per column (schools):")
+print(schools_df.isnull().sum()[schools_df.isnull().sum() > 0])</pre>
+<div class="see"><b>You should see:</b> Weather and Schools each report some missing cells and <b>1 duplicate row</b>; Tourism is clean (0 and 0).</div>
+
+<h3>Step 8 — A first pass at cleaning</h3>
+<p>The tourism table is already clean, but <b>weather</b> and <b>schools</b> have a few empty cells and a duplicate row. We do a light, sensible clean-up:</p>
+<ul>
+  <li><b>Remove duplicate rows</b> (the exact same record appearing twice).</li>
+  <li><b>Fill missing numbers</b> with the column <b>average</b>.</li>
+  <li><b>Fill missing text</b> with the <b>most common value</b> (the mode).</li>
+</ul>
+<div class="tip">This is just a <b>first pass</b>. Full cleaning (outliers, data types, validation) is a bigger topic for later.</div>
+<div class="copy">Copy this code</div>
+<pre># 1) Remove duplicate rows
+weather_df = weather_df.drop_duplicates().copy()
+schools_df = schools_df.drop_duplicates().copy()
+
+# 2) Fill missing NUMBERS with the column average
+for col in ['Humidity_pct', 'Rainfall_mm']:
+    weather_df[col] = weather_df[col].fillna(round(weather_df[col].mean()))
+schools_df['Teachers'] = schools_df['Teachers'].fillna(round(schools_df['Teachers'].mean()))
+schools_df['Year_Established'] = schools_df['Year_Established'].fillna(schools_df['Year_Established'].median())
+
+# 3) Fill missing TEXT with the most common value (mode)
+weather_df['Condition'] = weather_df['Condition'].fillna(weather_df['Condition'].mode()[0])
+schools_df['Type'] = schools_df['Type'].fillna(schools_df['Type'].mode()[0])
+
+print("After the first cleaning pass:")
+for name, df in [('WEATHER', weather_df), ('SCHOOLS', schools_df), ('TOURISM', tourism_df)]:
+    print(f"  {name}: {len(df)} rows, {df.isnull().sum().sum()} missing cells, {df.duplicated().sum()} duplicates")
+
+print("\nNote: this is a first pass only. Full cleaning comes later.")</pre>
+<div class="see"><b>You should see:</b> after cleaning, Weather back to <b>46</b> rows, Schools <b>50</b> rows, and <b>0 missing cells, 0 duplicates</b> everywhere.</div>
+
+<h3>Step 9 — Quick summary numbers</h3>
 <div class="copy">Copy this code</div>
 <pre>print("WEATHER")
 print(f"  Average temperature: {weather_df['Temperature_C'].mean():.1f} C")
@@ -136,7 +180,7 @@ print(f"  Total annual visitors: {tourism_df['Annual_Visitors'].sum():,}")
 print(f"  Average rating: {tourism_df['Rating'].mean():.2f} out of 5")</pre>
 <div class="see"><b>You should see:</b> headline figures for each table (e.g. avg temperature ~24 C).</div>
 
-<h3>Step 8 — The analysis dashboard</h3>
+<h3>Step 10 — The analysis dashboard</h3>
 <p>Six charts in one figure, pulling from all three scraped tables.</p>
 <div class="copy">Copy this code</div>
 <pre>fig, axes = plt.subplots(2, 3, figsize=(18, 10))

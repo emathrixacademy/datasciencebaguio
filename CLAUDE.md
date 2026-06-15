@@ -12,9 +12,15 @@ shared HTML dataset.
 ## Files
 
 - `Activity1_DataScience_Colab.ipynb` — Google Form → Sheet → Colab charts (gspread).
-- `Activity2_WebScraping_Colab.ipynb` — web scraping: Hacker News (live) + `car_data.html` (local).
+- `Activity2_WebScraping_Colab.ipynb` — web scraping the **live** CAR portal
+  (`…up.railway.app/car_data`) + a first-pass **data cleaning** demo (nulls + duplicates).
 - `Activity3_EDA_Colab.ipynb` — exploratory data analysis on the tourism table from `car_data.html`.
-- `car_data.html` — **simulated** CAR-region dataset: 3 tables (weather 46 rows, schools 50, tourism 40).
+- `car_data.html` — **simulated** CAR-region dataset: 3 tables. **INTENTIONALLY messy**:
+  the weather and schools tables contain a few blank cells and one duplicate row each
+  (so Activity 2 can teach cleaning). The **tourism table is kept perfectly clean** so
+  Activity 3's "0 missing, clean data" narrative stays correct. Do NOT "fix" the nulls in
+  weather/schools — they are deliberate. Raw scrape: weather 47, schools 51, tourism 40;
+  after Activity 2's cleaning pass: weather 46, schools 50, tourism 40.
 - `README.md` — participant-facing overview.
 
 ## How activities connect
