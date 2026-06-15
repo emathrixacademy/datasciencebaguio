@@ -108,6 +108,20 @@ app.get('/admin/attendance.csv', async (req, res) => {
   }
 });
 
+// ---- Admin: attendance as JSON (for the admin page) ----
+app.get('/admin/attendance.json', async (req, res) => {
+  if (!process.env.ADMIN_TOKEN || req.query.token !== process.env.ADMIN_TOKEN) {
+    return res.status(403).json({ error: 'forbidden' });
+  }
+  if (!pool) return res.status(503).json({ error: 'no database configured' });
+  try {
+    const { rows } = await pool.query('SELECT * FROM attendance ORDER BY created_at DESC');
+    res.json({ count: rows.length, rows });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 app.get('/api/health', (req, res) => res.json({ ok: true, db: hasDb }));
 
 // ---- Static site (clean URLs + rewrites) ----
