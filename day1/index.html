@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 1 — Foundations | DICT Data Science Seminar</title>
+<style>
+  :root{--bg:#0f172a;--card:#1e293b;--line:#334155;--accent:#38bdf8;--accent2:#a78bfa;--good:#34d399;--text:#e2e8f0;--muted:#94a3b8;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:5vh 6vw}
+  a.back{color:var(--accent);text-decoration:none;font-size:.9rem}
+  a.back:hover{text-decoration:underline}
+  .badge{display:inline-block;background:rgba(52,211,153,.15);color:var(--good);border:1px solid var(--good);border-radius:999px;padding:.2rem .8rem;font-size:.8rem;font-weight:700;margin:1rem 0 .8rem}
+  .kicker{color:var(--accent);font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:.8rem;margin-bottom:.6rem}
+  h1{font-size:clamp(1.8rem,4.5vw,3rem);line-height:1.1;margin-bottom:.7rem}
+  .accent{color:var(--accent)}
+  .sub{color:var(--muted);font-size:clamp(1rem,2vw,1.25rem);max-width:62ch;margin-bottom:2rem}
+  h2{font-size:1.1rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin:2.4rem 0 1.1rem;font-weight:700}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:1.2rem}
+  a.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.5rem;text-decoration:none;color:var(--text);transition:.2s}
+  a.card:hover{border-color:var(--accent);transform:translateY(-4px)}
+  .feature{grid-column:1/-1;background:linear-gradient(135deg,rgba(56,189,248,.12),rgba(167,139,250,.12))}
+  .num{font-size:1.8rem;font-weight:800;color:var(--accent2);line-height:1;margin-bottom:.4rem}
+  .card h3{font-size:1.2rem;color:#fff;margin-bottom:.4rem}
+  .card p{color:var(--muted);font-size:.95rem;line-height:1.5}
+  code{background:#0f172a;border:1px solid var(--line);border-radius:5px;padding:.05rem .35rem;font-size:.82rem;color:var(--accent)}
+  .note{color:var(--muted);max-width:680px;margin-bottom:1rem;font-size:.98rem}
+  footer{margin-top:3rem;padding-top:1.4rem;border-top:1px solid var(--line);color:var(--muted);font-size:.88rem}
+</style>
+</head>
+<body>
+  <a class="back" href="../index.html">← All days</a>
+  <div class="badge">Day 1 of 3</div>
+  <div class="kicker">DICT Data Science Seminar · Baguio</div>
+  <h1>Day 1 — <span class="accent">Foundations</span></h1>
+  <p class="sub">Collect data, scrape and clean it, then analyze it. Open the presentation first, then work through the three activities in Colab.</p>
+
+  <h2>Start here</h2>
+  <div class="grid">
+    <a class="card feature" href="presentation.html">
+      <div class="num">▶</div>
+      <h3>Day 1 Presentation</h3>
+      <p>Intro to data science + a walkthrough of all three activities. ← → to navigate, F for fullscreen.</p>
+    </a>
+  </div>
+
+  <h2>Activities (open in Colab)</h2>
+  <div class="grid">
+    <a class="card" href="https://colab.research.google.com/github/emathrixacademy/datasciencebaguio/blob/main/day1/notebooks/Activity1_DataScience_Colab.ipynb">
+      <div class="num">1</div><h3>Data Science</h3>
+      <p>Connect your own Google Form to Colab and chart the responses.</p>
+    </a>
+    <a class="card" href="https://colab.research.google.com/github/emathrixacademy/datasciencebaguio/blob/main/day1/notebooks/Activity2_WebScraping_Colab.ipynb">
+      <div class="num">2</div><h3>Web Scraping + Cleaning</h3>
+      <p>Scrape the live CAR portal, do a first pass of cleaning, correlate, and build a dashboard.</p>
+    </a>
+    <a class="card" href="https://colab.research.google.com/github/emathrixacademy/datasciencebaguio/blob/main/day1/notebooks/Activity3_EDA_Colab.ipynb">
+      <div class="num">3</div><h3>Exploratory Analysis</h3>
+      <p>Generic EDA — pick a dataset, set the labels, analyze, and answer the questions.</p>
+    </a>
+  </div>
+
+  <h2>Student guides (PDF)</h2>
+  <div class="grid">
+    <a class="card" href="guides/Activity1_Guide.pdf"><div class="num">1</div><h3>Activity 1 Guide</h3><p>Step-by-step with copy-paste code.</p></a>
+    <a class="card" href="guides/Activity2_Guide.pdf"><div class="num">2</div><h3>Activity 2 Guide</h3><p>Step-by-step with copy-paste code.</p></a>
+    <a class="card" href="guides/Activity3_Guide.pdf"><div class="num">3</div><h3>Activity 3 Guide</h3><p>Step-by-step with copy-paste code.</p></a>
+  </div>
+
+  <h2>Activity 2 — scrape this live portal</h2>
+  <p class="note">Activity 2 scrapes the CAR Open Data Portal directly. Practice sets have the same structure with different data.</p>
+  <div class="grid">
+    <a class="card" href="../datasets/car_data.html"><div class="num">📄</div><h3>CAR Portal (demo)</h3><p><code>…/datasets/car_data</code></p></a>
+    <a class="card" href="../datasets/car_data1.html"><div class="num">1</div><h3>Practice Set 1</h3><p><code>…/datasets/car_data1</code></p></a>
+    <a class="card" href="../datasets/car_data2.html"><div class="num">2</div><h3>Practice Set 2</h3><p><code>…/datasets/car_data2</code></p></a>
+    <a class="card" href="../datasets/car_data3.html"><div class="num">3</div><h3>Practice Set 3</h3><p><code>…/datasets/car_data3</code></p></a>
+  </div>
+
+  <h2>Activity 3 — download a CSV, upload to Colab</h2>
+  <p class="note">Open a portal, click <b>Download CSV</b>, upload it to Colab, then paste the matching config block into Activity 3.</p>
+  <div class="grid">
+    <a class="card" href="../datasets/forest_data.html"><div class="num">🌲</div><h3>Forest Reserves</h3><p>Download <code>forest.csv</code></p></a>
+    <a class="card" href="../datasets/wildlife_data.html"><div class="num">🦅</div><h3>Wildlife Species</h3><p>Download <code>wildlife.csv</code></p></a>
+    <a class="card" href="../datasets/airquality_data.html"><div class="num">🌫️</div><h3>Air Quality Stations</h3><p>Download <code>airquality.csv</code></p></a>
+  </div>
+
+  <footer>DICT Data Science Seminar · Cordillera Administrative Region · June 2026 · all data is simulated for training.</footer>
+</body>
+</html>

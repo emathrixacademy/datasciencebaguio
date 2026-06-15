@@ -4,58 +4,70 @@ Guidance for Claude Code when working in this folder. Keep this file updated as 
 
 ## What this folder is
 
-Hands-on seminar materials for a **DICT** event run by **Emathrix Training Center**
-(Baguio, CAR region, June 14 2026). Audience: beginners learning **Data Science / Data
-Analysis** and **Data Engineering**. Deliverables are **Google Colab notebooks** plus a
-shared HTML dataset.
+Materials for a **DICT** 3-day Data Science seminar (Baguio, CAR region, June 2026). Audience:
+beginners learning **Data Science / Data Analysis** and **Data Engineering**. Deliverables are
+**Google Colab notebooks** + a static website (deployed on Railway via `serve`).
 
-## Files
+## Folder structure
 
-- `Activity1_DataScience_Colab.ipynb` — Google Form → Sheet → Colab charts (gspread).
-- `Activity2_WebScraping_Colab.ipynb` — web scraping the **live** CAR portal
-  (`…up.railway.app/car_data`) + a first-pass **data cleaning** demo (nulls + duplicates).
-- `Activity3_EDA_Colab.ipynb` — exploratory data analysis on the tourism table from `car_data.html`.
-- `car_data.html` — **simulated** CAR-region dataset: 3 tables. **INTENTIONALLY messy**:
-  the weather and schools tables contain a few blank cells and one duplicate row each
-  (so Activity 2 can teach cleaning). The **tourism table is kept perfectly clean** so
-  Activity 3's "0 missing, clean data" narrative stays correct. Do NOT "fix" the nulls in
-  weather/schools — they are deliberate. Raw scrape: weather 47, schools 51, tourism 40;
-  after Activity 2's cleaning pass: weather 46, schools 50, tourism 40.
-- `car_data1.html`, `car_data2.html`, `car_data3.html` — **practice datasets** for students to
-  analyze on their own. Same schema as `car_data.html`, different (seeded) values, same intentional
-  messiness pattern (weather/schools have nulls + 1 duplicate; tourism clean). Served live at
-  `…up.railway.app/car_data1`, `/car_data2`, `/car_data3`. Generated with fixed random seeds
-  (2026/2027/2028) — regenerate with the same seeds to reproduce.
-- `forest_data.html`, `wildlife_data.html`, `airquality_data.html` — **Activity 3 themed
-  datasets** (single table each, ~40 rows, clean). Same generic shape: ID, Name, Location,
-  Province, a Category column, two numeric columns, a 0-5 score, a status column. Served at
-  `…/forest_data`, `/wildlife_data`, `/airquality_data`. Activity 3 is **generic/config-driven** —
-  students set 8 labels (DATA_URL, GROUP_COL, TYPE_COL, MAIN_NUM, SECOND_NUM, SCORE_COL,
-  NAME_COL, ID_COL) and the rest runs unchanged. Seeds 11/22/33.
-- `README.md` — participant-facing overview.
+```
+index.html            Hub page — links to Day 1 / 2 / 3
+serve.json            Backward-compatible URL rewrites (see below)
+package.json          `serve .` static hosting
+datasets/             Shared, live-served data (portals + csv/)
+day1/  index.html · presentation.html · notebooks/ · guides/
+day2/  index.html     (placeholder — in preparation)
+day3/  index.html     (placeholder — in preparation)
+```
 
-## How activities connect
+When adding Day 2 / Day 3 content, mirror the Day 1 layout (its own `index.html`, `notebooks/`,
+`guides/`, and reuse `datasets/` or add new ones there). Update the hub `index.html` cards.
 
-- Activities 2 and 3 both depend on `car_data.html`. `pd.read_html` returns the tables in
-  order: `[0]` weather, `[1]` schools, `[2]` tourism.
-- Column names in the notebooks must match the `<th>` headers in `car_data.html` exactly
-  (e.g. `Annual_Visitors`, `Entry_Fee_PHP`, `Student_Teacher_Ratio`, `Site ID`, `Site Name`).
-  If you edit one, update the other.
+## Day 1 notebooks (`day1/notebooks/`)
+
+- `Activity1_DataScience_Colab.ipynb` — Google Form → Sheet → Colab charts (gspread). No data dep.
+- `Activity2_WebScraping_Colab.ipynb` — scrapes the **live** CAR portal
+  (`…up.railway.app/datasets/car_data`), then a first-pass **cleaning** demo (drop dup, fillna
+  mean/mode), a 2-variable **correlation** (elevation vs temperature), and a dashboard.
+- `Activity3_EDA_Colab.ipynb` — **generic / config-driven** EDA. Student uploads a CSV and sets 8
+  labels (`DATA_FILE, GROUP_COL, TYPE_COL, MAIN_NUM, SECOND_NUM, SCORE_COL, NAME_COL, ID_COL`);
+  every step runs unchanged. Step 10 is a "your turn" **questions** cell (not auto-printed findings).
+
+## Datasets (`datasets/`) — all simulated, served live
+
+- `car_data.html` — 3 tables (`pd.read_html` order: `[0]` weather, `[1]` schools, `[2]` tourism).
+  **INTENTIONALLY messy**: weather & schools have blank cells + 1 duplicate row each; **tourism is
+  kept clean**. Do NOT "fix" the weather/schools nulls — they drive Activity 2's cleaning lesson.
+  Raw scrape: weather 47, schools 51, tourism 40; after cleaning: 46 / 50 / 40.
+- `car_data1/2/3.html` — Activity 2 practice sets, same shape, different data (seeds 2026/27/28).
+- `forest_data.html`, `wildlife_data.html`, `airquality_data.html` — Activity 3 themed datasets
+  (single table, ~40 rows, clean). Same generic shape: ID, Name, Location, Province, a Category
+  column, two numeric columns, a 0–5 score, a status column. Each has a **Download CSV** button →
+  `datasets/csv/<name>.csv`. Seeds 11/22/33.
+- `datasets/csv/*.csv` — CSV exports (weather/schools/tourism + forest/wildlife/airquality),
+  generated FROM the matching HTML so they stay identical.
+
+## URLs & serve.json
+
+The portals moved under `datasets/`, so live URLs are now `…/datasets/car_data`, `/datasets/forest_data`,
+etc. `serve.json` keeps the **old short URLs** (`/car_data`, `/forest_data`, …) working via rewrites,
+so already-downloaded notebooks don't break. If you move a dataset, add/adjust its rewrite.
 
 ## Conventions to preserve
 
-- These are **teaching** notebooks. Favor clarity over cleverness; keep step-by-step
-  markdown cells and `Shift + Enter`, top-to-bottom flow.
-- Instructions are intentionally **bilingual (English + Tagalog)** — keep that voice.
-- Always keep the **"simulated vs real data"** disclaimers. They are a core teaching point,
-  not boilerplate.
-- Notebooks target **Google Colab** (Colab-specific bits: `google.colab.auth`, file-upload
-  panel, `!pip install`). Don't replace with local-only assumptions.
-- Each notebook should run standalone (Activity 3 re-scrapes the HTML rather than depending
-  on Activity 2's runtime state).
+- **Teaching** notebooks: clarity over cleverness; step-by-step markdown, `Shift + Enter` top to bottom.
+- Bilingual **English + Tagalog** voice in the notebooks — keep it.
+- Always keep the **"simulated vs real data"** disclaimers — a core teaching point.
+- Target **Google Colab** (`google.colab` upload panel, `!pip install`). No local-only assumptions.
+- Branding is **DICT** (not Emathrix) across the website and presentation.
+- Column names in notebooks must match the dataset `<th>` headers exactly. If you edit one, update the other.
 
 ## When editing
 
-- Run a quick consistency check between any changed column name and `car_data.html`.
-- Sign-off line in notebooks is "— Emathrix Training Center"; keep it.
-- If you add a new activity or dataset, update both `README.md` and this file.
+- After moving/renaming a dataset, check: the notebook URL(s), the portal Download-CSV `href`, the
+  `serve.json` rewrite, and the day page links.
+- If you add an activity, dataset, or day, update the hub `index.html`, the relevant day page,
+  `README.md`, and this file.
+- Guide PDFs are generated from the matching `*.html` via headless Edge with a **proper Windows
+  `file://` URI** (spaces URL-encoded) — an MSYS `/c/...` path silently produces a "file not found"
+  PDF. Verify a regenerated PDF has multiple `/Page` objects, not a single error page.

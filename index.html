@@ -12,146 +12,59 @@
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);
-    min-height:100vh;padding:5vh 6vw}
-  .kicker{color:var(--accent);font-weight:700;letter-spacing:.15em;text-transform:uppercase;
-    font-size:.8rem;margin-bottom:.8rem}
-  h1{font-size:clamp(2rem,5vw,3.4rem);line-height:1.1;margin-bottom:.8rem}
-  .sub{color:var(--muted);font-size:clamp(1rem,2vw,1.3rem);max-width:60ch;margin-bottom:2.5rem}
-  .accent{color:var(--accent)}
-  h2{font-size:1.1rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;
-    margin:2.5rem 0 1.2rem;font-weight:700}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem}
-  a.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:16px;
-    padding:1.6rem;text-decoration:none;color:var(--text);transition:.2s}
-  a.card:hover{border-color:var(--accent);transform:translateY(-4px)}
-  .card .num{font-size:2rem;font-weight:800;color:var(--accent2);line-height:1;margin-bottom:.5rem}
-  .card h3{font-size:1.25rem;color:#fff;margin-bottom:.4rem}
-  .card p{color:var(--muted);font-size:.98rem;line-height:1.5}
-  .feature{grid-column:1/-1;background:linear-gradient(135deg,rgba(56,189,248,.12),rgba(167,139,250,.12))}
-  .feature h3{font-size:1.5rem}
-  footer{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--line);
-    color:var(--muted);font-size:.9rem}
+    min-height:100vh;padding:6vh 6vw}
   .badge{display:inline-block;background:rgba(52,211,153,.15);color:var(--good);
     border:1px solid var(--good);border-radius:999px;padding:.2rem .8rem;font-size:.8rem;
     font-weight:700;margin-bottom:1.2rem}
-  .note{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);
-    border-radius:8px;padding:1rem 1.2rem;color:var(--text);font-size:1rem;max-width:680px}
-  .note pre{white-space:pre;color:#e2e8f0}
+  .kicker{color:var(--accent);font-weight:700;letter-spacing:.15em;text-transform:uppercase;
+    font-size:.8rem;margin-bottom:.8rem}
+  h1{font-size:clamp(2rem,5vw,3.4rem);line-height:1.1;margin-bottom:.8rem}
+  .accent{color:var(--accent)}
+  .sub{color:var(--muted);font-size:clamp(1rem,2vw,1.3rem);max-width:60ch;margin-bottom:2.5rem}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.4rem}
+  a.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:1.8rem;text-decoration:none;color:var(--text);transition:.2s}
+  a.card:hover{border-color:var(--accent);transform:translateY(-4px)}
+  a.card.soon{opacity:.7}
+  .day{font-size:2rem;font-weight:800;color:var(--accent2);line-height:1;margin-bottom:.5rem}
+  .card h3{font-size:1.4rem;color:#fff;margin-bottom:.5rem}
+  .card p{color:var(--muted);font-size:1rem;line-height:1.5}
+  .pill{display:inline-block;font-size:.72rem;font-weight:700;border-radius:999px;padding:.15rem .7rem;margin-top:1rem}
+  .pill.ready{background:rgba(52,211,153,.15);color:var(--good);border:1px solid var(--good)}
+  .pill.wip{background:rgba(148,163,184,.15);color:var(--muted);border:1px solid var(--line)}
+  footer{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
 </style>
 </head>
 <body>
-  <div class="badge">DICT · Day 1 of 3</div>
+  <div class="badge">3-Day Seminar</div>
   <div class="kicker">Department of Information and Communications Technology</div>
   <h1>Data Science Seminar — <span class="accent">Baguio</span></h1>
-  <p class="sub">Hands-on training for beginners: collect data, scrape the web, and analyze a real dataset. Everything runs in Google Colab — no installs needed.</p>
+  <p class="sub">Hands-on training for beginners. Pick a day to open its materials — presentation, notebooks, guides, and datasets. Everything runs in Google Colab; no installs needed.</p>
 
-  <h2>Start here</h2>
   <div class="grid">
-    <a class="card feature" href="Day1_Presentation.html">
-      <div class="num">▶</div>
-      <h3>Day 1 Presentation</h3>
-      <p>Open the slide deck — intro to data science plus a walkthrough of all three activities. Use ← → to navigate, F for fullscreen.</p>
+    <a class="card" href="day1/index.html">
+      <div class="day">Day 1</div>
+      <h3>Foundations</h3>
+      <p>Data Science with Google Forms, Web Scraping + first-pass cleaning, and Exploratory Data Analysis.</p>
+      <span class="pill ready">Ready ✓</span>
     </a>
-  </div>
-
-  <h2>Activities</h2>
-  <div class="grid">
-    <a class="card" href="https://colab.research.google.com/github/emathrixacademy/datasciencebaguio/blob/main/Activity1_DataScience_Colab.ipynb">
-      <div class="num">1</div><h3>Data Science</h3>
-      <p>Connect your own Google Form to Colab and turn survey responses into charts. Opens in Colab.</p>
+    <a class="card soon" href="day2/index.html">
+      <div class="day">Day 2</div>
+      <h3>Coming up</h3>
+      <p>Day 2 materials will appear here.</p>
+      <span class="pill wip">In preparation</span>
     </a>
-    <a class="card" href="https://colab.research.google.com/github/emathrixacademy/datasciencebaguio/blob/main/Activity2_WebScraping_Colab.ipynb">
-      <div class="num">2</div><h3>Web Scraping</h3>
-      <p>Scrape live headlines and a local CAR-region dataset, then build a dashboard. Opens in Colab.</p>
-    </a>
-    <a class="card" href="https://colab.research.google.com/github/emathrixacademy/datasciencebaguio/blob/main/Activity3_EDA_Colab.ipynb">
-      <div class="num">3</div><h3>Exploratory Analysis</h3>
-      <p>Run a full EDA on the tourism data: quality checks, group comparisons, correlation, findings. Opens in Colab.</p>
-    </a>
-  </div>
-
-  <h2>Student guides (PDF)</h2>
-  <div class="grid">
-    <a class="card" href="guides/Activity1_Guide.pdf">
-      <div class="num">1</div><h3>Activity 1 Guide</h3>
-      <p>Step-by-step walkthrough with copy-paste code for the Data Science activity.</p>
-    </a>
-    <a class="card" href="guides/Activity2_Guide.pdf">
-      <div class="num">2</div><h3>Activity 2 Guide</h3>
-      <p>Step-by-step walkthrough with copy-paste code for Web Scraping.</p>
-    </a>
-    <a class="card" href="guides/Activity3_Guide.pdf">
-      <div class="num">3</div><h3>Activity 3 Guide</h3>
-      <p>Step-by-step walkthrough with copy-paste code for Exploratory Data Analysis.</p>
-    </a>
-  </div>
-
-  <h2>Dataset</h2>
-  <div class="grid">
-    <a class="card" href="car_data.html">
-      <div class="num">📄</div><h3>car_data.html</h3>
-      <p>Full simulated CAR-region dataset — weather (46), schools (50), tourism (40). Used by Activities 2 &amp; 3.</p>
-    </a>
-    <a class="card" href="data/weather.csv" download>
-      <div class="num">📊</div><h3>weather.csv</h3>
-      <p>Weather stations table (46 rows) as a CSV file.</p>
-    </a>
-    <a class="card" href="data/schools.csv" download>
-      <div class="num">📊</div><h3>schools.csv</h3>
-      <p>Schools &amp; enrollment table (50 rows) as a CSV file.</p>
-    </a>
-    <a class="card" href="data/tourism.csv" download>
-      <div class="num">📊</div><h3>tourism.csv</h3>
-      <p>Tourism &amp; cultural sites table (40 rows) as a CSV file.</p>
-    </a>
-  </div>
-
-  <div class="note" style="margin-top:1.4rem">
-    <b>Load the data inside Colab</b> (no upload needed) by running this in a cell:
-    <pre style="background:#0f172a;color:#e2e8f0;padding:12px 14px;border-radius:8px;margin-top:.6rem;overflow-x:auto;font-family:Consolas,monospace;font-size:.85rem">import urllib.request
-urllib.request.urlretrieve(
-    "https://datasciencebaguio-production.up.railway.app/car_data",
-    "car_data.html")
-print("Downloaded car_data.html")</pre>
-  </div>
-
-  <h2>Practice datasets (analyze on your own)</h2>
-  <p style="color:var(--muted);max-width:680px;margin-bottom:1rem">Same structure as the demo, but different data. Each student/group can scrape and analyze one of these using the same steps from Activity 2.</p>
-  <div class="grid">
-    <a class="card" href="car_data1.html">
-      <div class="num">1</div><h3>Practice Set 1</h3>
-      <p>Scrape from: <code>…up.railway.app/car_data1</code></p>
-    </a>
-    <a class="card" href="car_data2.html">
-      <div class="num">2</div><h3>Practice Set 2</h3>
-      <p>Scrape from: <code>…up.railway.app/car_data2</code></p>
-    </a>
-    <a class="card" href="car_data3.html">
-      <div class="num">3</div><h3>Practice Set 3</h3>
-      <p>Scrape from: <code>…up.railway.app/car_data3</code></p>
-    </a>
-  </div>
-
-  <h2>Activity 3 datasets (analyze with the generic notebook)</h2>
-  <p style="color:var(--muted);max-width:680px;margin-bottom:1rem">Different topics, same structure. Open the portal, click <b>Download CSV</b>, upload it to Colab, then paste the matching config block into Activity 3 to analyze.</p>
-  <div class="grid">
-    <a class="card" href="forest_data.html">
-      <div class="num">🌲</div><h3>Forest Reserves</h3>
-      <p>Open portal → Download CSV (<code>forest.csv</code>)</p>
-    </a>
-    <a class="card" href="wildlife_data.html">
-      <div class="num">🦅</div><h3>Wildlife Species</h3>
-      <p>Open portal → Download CSV (<code>wildlife.csv</code>)</p>
-    </a>
-    <a class="card" href="airquality_data.html">
-      <div class="num">🌫️</div><h3>Air Quality Stations</h3>
-      <p>Open portal → Download CSV (<code>airquality.csv</code>)</p>
+    <a class="card soon" href="day3/index.html">
+      <div class="day">Day 3</div>
+      <h3>Coming up</h3>
+      <p>Day 3 materials will appear here.</p>
+      <span class="pill wip">In preparation</span>
     </a>
   </div>
 
   <footer>
     DICT Data Science Seminar · Cordillera Administrative Region · June 2026<br>
-    Note: the CAR dataset is simulated sample data for training, not official statistics.
+    Note: all datasets are simulated sample data for training, not official statistics.
   </footer>
 </body>
 </html>

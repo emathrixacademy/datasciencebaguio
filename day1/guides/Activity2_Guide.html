@@ -32,7 +32,7 @@
 <b>CAR Region Open Data Portal</b> — a live web page with three tables (weather stations, schools,
 and tourism sites) — do a <b>first pass of data cleaning</b> (handle missing values and duplicates),
 and build an analysis dashboard.</p>
-<div class="note"><b>The page we scrape:</b> <code>https://datasciencebaguio-production.up.railway.app/car_data</code><br>
+<div class="note"><b>The page we scrape:</b> <code>https://datasciencebaguio-production.up.railway.app/datasets/car_data</code><br>
 <b>Honest note:</b> this portal holds <b>simulated sample data</b> made for this workshop. The numbers are realistic but invented — not official government figures. What's real is the <b>skill</b>.</div>
 
 <h2>Before you start</h2>
@@ -61,7 +61,7 @@ print("Libraries loaded.")</pre>
 <h3>Step 3 — Download the web page</h3>
 <p><code>requests.get</code> fetches the raw page from the portal. A status of <b>200</b> means success.</p>
 <div class="copy">Copy this code</div>
-<pre>url = 'https://datasciencebaguio-production.up.railway.app/car_data'
+<pre>url = 'https://datasciencebaguio-production.up.railway.app/datasets/car_data'
 
 try:
     response = requests.get(url, timeout=15)
