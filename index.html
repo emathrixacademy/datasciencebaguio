@@ -34,6 +34,9 @@
   .badge{display:inline-block;background:rgba(52,211,153,.15);color:var(--good);
     border:1px solid var(--good);border-radius:999px;padding:.2rem .8rem;font-size:.8rem;
     font-weight:700;margin-bottom:1.2rem}
+  .note{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--accent);
+    border-radius:8px;padding:1rem 1.2rem;color:var(--text);font-size:1rem;max-width:680px}
+  .note pre{white-space:pre;color:#e2e8f0}
 </style>
 </head>
 <body>
@@ -87,8 +90,29 @@
   <div class="grid">
     <a class="card" href="car_data.html">
       <div class="num">📄</div><h3>car_data.html</h3>
-      <p>Simulated CAR-region sample data — weather (46), schools (50), tourism (40). For Activities 2 &amp; 3.</p>
+      <p>Full simulated CAR-region dataset — weather (46), schools (50), tourism (40). Used by Activities 2 &amp; 3.</p>
     </a>
+    <a class="card" href="data/weather.csv" download>
+      <div class="num">📊</div><h3>weather.csv</h3>
+      <p>Weather stations table (46 rows) as a CSV file.</p>
+    </a>
+    <a class="card" href="data/schools.csv" download>
+      <div class="num">📊</div><h3>schools.csv</h3>
+      <p>Schools &amp; enrollment table (50 rows) as a CSV file.</p>
+    </a>
+    <a class="card" href="data/tourism.csv" download>
+      <div class="num">📊</div><h3>tourism.csv</h3>
+      <p>Tourism &amp; cultural sites table (40 rows) as a CSV file.</p>
+    </a>
+  </div>
+
+  <div class="note" style="margin-top:1.4rem">
+    <b>Load the data inside Colab</b> (no upload needed) by running this in a cell:
+    <pre style="background:#0f172a;color:#e2e8f0;padding:12px 14px;border-radius:8px;margin-top:.6rem;overflow-x:auto;font-family:Consolas,monospace;font-size:.85rem">import urllib.request
+urllib.request.urlretrieve(
+    "https://datasciencebaguio-production.up.railway.app/car_data",
+    "car_data.html")
+print("Downloaded car_data.html")</pre>
   </div>
 
   <footer>

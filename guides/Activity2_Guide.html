@@ -154,11 +154,11 @@ if os.path.exists('car_data.html'):
 else:
     print("car_data.html not found yet.")
     print("Upload it using the folder icon on the left, then re-run this cell.")</pre>
-<div class="tip"><b>Can't upload?</b> Optional alternative — run this cell instead to download the file directly, then re-run Step 8:</div>
-<div class="copy">Optional — download instead of upload</div>
+<div class="tip"><b>Can't upload?</b> Easier alternative — run this cell to download the file directly into Colab, then run Step 8 to confirm:</div>
+<div class="copy">Download instead of upload</div>
 <pre>import urllib.request
 urllib.request.urlretrieve(
-    "https://raw.githubusercontent.com/emathrixacademy/datasciencebaguio/main/car_data.html",
+    "https://datasciencebaguio-production.up.railway.app/car_data",
     "car_data.html")
 print("Downloaded car_data.html")</pre>
 <div class="see"><b>You should see:</b> <code>Found car_data.html, you're ready.</code></div>
