@@ -21,6 +21,11 @@ shared HTML dataset.
   Activity 3's "0 missing, clean data" narrative stays correct. Do NOT "fix" the nulls in
   weather/schools — they are deliberate. Raw scrape: weather 47, schools 51, tourism 40;
   after Activity 2's cleaning pass: weather 46, schools 50, tourism 40.
+- `car_data1.html`, `car_data2.html`, `car_data3.html` — **practice datasets** for students to
+  analyze on their own. Same schema as `car_data.html`, different (seeded) values, same intentional
+  messiness pattern (weather/schools have nulls + 1 duplicate; tourism clean). Served live at
+  `…up.railway.app/car_data1`, `/car_data2`, `/car_data3`. Generated with fixed random seeds
+  (2026/2027/2028) — regenerate with the same seeds to reproduce.
 - `README.md` — participant-facing overview.
 
 ## How activities connect
