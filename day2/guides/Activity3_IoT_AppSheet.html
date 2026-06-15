@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 2 · Activity 3 — Smart Mushroom Farm App Guide</title>
+<style>
+  body{font-family:"Segoe UI",system-ui,sans-serif;color:#1a202c;line-height:1.6;max-width:860px;margin:0 auto;padding:40px 28px}
+  h1{font-size:2rem;color:#0b69a3;border-bottom:3px solid #0b69a3;padding-bottom:.4rem}
+  h2{font-size:1.3rem;color:#0b69a3;margin-top:2rem;border-left:5px solid #38bdf8;padding-left:.6rem}
+  h3{font-size:1.05rem;margin-top:1.3rem}
+  .kicker{color:#7c3aed;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.8rem}
+  code,pre{font-family:"Consolas","Courier New",monospace}
+  pre{background:#0f172a;color:#e2e8f0;padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:.82rem;white-space:pre-wrap;word-break:break-word}
+  .copy{font-size:.78rem;font-weight:700;color:#0b69a3;text-transform:uppercase;letter-spacing:.05em;margin:1rem 0 .3rem}
+  .note{background:#eff6ff;border-left:4px solid #3b82f6;padding:.7rem 1rem;border-radius:6px;margin:1rem 0}
+  .warn{background:#fef2f2;border-left:4px solid #ef4444;padding:.7rem 1rem;border-radius:6px;margin:1rem 0}
+  ol,ul{margin:.4rem 0 .4rem 1.3rem}
+  .flow{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin:1rem 0}
+  .node{background:#e0f2fe;border:1px solid #0b69a3;border-radius:8px;padding:.4rem .8rem;font-size:.9rem}
+  .arrow{color:#0b69a3;font-weight:700}
+  .foot{margin-top:2.5rem;border-top:1px solid #cbd5e1;padding-top:1rem;color:#64748b;font-size:.85rem}
+  @media print{body{padding:0}h2,h3{break-after:avoid}pre{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="kicker">DICT Data Science Seminar · Baguio · Day 2</div>
+<h1>Activity 3 — Build Your Own Smart Mushroom Farm Mobile App</h1>
+<p>A complete IoT monitoring system: a sensor <b>simulator</b> sends data to a <b>Google Apps Script</b>,
+which stores it in <b>Google Sheets</b>, displayed as a live mobile app in <b>AppSheet</b> — and analyzed in <b>Colab</b>.</p>
+
+<div class="flow">
+  <span class="node">ESP32 Simulator</span><span class="arrow">→</span>
+  <span class="node">Apps Script (doPost)</span><span class="arrow">→</span>
+  <span class="node">Google Sheet</span><span class="arrow">→</span>
+  <span class="node">AppSheet (mobile)</span><span class="arrow">→</span>
+  <span class="node">Colab EDA</span>
+</div>
+
+<h2>Prerequisites</h2>
+<ul>
+  <li>Google account (free), Chrome browser, a smartphone for testing.</li>
+  <li>Simulator: <code>https://setcertification.com/datascience/baguio/session5/</code>
+      (also <code>index2.html</code> and <code>index3.html</code> for the other simulators).</li>
+</ul>
+
+<h2>Part 1 — Create your Google Sheet</h2>
+<ol>
+  <li>Google Drive → <b>+ New → Google Sheets</b>.</li>
+  <li>Bold + color Row 1 (headers get created automatically by the script).</li>
+  <li>Copy the <b>Sheet ID</b> from the URL: <code>.../spreadsheets/d/<b>[THIS_IS_YOUR_SHEET_ID]</b>/edit</code> — save it.</li>
+</ol>
+
+<h2>Part 2 — Google Apps Script (the backend)</h2>
+<ol>
+  <li>Go to <code>script.google.com</code> → <b>New Project</b> → name it <code>MushroomFarmAPI_[YourName]</code>.</li>
+  <li>Delete the default code and paste the script below.</li>
+  <li>Replace <code>YOUR_SHEET_ID_HERE</code> with your Sheet ID, then <b>Save</b>.</li>
+  <li><b>Deploy → New deployment → Web app</b>; Execute as <b>Me</b>; Who has access <b>Anyone</b>; <b>Deploy</b>; authorize.</li>
+  <li>Copy the <b>Web App URL</b> (ends with <code>/exec</code>) — you'll paste it into the simulator.</li>
+</ol>
+<div class="note">This one script <b>auto-detects</b> the simulator type (Mushroom Farm, Weather Station, Tourism Monitor, Forest Watch) and sets the right headers automatically.</div>
+<div class="copy">Apps Script (Code.gs)</div>
+<pre>// REPLACE WITH YOUR GOOGLE SHEET ID
+const SHEET_ID = 'YOUR_SHEET_ID_HERE';
+const SHEET_NAME = 'Sheet1';
+
+function doPost(e) {
+  try {
+    let data;
+    if (e.postData && e.postData.contents) {
+      try { data = JSON.parse(e.postData.contents); }
+      catch (jsonError) { data = e.parameter; }
+    } else { data = e.parameter; }
+
+    const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(SHEET_NAME);
+
+    if (sheet.getLastRow() === 0) {
+      let headers = [];
+      if (data.temperature !== undefined && data.humidity !== undefined) {
+        if (data.soilMoisture !== undefined) {
+          headers = ['Timestamp','DeviceID','Temperature','Humidity','Light','CO2','SoilMoisture'];
+        } else if (data.pressure !== undefined) {
+          headers = ['Timestamp','StationID','Province','Temperature','Humidity','Pressure','WindSpeed','Rainfall','UVIndex'];
+        }
+      } else if (data.localTourists !== undefined) {
+        headers = ['Timestamp','MonitorID','Province','LocalTourists','ForeignTourists','GroupTours','TotalVisitors','HotelOccupancy','TimePeriod','TopDestination'];
+      } else if (data.treeCount !== undefined) {
+        headers = ['Timestamp','MonitorID','Forest','Temperature','Moisture','FireRisk','AirQuality','Rainfall','GrowthRate','TreeCount','Coverage','Species','HealthStatus'];
+      } else {
+        headers = ['Timestamp', ...Object.keys(data)];
+      }
+      sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
+      sheet.getRange(1, 1, 1, headers.length).setFontWeight('bold').setBackground('#4a5568').setFontColor('#ffffff');
+    }
+
+    let row = [new Date()];
+    if (data.soilMoisture !== undefined) {
+      row.push(data.deviceId||'Unknown', data.temperature||0, data.humidity||0, data.light||0, data.co2||0, data.soilMoisture||0);
+    } else if (data.pressure !== undefined) {
+      row.push(data.stationId||'Unknown', data.province||'Unknown', data.temperature||0, data.humidity||0, data.pressure||0, data.windSpeed||0, data.rainfall||0, data.uvIndex||0);
+    } else if (data.localTourists !== undefined) {
+      row.push(data.monitorId||'Unknown', data.province||'Unknown', data.localTourists||0, data.foreignTourists||0, data.groupTours||0, data.totalVisitors||0, data.hotelOccupancy||0, data.timePeriod||'Unknown', data.topDestination||'Unknown');
+    } else if (data.treeCount !== undefined) {
+      row.push(data.monitorId||'Unknown', data.forest||'Unknown', data.temperature||0, data.moisture||0, data.fireRisk||0, data.airQuality||0, data.rainfall||0, data.growthRate||0, data.treeCount||0, data.coverage||0, data.species||0, data.healthStatus||'Unknown');
+    } else {
+      Object.keys(data).forEach(key => { if (key !== 'timestamp') row.push(data[key]); });
+    }
+
+    sheet.appendRow(row);
+    if (sheet.getLastRow() === 2) sheet.autoResizeColumns(1, sheet.getLastColumn());
+    if (sheet.getLastRow() > 10000) sheet.deleteRow(2);
+
+    return ContentService.createTextOutput(JSON.stringify({
+      'status':'success','message':'Data logged successfully',
+      'simulator':detectSimulatorType(data),'timestamp':new Date().toISOString()
+    })).setMimeType(ContentService.MimeType.JSON);
+  } catch (error) {
+    return ContentService.createTextOutput(JSON.stringify({'status':'error','message':error.toString()}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+function detectSimulatorType(data) {
+  if (data.soilMoisture !== undefined) return 'Mushroom Farm';
+  if (data.pressure !== undefined) return 'Weather Station';
+  if (data.localTourists !== undefined) return 'Tourism Monitor';
+  if (data.treeCount !== undefined) return 'Forest Watch';
+  return 'Unknown';
+}
+
+function doGet(e) {
+  try {
+    const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName(SHEET_NAME);
+    const lastRow = sheet.getLastRow();
+    if (lastRow > 1) {
+      const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+      const data = sheet.getRange(lastRow, 1, 1, sheet.getLastColumn()).getValues()[0];
+      const response = {};
+      headers.forEach((header, index) => { response[header] = data[index]; });
+      return ContentService.createTextOutput(JSON.stringify(response)).setMimeType(ContentService.MimeType.JSON);
+    }
+    return ContentService.createTextOutput(JSON.stringify({'message':'No data available'})).setMimeType(ContentService.MimeType.JSON);
+  } catch (error) {
+    return ContentService.createTextOutput(JSON.stringify({'error':error.toString()})).setMimeType(ContentService.MimeType.JSON);
+  }
+}</pre>
+
+<h2>Part 3 — Connect the simulator</h2>
+<ol>
+  <li>Open the simulator URL in Chrome (see Prerequisites).</li>
+  <li>In the Control Center, paste your <b>Web App URL</b>; set a Device ID; choose Manual / Auto / Stress.</li>
+  <li>Click <b>Start Simulation</b> (or <b>Send Once</b> to test). Check your Sheet — rows should appear.</li>
+</ol>
+<div class="warn">No data? Confirm the Web App URL is correct and ends with <code>/exec</code>. Try <b>Send Once</b> first.</div>
+
+<h2>Part 4 — Build the AppSheet mobile app</h2>
+<ol>
+  <li><code>appsheet.com</code> → sign in → <b>Create → App → Start with existing data</b> → choose your Sheet.</li>
+  <li>Customize: app name <b>Smart Mushroom Farm Monitor</b>, theme green, add a logo.</li>
+  <li>Add views: <b>Dashboard</b>, <b>Current Conditions</b> (detail of latest row), <b>Temperature Trend</b> (line chart), <b>All Readings</b> (table sorted by Timestamp desc).</li>
+  <li>Format rules: Temperature 18–24 green, outside red. Add a <b>Status</b> virtual column (formula below).</li>
+  <li>Automation → Bots: alert when <code>[Temperature] &gt; 28</code>.</li>
+</ol>
+<div class="copy">AppSheet — Status virtual column</div>
+<pre>IF(AND([Temperature]>=18, [Temperature]<=24, [Humidity]>=80, [Humidity]<=95),
+   "✅ Optimal", "⚠️ Check Conditions")</pre>
+<div class="copy">AppSheet — Optimal range indicator</div>
+<pre>IF(AND([Temperature]>=18,[Temperature]<=24,[Humidity]>=80,[Humidity]<=95), "🟢",
+   IF(OR([Temperature]<15,[Temperature]>30,[Humidity]<60), "🔴", "🟡"))</pre>
+
+<h2>Part 5 — Analyze in Colab</h2>
+<p>Open the <b>Activity 3 Colab notebook</b>. Set <code>SHEET_NAME</code> to your sheet's name and run it — the script
+auto-detects the simulator type and produces overview stats, time-series and correlation charts, anomaly detection,
+insights, and an enhanced CSV export. It works for all four simulators.</p>
+
+<div class="foot">DICT Data Science Seminar · Day 2 · June 2026 · replace all IDs/URLs with your own.</div>
+</body>
+</html>
