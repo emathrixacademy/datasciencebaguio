@@ -19,17 +19,22 @@ attendance/RAILWAY_POSTGRES_SETUP.md   How to attach Railway Postgres (DATABASE_
 datasets/             Shared, live-served data (portals + csv/)
 day1/  index.html · presentation.html · notebooks/ · guides/
 day2/  index.html · notebooks/ · guides/   (Automation & AI)
-day3/  index.html · guides/   (Capstone: jigsaw group project, no new notebooks)
+day3/  index.html · notebooks/ · guides/   (Capstone: Form → Sheet → Analyze → AI)
 ```
 
-## Day 3 — Capstone
+## Day 3 — Capstone (Form to AI)
 
-`day3/index.html` is the capstone page ("From Data to Decision"): a 3-hour **jigsaw** group project
-(4 roles in parallel — Collector / Scraper-Cleaner / Analyst / AI-Builder — each a slice of an earlier
-activity, all feeding one shared Google Sheet). `day3/guides/Capstone_Guide.html(+pdf)` is the printable
-guide with role cards, the 3-hour timetable, copy-paste snippets, deliverables, and a 20-point scoring
-rubric. It **reuses** existing assets (practice portals, the generic EDA notebook, the image classifier)
-— no new notebooks. Hour 4 is presentations + closing.
+A single linear end-to-end group project: build a **Google Form** (application/enrollment) with **one
+image-document upload** → responses + the image's Drive link land in a **Google Sheet** → the
+`day3/notebooks/Capstone_FormToAI_Colab.ipynb` notebook connects to the Sheet, analyzes + **visualizes**,
+then loads a **Teachable Machine** model to **identify each uploaded image** and **test confidence**.
+
+Notebook key points: authenticates with `google.colab.auth` (must be the **form owner's** account),
+opens the Sheet via gspread (`SHEET_ID` + `IMAGE_COL` config), downloads each Form-uploaded image from its
+Drive link via the Drive API (`drive_service.files().get_media`, id pulled from the link with a regex),
+classifies with the uploaded TM model zip (auto-arranged; SavedModel or Keras), and charts the confidence.
+`day3/guides/Capstone_Guide.html(+pdf)` has the form-building steps, the 3-hour timetable, and a 20-point
+rubric. Hour 4 is presentations + closing.
 
 ## Day 2 notebooks (`day2/notebooks/`)
 

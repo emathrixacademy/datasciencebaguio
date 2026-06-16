@@ -13,19 +13,21 @@
   .badge{display:inline-block;background:rgba(52,211,153,.15);color:var(--good);border:1px solid var(--good);border-radius:999px;padding:.2rem .8rem;font-size:.8rem;font-weight:700;margin:1rem 0 .8rem}
   .kicker{color:var(--accent);font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:.8rem;margin-bottom:.6rem}
   h1{font-size:clamp(1.8rem,4.5vw,3rem);line-height:1.1;margin-bottom:.7rem}
-  .accent{color:var(--accent)} .accent2{color:var(--accent2)}
+  .accent{color:var(--accent)}
   .sub{color:var(--muted);font-size:clamp(1rem,2vw,1.25rem);max-width:64ch;margin-bottom:1.4rem}
   .btnrow{display:flex;flex-wrap:wrap;gap:.7rem;margin-bottom:1rem}
   a.btn{display:inline-block;border-radius:10px;padding:.6rem 1.1rem;text-decoration:none;font-weight:700;font-size:.95rem}
   a.btn.g{background:var(--card);border:1px solid var(--good);color:var(--good)}
   a.btn.a{background:var(--card);border:1px solid var(--accent);color:var(--accent)}
-  h2{font-size:1.1rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin:2.4rem 0 1.1rem;font-weight:700}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.1rem}
-  .role{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.3rem;border-top:4px solid var(--accent2)}
-  .role h3{font-size:1.15rem;color:#fff;margin-bottom:.2rem}
-  .role .from{color:var(--muted);font-size:.8rem;margin-bottom:.6rem}
-  .role ul{margin:.3rem 0 .3rem 1.1rem} .role li{font-size:.92rem;margin:.25rem 0;color:var(--text)}
-  .role a{color:var(--accent);font-size:.85rem}
+  .flow{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin:1.2rem 0 1.6rem}
+  .flow .node{background:var(--card);border:1px solid var(--accent);border-radius:12px;padding:.6rem 1rem;font-weight:600}
+  .flow .arrow{color:var(--accent);font-size:1.4rem}
+  h2{font-size:1.1rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin:2.2rem 0 1rem;font-weight:700}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.1rem}
+  .step{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.3rem;border-top:4px solid var(--accent2)}
+  .step .n{font-size:1.6rem;font-weight:800;color:var(--accent2);line-height:1}
+  .step h3{font-size:1.1rem;color:#fff;margin:.3rem 0}
+  .step p{color:var(--muted);font-size:.93rem;line-height:1.5}
   .time{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1rem 1.2rem;max-width:760px}
   .time table{width:100%;border-collapse:collapse;font-size:.95rem}
   .time td{padding:.45rem .3rem;border-bottom:1px solid var(--line);vertical-align:top}
@@ -45,89 +47,61 @@
   <a class="back" href="../home.html">← All days</a>
   <div class="badge">Day 3 of 3 · Capstone</div>
   <div class="kicker">DICT Data Science Seminar · Baguio</div>
-  <h1>Day 3 — <span class="accent">From Data to Decision</span></h1>
-  <p class="sub">A 3-hour group capstone that combines a slice of every activity. Each group of 3–4 splits into roles that work in parallel, all feeding <b>one shared Google Sheet</b>, then combine and present.</p>
+  <h1>Day 3 — <span class="accent">Form to AI</span></h1>
+  <p class="sub">Each group builds one end-to-end data product: a Google Form (application / enrollment) with an image-document upload, stored in a Sheet, then analyzed in Colab and run through your own AI model.</p>
 
   <div class="btnrow">
+    <a class="btn a" href="https://colab.research.google.com/github/emathrixacademy/datasciencebaguio/blob/main/day3/notebooks/Capstone_FormToAI_Colab.ipynb">▶ Open Capstone Notebook</a>
     <a class="btn g" href="guides/Capstone_Guide.pdf">📄 Capstone Guide (PDF)</a>
-    <a class="btn a" href="https://drive.google.com/drive/folders/14VxxNTGVbvwBAC8VqxDoJmDSyHwf1G_n?usp=sharing" target="_blank" rel="noopener">📁 Day 3 Materials (Drive)</a>
+    <a class="btn g" href="https://drive.google.com/drive/folders/14VxxNTGVbvwBAC8VqxDoJmDSyHwf1G_n?usp=sharing" target="_blank" rel="noopener">📁 Day 3 Materials (Drive)</a>
   </div>
 
-  <h2>The 4 roles (work in parallel → combine)</h2>
-  <div class="grid">
-    <div class="role">
-      <h3>1 · Collector</h3>
-      <div class="from">a slice of Day 1 Activity 1 / Day 2 Activity 3</div>
-      <ul>
-        <li>Make a short <b>Google Form</b> (3–4 questions) with a linked Sheet — or run the IoT simulator into a Sheet.</li>
-        <li>Get a few responses fast (group fills it).</li>
-      </ul>
-      <a href="https://forms.google.com" target="_blank" rel="noopener">forms.google.com →</a>
-    </div>
-    <div class="role">
-      <h3>2 · Scraper / Cleaner</h3>
-      <div class="from">a slice of Day 1 Activity 2</div>
-      <ul>
-        <li>Scrape your assigned <b>practice portal</b> with <code>pd.read_html</code>.</li>
-        <li>Drop duplicates, fill missing values, check one correlation.</li>
-      </ul>
-      <a href="../datasets/car_data1.html" target="_blank" rel="noopener">practice portals →</a>
-    </div>
-    <div class="role">
-      <h3>3 · Analyst</h3>
-      <div class="from">a slice of Day 1 Activity 3</div>
-      <ul>
-        <li>Run the <b>generic EDA notebook</b> on the data.</li>
-        <li>Group, correlate, build the dashboard, <b>answer 3 questions</b>.</li>
-      </ul>
-      <a href="https://colab.research.google.com/github/emathrixacademy/datasciencebaguio/blob/main/day1/notebooks/Activity3_EDA_Colab.ipynb" target="_blank" rel="noopener">EDA notebook →</a>
-    </div>
-    <div class="role">
-      <h3>4 · AI / Builder</h3>
-      <div class="from">a slice of Day 2 Activity 2 / 3 / 1</div>
-      <ul>
-        <li><b>Classify</b> a few images with a reused Teachable Machine model, <b>and/or</b></li>
-        <li>Build an <b>AppSheet</b> screen on the Sheet, or one <b>n8n</b> alert.</li>
-      </ul>
-      <a href="https://colab.research.google.com/github/emathrixacademy/datasciencebaguio/blob/main/day2/notebooks/Activity2_ImageClassifier_Colab.ipynb" target="_blank" rel="noopener">classifier →</a>
-    </div>
+  <div class="flow">
+    <span class="node">Google Form + image upload</span><span class="arrow">→</span>
+    <span class="node">Google Sheet</span><span class="arrow">→</span>
+    <span class="node">Colab: analyze + visualize</span><span class="arrow">→</span>
+    <span class="node">Teachable Machine: identify + confidence</span>
+  </div>
+
+  <h2>The 5 steps</h2>
+  <div class="steps">
+    <div class="step"><div class="n">1</div><h3>Build the form</h3><p>A short application / enrollment form with a few fields <b>and one file-upload question</b> for an image document. Link a response Sheet.</p></div>
+    <div class="step"><div class="n">2</div><h3>Collect responses</h3><p>Fill it a few times (each with an image upload). Answers and the image's Drive link land in the Sheet.</p></div>
+    <div class="step"><div class="n">3</div><h3>Connect &amp; analyze</h3><p>In the Colab notebook, connect to your Sheet, describe the data, and <b>visualize</b> the responses.</p></div>
+    <div class="step"><div class="n">4</div><h3>Interpret</h3><p>Write 2–3 sentences: what do the charts say about your applicants/enrollees?</p></div>
+    <div class="step"><div class="n">5</div><h3>Apply the AI</h3><p>Load your <b>Teachable Machine</b> model; it <b>identifies each uploaded image</b> and reports the <b>confidence level</b>. Flag low-confidence ones for review.</p></div>
   </div>
 
   <h2>3-hour timetable</h2>
   <div class="time">
     <table>
-      <tr><td>0:00–0:15</td><td><b>Brief & assign</b> — form groups, pick a theme, hand out roles + the assigned practice portal.</td></tr>
-      <tr><td>0:15–1:15</td><td><b>Parallel build (60)</b> — each role works on their slice at the same time.</td></tr>
-      <tr><td>1:15–2:00</td><td><b>Integrate (45)</b> — Analyst points the notebook at the shared Sheet; run clean → correlation → dashboard → 3 questions; Builder connects AppSheet / alert.</td></tr>
-      <tr><td>2:00–2:40</td><td><b>Polish (40)</b> — write 3 findings + 1 recommendation; screenshot the dashboard / app / classifier.</td></tr>
-      <tr><td>2:40–3:00</td><td><b>Dry-run (20)</b> — rehearse the 3-minute story.</td></tr>
-      <tr><td>Hour 4</td><td><b>Presentations & closing</b> — 3 minutes per group.</td></tr>
+      <tr><td>0:00–0:15</td><td><b>Brief &amp; groups</b> — pick your form type (application or enrollment) and classes for the model.</td></tr>
+      <tr><td>0:15–1:00</td><td><b>Build &amp; collect (45)</b> — make the Google Form with an image upload; gather a few responses.</td></tr>
+      <tr><td>1:00–1:45</td><td><b>Analyze &amp; visualize (45)</b> — connect the notebook to the Sheet; charts + interpretation.</td></tr>
+      <tr><td>1:45–2:30</td><td><b>AI (45)</b> — reuse/train a Teachable Machine model; classify the uploaded images; test confidence.</td></tr>
+      <tr><td>2:30–3:00</td><td><b>Polish &amp; dry-run (30)</b> — findings + 1 recommendation; rehearse the 3-minute story.</td></tr>
+      <tr><td>Hour 4</td><td><b>Presentations &amp; closing.</b></td></tr>
     </table>
   </div>
-  <div class="note"><b>Hard checkpoint at 1:15.</b> If a role is stuck, hand off the partial output to the group and move on — done-small beats perfect.</div>
+  <div class="note"><b>Form tip:</b> a file-upload question requires responders to <b>sign in with Google</b>, and the uploads save to the form owner's Drive. Run the notebook with that <b>same owner account</b> so it can read the images.</div>
 
-  <h2>What "done" looks like (deliverables)</h2>
+  <h2>What "done" looks like</h2>
   <ul class="deliver">
-    <li>A Google Sheet with collected or scraped data</li>
-    <li>One cleaned dataset + one correlation</li>
-    <li>One EDA dashboard + answers to 3 questions</li>
-    <li>One AI-or-app artifact (a classification result, an AppSheet screen, or an n8n alert)</li>
-    <li>A 3-minute story: <b>what data → what we found → what we'd decide</b></li>
+    <li>A working Google Form with an image-document upload + a linked Sheet of responses</li>
+    <li>The notebook connected to the Sheet, with charts + a written interpretation</li>
+    <li>Each uploaded image identified by your model, with its confidence level</li>
+    <li>A confidence read-out (average, and which uploads are below 80% / need review)</li>
+    <li>A 3-minute story: what the form collected → what the data shows → how well the AI identified the documents</li>
   </ul>
 
   <h2>Resources</h2>
   <div class="res">
-    <a class="chip" href="../datasets/car_data1.html" target="_blank" rel="noopener">Portal 1</a>
-    <a class="chip" href="../datasets/car_data2.html" target="_blank" rel="noopener">Portal 2</a>
-    <a class="chip" href="../datasets/car_data3.html" target="_blank" rel="noopener">Portal 3</a>
-    <a class="chip" href="https://colab.research.google.com/github/emathrixacademy/datasciencebaguio/blob/main/day1/notebooks/Activity3_EDA_Colab.ipynb" target="_blank" rel="noopener">EDA notebook</a>
-    <a class="chip" href="https://colab.research.google.com/github/emathrixacademy/datasciencebaguio/blob/main/day2/notebooks/Activity2_ImageClassifier_Colab.ipynb" target="_blank" rel="noopener">Image classifier</a>
+    <a class="chip" href="https://forms.google.com" target="_blank" rel="noopener">Google Forms</a>
+    <a class="chip" href="https://colab.research.google.com/github/emathrixacademy/datasciencebaguio/blob/main/day3/notebooks/Capstone_FormToAI_Colab.ipynb" target="_blank" rel="noopener">Capstone notebook</a>
     <a class="chip" href="https://teachablemachine.withgoogle.com/" target="_blank" rel="noopener">Teachable Machine</a>
-    <a class="chip" href="https://www.appsheet.com/" target="_blank" rel="noopener">AppSheet</a>
-    <a class="chip" href="../day2/guides/Activity1_n8n_Pipeline.html" target="_blank" rel="noopener">n8n guide</a>
-    <a class="chip" href="../day2/guides/Activity3_IoT_AppSheet.html" target="_blank" rel="noopener">IoT/AppSheet guide</a>
+    <a class="chip" href="../day2/guides/Activity2_ModelTraining_Guide.pdf" target="_blank" rel="noopener">Model-training guide</a>
   </div>
 
-  <footer>DICT Data Science Seminar · Cordillera Administrative Region · June 2026 · all datasets are simulated for training.</footer>
+  <footer>DICT Data Science Seminar · Cordillera Administrative Region · June 2026 · all data is for training.</footer>
 </body>
 </html>
