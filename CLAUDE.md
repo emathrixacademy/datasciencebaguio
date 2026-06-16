@@ -19,8 +19,17 @@ attendance/RAILWAY_POSTGRES_SETUP.md   How to attach Railway Postgres (DATABASE_
 datasets/             Shared, live-served data (portals + csv/)
 day1/  index.html · presentation.html · notebooks/ · guides/
 day2/  index.html · notebooks/ · guides/   (Automation & AI)
-day3/  index.html     (placeholder — in preparation)
+day3/  index.html · guides/   (Capstone: jigsaw group project, no new notebooks)
 ```
+
+## Day 3 — Capstone
+
+`day3/index.html` is the capstone page ("From Data to Decision"): a 3-hour **jigsaw** group project
+(4 roles in parallel — Collector / Scraper-Cleaner / Analyst / AI-Builder — each a slice of an earlier
+activity, all feeding one shared Google Sheet). `day3/guides/Capstone_Guide.html(+pdf)` is the printable
+guide with role cards, the 3-hour timetable, copy-paste snippets, deliverables, and a 20-point scoring
+rubric. It **reuses** existing assets (practice portals, the generic EDA notebook, the image classifier)
+— no new notebooks. Hour 4 is presentations + closing.
 
 ## Day 2 notebooks (`day2/notebooks/`)
 

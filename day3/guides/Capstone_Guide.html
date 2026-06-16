@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 3 Capstone Guide — From Data to Decision</title>
+<style>
+  body{font-family:"Segoe UI",system-ui,sans-serif;color:#1a202c;line-height:1.55;max-width:840px;margin:0 auto;padding:36px 28px}
+  h1{font-size:1.9rem;color:#0b69a3;border-bottom:3px solid #0b69a3;padding-bottom:.35rem}
+  h2{font-size:1.25rem;color:#0b69a3;margin-top:1.8rem;border-left:5px solid #38bdf8;padding-left:.6rem}
+  .kicker{color:#7c3aed;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.78rem}
+  code{font-family:Consolas,monospace;background:#f1f5f9;border:1px solid #cbd5e1;border-radius:5px;padding:.03rem .3rem;font-size:.85rem}
+  pre{font-family:Consolas,monospace;background:#0f172a;color:#e2e8f0;padding:12px 14px;border-radius:8px;overflow-x:auto;font-size:.82rem;white-space:pre-wrap}
+  table{width:100%;border-collapse:collapse;margin-top:.6rem;font-size:.9rem}
+  th,td{border:1px solid #cbd5e1;padding:.45rem .6rem;text-align:left;vertical-align:top}
+  th{background:#0b69a3;color:#fff}
+  .role{break-inside:avoid;margin:.6rem 0;border:1px solid #cbd5e1;border-left:5px solid #7c3aed;border-radius:8px;padding:.6rem .9rem}
+  .role h3{font-size:1.05rem;margin-bottom:.1rem}
+  .role .from{color:#64748b;font-size:.8rem;margin-bottom:.4rem}
+  ul{margin:.3rem 0 .3rem 1.2rem}
+  .tip{background:#fffbeb;border-left:4px solid #f59e0b;padding:.55rem .9rem;border-radius:6px;margin:.7rem 0;font-size:.92rem}
+  .box{display:inline-block;width:14px;height:14px;border:1.5px solid #475569;border-radius:3px;vertical-align:middle;margin-right:6px}
+  .foot{margin-top:2rem;border-top:1px solid #cbd5e1;padding-top:.8rem;color:#64748b;font-size:.82rem}
+  @media print{body{padding:0}h2{break-after:avoid}}
+</style>
+</head>
+<body>
+<div class="kicker">DICT Data Science Seminar · Baguio · Day 3</div>
+<h1>Capstone — From Data to Decision</h1>
+<p>In groups of <b>3–4</b>, build one small end-to-end data product in <b>3 hours</b>. Each member owns a role
+(a slice of an earlier activity); everyone feeds <b>one shared Google Sheet</b>, then you combine and present.</p>
+
+<h2>Roles (work in parallel)</h2>
+
+<div class="role">
+  <h3>1 · Collector</h3>
+  <div class="from">slice of Day 1 Activity 1 / Day 2 Activity 3</div>
+  <ul>
+    <li>Create a short <b>Google Form</b> (3–4 questions) → link a response Sheet. Group fills it for a few rows.</li>
+    <li>(Or) run the IoT simulator so it writes to a Sheet.</li>
+  </ul>
+</div>
+<div class="role">
+  <h3>2 · Scraper / Cleaner</h3>
+  <div class="from">slice of Day 1 Activity 2</div>
+  <ul>
+    <li>Scrape your assigned practice portal: <code>tables = pd.read_html(URL)</code>.</li>
+    <li>Clean: <code>df = df.drop_duplicates()</code>, fill missing numbers with the mean, missing text with the mode.</li>
+    <li>Check one correlation: <code>df['A'].corr(df['B'])</code>.</li>
+  </ul>
+</div>
+<div class="role">
+  <h3>3 · Analyst</h3>
+  <div class="from">slice of Day 1 Activity 3</div>
+  <ul>
+    <li>Open the <b>generic EDA notebook</b>, set the config labels, run group-by + dashboard.</li>
+    <li>Answer the <b>3 questions</b>: top/bottom group, the gap, and one relationship.</li>
+  </ul>
+</div>
+<div class="role">
+  <h3>4 · AI / Builder</h3>
+  <div class="from">slice of Day 2 Activity 2 / 3 / 1</div>
+  <ul>
+    <li><b>Classify</b> a few images with a reused Teachable Machine model (upload the zip — it auto-arranges), <b>and/or</b></li>
+    <li>Build one <b>AppSheet</b> screen on the Sheet, or one <b>n8n</b> email alert.</li>
+  </ul>
+</div>
+
+<h2>3-hour timetable</h2>
+<table>
+  <tr><th>Time</th><th>What happens</th></tr>
+  <tr><td>0:00–0:15</td><td>Brief, form groups, assign roles + your practice portal</td></tr>
+  <tr><td>0:15–1:15</td><td>Parallel build (60 min) — all roles at once</td></tr>
+  <tr><td>1:15–2:00</td><td>Integrate (45) — notebook reads the shared Sheet; clean → correlation → dashboard → 3 questions; Builder connects app/alert</td></tr>
+  <tr><td>2:00–2:40</td><td>Polish (40) — 3 findings + 1 recommendation; screenshots</td></tr>
+  <tr><td>2:40–3:00</td><td>Dry-run (20) — rehearse the 3-minute story</td></tr>
+  <tr><td>Hour 4</td><td>Presentations &amp; closing — 3 min per group</td></tr>
+</table>
+<div class="tip"><b>Hard checkpoint at 1:15:</b> if a role is stuck, hand the partial output to the group and move on. Done-small beats perfect.</div>
+
+<h2>Handy snippets</h2>
+<pre>import pandas as pd
+# Scraper/Cleaner — scrape + clean a practice portal
+url = 'https://datasciencebaguio-production.up.railway.app/car_data1'   # or car_data2 / car_data3
+df = pd.read_html(url)[0]
+df = df.drop_duplicates().copy()
+for c in df.select_dtypes('number').columns:
+    df[c] = df[c].fillna(round(df[c].mean()))
+print(df.shape, "rows after cleaning")</pre>
+<pre># Analyst — read the Collector's Google Sheet (Share: Anyone with link -> Viewer)
+SHEET_ID = 'PASTE_SHEET_ID'
+df = pd.read_csv(f'https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=csv')
+print(df.head())</pre>
+
+<h2>Deliverables (tick to pass)</h2>
+<p>
+  <span class="box"></span> Sheet with collected/scraped data &nbsp;
+  <span class="box"></span> Cleaned dataset + one correlation<br>
+  <span class="box"></span> EDA dashboard + 3 answered questions &nbsp;
+  <span class="box"></span> One AI-or-app artifact<br>
+  <span class="box"></span> 3-minute story: what data → what we found → what we'd decide
+</p>
+
+<h2>Scoring rubric (20 points)</h2>
+<table>
+  <tr><th>Criteria</th><th>Points</th></tr>
+  <tr><td><b>Data collected / scraped</b> — a real Sheet or scraped table</td><td>4</td></tr>
+  <tr><td><b>Cleaning</b> — duplicates removed, missing handled, 1 correlation shown</td><td>4</td></tr>
+  <tr><td><b>Analysis</b> — dashboard + 3 questions answered from their own data</td><td>4</td></tr>
+  <tr><td><b>AI / app artifact</b> — classifier result, AppSheet screen, or n8n alert</td><td>4</td></tr>
+  <tr><td><b>Presentation</b> — clear 3-min story, ends in a decision/recommendation</td><td>4</td></tr>
+  <tr><td style="text-align:right"><b>Total</b></td><td><b>20</b></td></tr>
+</table>
+
+<div class="foot">DICT Data Science Seminar · Day 3 · June 2026 · To save as PDF: Ctrl + P → Save as PDF.</div>
+</body>
+</html>
