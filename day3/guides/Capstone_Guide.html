@@ -59,6 +59,18 @@ IMAGE_COL = 'Upload your document'   # your upload question's exact title</pre>
   <li><b>Step 10:</b> <b>test confidence</b> — distribution, average, and which uploads are below 80% (need review).</li>
 </ol>
 
+<h2>🧩 The twist — unscramble the notebook first</h2>
+<p>The notebook you're given has its cells <b>out of order</b>. Before anything runs, your group must work out the
+<b>correct sequence</b> and rearrange the cells (use the <b>↑ / ↓ move-cell buttons</b> in Colab), then run top to bottom.</p>
+<p>Reason from <b>dependencies</b> — what has to happen before what:</p>
+<ul>
+  <li>Install packages <b>before</b> importing them; import libraries <b>before</b> using them.</li>
+  <li>Sign in to Google <b>before</b> opening the Sheet.</li>
+  <li>Load the data <b>before</b> describing / charting it.</li>
+  <li>Upload &amp; load the model <b>before</b> classifying; classify <b>before</b> testing confidence.</li>
+</ul>
+<p>Each cell is labelled <b>A–J</b> with a one-line hint. When the order is right, the whole thing runs with no errors.</p>
+
 <h2>3-hour timetable</h2>
 <table>
   <tr><th>Time</th><th>What happens</th></tr>
@@ -91,6 +103,25 @@ IMAGE_COL = 'Upload your document'   # your upload question's exact title</pre>
   <tr><td><b>Confidence + presentation</b> — confidence tested; clear 3-min story ending in a decision</td><td>4</td></tr>
   <tr><td style="text-align:right"><b>Total</b></td><td><b>20</b></td></tr>
 </table>
+
+<h2 style="border-left-color:#ef4444;color:#b91c1c">Facilitator answer key 🔑</h2>
+<p>Correct cell order for the scrambled notebook:</p>
+<pre>D  →  H  →  F  →  I  →  B  →  A  →  J  →  E  →  C  →  G</pre>
+<table>
+  <tr><th>Order</th><th>Cell</th><th>What it does</th></tr>
+  <tr><td>1</td><td>D</td><td>Install packages</td></tr>
+  <tr><td>2</td><td>H</td><td>Import libraries</td></tr>
+  <tr><td>3</td><td>F</td><td>Sign in to Google (Sheets + Drive)</td></tr>
+  <tr><td>4</td><td>I</td><td>Open the Google Sheet into a table</td></tr>
+  <tr><td>5</td><td>B</td><td>Describe the data</td></tr>
+  <tr><td>6</td><td>A</td><td>Visualize the responses</td></tr>
+  <tr><td>7</td><td>J</td><td>Upload &amp; unzip the model</td></tr>
+  <tr><td>8</td><td>E</td><td>Load model + predict function</td></tr>
+  <tr><td>9</td><td>C</td><td>Classify each uploaded image</td></tr>
+  <tr><td>10</td><td>G</td><td>Test the confidence</td></tr>
+</table>
+<div class="tip">Accept small variations that still run (e.g. B and A can swap; D+H can be one step) — the must-hold rule is:
+install/import → sign in → load sheet → analyze → upload/load model → classify → confidence.</div>
 
 <div class="foot">DICT Data Science Seminar · Day 3 · June 2026 · To save as PDF: Ctrl + P → Save as PDF.</div>
 </body>
