@@ -1,7 +1,7 @@
 {
   "name": "datasciencebaguio",
   "version": "1.0.0",
-  "description": "DICT Data Science Seminar — Baguio (static site + attendance API)",
+  "description": "DICT Data Science Seminar — CAR Region (static site + attendance API)",
   "private": true,
   "scripts": {
     "start": "node server.js"

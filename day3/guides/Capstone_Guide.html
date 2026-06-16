@@ -1,128 +1,216 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Day 3 Capstone Guide — Form to AI</title>
-<style>
-  body{font-family:"Segoe UI",system-ui,sans-serif;color:#1a202c;line-height:1.55;max-width:840px;margin:0 auto;padding:36px 28px}
-  h1{font-size:1.9rem;color:#0b69a3;border-bottom:3px solid #0b69a3;padding-bottom:.35rem}
-  h2{font-size:1.25rem;color:#0b69a3;margin-top:1.8rem;border-left:5px solid #38bdf8;padding-left:.6rem}
-  h3{font-size:1.05rem;margin-top:1rem}
+<title>Day 3 Capstone — Group Task &amp; Code</title><style>
+  body{font-family:"Segoe UI",system-ui,sans-serif;color:#1a202c;line-height:1.55;max-width:840px;margin:0 auto;padding:34px 28px}
+  h1{font-size:1.85rem;color:#0b69a3;border-bottom:3px solid #0b69a3;padding-bottom:.35rem}
+  h2{font-size:1.25rem;color:#0b69a3;margin-top:1.7rem;border-left:5px solid #38bdf8;padding-left:.6rem}
+  h3{font-size:1.05rem;margin-top:1.1rem;color:#111}
   .kicker{color:#7c3aed;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.78rem}
   code{font-family:Consolas,monospace;background:#f1f5f9;border:1px solid #cbd5e1;border-radius:5px;padding:.03rem .3rem;font-size:.85rem}
-  pre{font-family:Consolas,monospace;background:#0f172a;color:#e2e8f0;padding:12px 14px;border-radius:8px;overflow-x:auto;font-size:.82rem;white-space:pre-wrap}
-  table{width:100%;border-collapse:collapse;margin-top:.6rem;font-size:.9rem}
-  th,td{border:1px solid #cbd5e1;padding:.45rem .6rem;text-align:left;vertical-align:top}
-  th{background:#0b69a3;color:#fff}
-  ol,ul{margin:.3rem 0 .3rem 1.2rem}
+  pre{font-family:Consolas,monospace;background:#0f172a;color:#e2e8f0;padding:12px 14px;border-radius:8px;overflow-x:auto;font-size:.78rem;line-height:1.45;white-space:pre;tab-size:4}
+  table{width:100%;border-collapse:collapse;margin-top:.5rem;font-size:.9rem}
+  th,td{border:1px solid #cbd5e1;padding:.45rem .6rem;text-align:left;vertical-align:top} th{background:#0b69a3;color:#fff}
+  ol,ul{margin:.3rem 0 .3rem 1.2rem} li{margin:.18rem 0}
   .tip{background:#fffbeb;border-left:4px solid #f59e0b;padding:.55rem .9rem;border-radius:6px;margin:.7rem 0;font-size:.92rem}
-  .box{display:inline-block;width:14px;height:14px;border:1.5px solid #475569;border-radius:3px;vertical-align:middle;margin-right:6px}
+  .mission{background:#eff6ff;border-left:4px solid #3b82f6;padding:.7rem 1rem;border-radius:8px;margin:.6rem 0}
+  .bx{display:inline-block;width:14px;height:14px;border:1.5px solid #475569;border-radius:3px;vertical-align:middle;margin-right:6px}
   .foot{margin-top:2rem;border-top:1px solid #cbd5e1;padding-top:.8rem;color:#64748b;font-size:.82rem}
-  @media print{body{padding:0}h2,h3{break-after:avoid}pre{break-inside:avoid}}
-</style>
-</head>
-<body>
-<div class="kicker">DICT Data Science Seminar · Baguio · Day 3</div>
-<h1>Capstone — Form to AI</h1>
-<p>In groups, build one end-to-end data product in 3 hours: a <b>Google Form</b> (application / enrollment)
-with an <b>image-document upload</b> → stored in a <b>Google Sheet</b> → <b>analyzed &amp; visualized</b> in Colab →
-your <b>Teachable Machine</b> model <b>identifies the uploaded image</b> and reports its <b>confidence</b>.</p>
+  @media print{body{padding:0}h2,h3{break-after:avoid}pre{white-space:pre-wrap;word-break:break-word;break-inside:avoid}}
+</style></head><body>
+<div class="kicker">DICT Data Science Seminar · CAR Region · Day 3</div>
+<h1>Capstone — Group Task &amp; Colab Code (Form &rarr; Sheet &rarr; Analyze &rarr; AI)</h1>
+<div class="mission"><b>Your group's mission:</b> build one complete data product. Create a <b>Google survey / application form</b> with an <b>image-document upload</b>, collect responses into a <b>Google Sheet</b>, then in <b>Google Colab</b> connect to that Sheet, <b>analyze and visualize</b> the data and write an interpretation, and finally use a <b>Teachable Machine</b> model to <b>identify the uploaded images</b> and <b>test the model's confidence</b>.</div>
+<div class="tip">&#129513; <b>The twist:</b> the Colab notebook you are given has its cells <b>scrambled</b>. Work out the correct order from the dependencies and rearrange them (Colab &uarr; &darr; move-cell buttons) &mdash; or copy the code from this guide in the order below. If you copy from a PDF, fix any indentation the paste breaks.</div>
+<h2>Step 1 &mdash; Create the Google survey form (with image upload)</h2><ol><li>Go to <b>forms.google.com</b> &rarr; blank form. Title it (e.g. <i>Scholarship Application</i> / <i>Enrollment Form</i>).</li><li>Add a few questions: Name, Age or Grade, Course/Program, 1&ndash;2 multiple-choice questions.</li><li>Add a <b>File upload</b> question titled <code>Upload your document</code> &rarr; allow <b>1 file</b>, type <b>Image</b>.</li><li><b>Responses</b> &rarr; green <b>Sheets</b> icon &rarr; <b>Create spreadsheet</b> (links a response Sheet).</li><li>Submit the form a few times, each time uploading an image (document / ID / form photo).</li></ol>
+<div class="tip"><b>Important:</b> a file-upload question makes responders <b>sign in with Google</b>, and uploads save to the <b>form owner's Drive</b>. The teammate who <b>owns the form</b> must run the Colab notebook (same Google account in the login popup) so it can read the images.</div>
+<h2>Step 2 &mdash; Get your Sheet ID + image column name</h2><ul><li>Open the linked Sheet. The <b>Sheet ID</b> is the long code between <code>/d/</code> and <code>/edit</code> in the URL.</li><li>Note the exact column header of the upload question (e.g. <code>Upload your document</code>).</li></ul>
+<h2>Step 3 &mdash; Train your Teachable Machine model</h2><ol><li>Go to <b>teachablemachine.withgoogle.com</b> &rarr; <b>Image Project</b> &rarr; <b>Standard</b>.</li><li>Create your classes (e.g. <i>Valid</i> / <i>Not valid</i>) and add example images to each.</li><li><b>Train Model</b>, then <b>Export Model &rarr; Tensorflow &rarr; Download my model</b> &rarr; you get a <b>.zip</b>.</li></ol>
+<h2>Step 4 &mdash; The Colab code, in order</h2><p>Run these in your notebook. Edit only the config in 4.4 (<code>SHEET_ID</code> and <code>IMAGE_COL</code>).</p>
+<h3>4.1 &mdash; Install the tools</h3><pre>!pip install gspread -q</pre>
+<h3>4.2 &mdash; Import the libraries</h3><pre>import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import os, io, re
+import gspread
+from google.colab import auth
+from google.auth import default
+from googleapiclient.discovery import build
+from googleapiclient.http import MediaIoBaseDownload
+from IPython.display import display
+print(&quot;Libraries loaded.&quot;)</pre>
+<h3>4.3 &mdash; Sign in to Google (Sheets + Drive)</h3><pre># ============= CONNECT TO GOOGLE (Sheet + Drive) =============
+# A popup asks you to choose your Google account (the one that OWNS the form/sheet) and Allow.
+auth.authenticate_user()
+creds, _ = default()
+gc = gspread.authorize(creds)
+drive_service = build(&#x27;drive&#x27;, &#x27;v3&#x27;)
+print(&quot;Connected to Google Sheets + Drive.&quot;)</pre>
+<h3>4.4 &mdash; Load your form responses (set SHEET_ID + IMAGE_COL)</h3><pre># ============= LOAD YOUR FORM RESPONSES =============
+# Paste your linked response Sheet&#x27;s ID, and the exact column title of the IMAGE UPLOAD question.
+SHEET_ID  = &#x27;PASTE_YOUR_SHEET_ID_HERE&#x27;
+IMAGE_COL = &#x27;Upload your document&#x27;   # change to your form&#x27;s file-upload question title
 
-<h2>Part A — Build the form (Google Forms)</h2>
-<ol>
-  <li>Go to <b>forms.google.com</b> → new form. Title it (e.g. <i>Scholarship Application</i> or <i>Enrollment Form</i>).</li>
-  <li>Add a few simple questions (Name, Age/Grade, Course/Program, a choice question or two).</li>
-  <li>Add a <b>File upload</b> question titled e.g. <code>Upload your document</code> — limit to <b>1 file</b>, type <b>Image</b>.</li>
-  <li><b>Responses</b> tab → green Sheets icon → <b>Create spreadsheet</b> (this links a Sheet).</li>
-  <li>Fill the form a few times, each time uploading an image (a photo of a document, ID, etc.).</li>
-</ol>
-<div class="tip"><b>Important:</b> a file-upload question makes responders <b>sign in with Google</b>, and uploads save to the
-<b>form owner's Drive</b>. In Colab, log in with that <b>same owner account</b> so the notebook can read the images.</div>
+ws = gc.open_by_key(SHEET_ID).get_worksheet(0)
+df = pd.DataFrame(ws.get_all_records())
+print(f&quot;Loaded {len(df)} responses with {df.shape[1]} columns.&quot;)
+print(&quot;Columns:&quot;, list(df.columns))
+display(df.head())</pre>
+<h3>4.5 &mdash; Explore &amp; describe the data</h3><pre># ============= EXPLORE &amp; DESCRIBE THE DATA =============
+print(&quot;Data types:&quot;)
+print(df.dtypes)
 
-<h2>Part B — Get your Sheet ID + image column</h2>
-<ul>
-  <li>Open the linked Sheet. The <b>Sheet ID</b> is the long code in the URL between <code>/d/</code> and <code>/edit</code>.</li>
-  <li>Note the exact <b>title of your upload question</b> as it appears as a column header (e.g. <code>Upload your document</code>).</li>
-</ul>
+num_cols = df.select_dtypes(include=[np.number]).columns.tolist()
+if num_cols:
+    print(&quot;\nNumeric summary:&quot;)
+    display(df[num_cols].describe().round(2))
 
-<h2>Part C — Analyze &amp; classify (Colab notebook)</h2>
-<p>Open the <b>Capstone notebook</b> and run it top to bottom. You only edit one config cell:</p>
-<pre>SHEET_ID  = 'PASTE_YOUR_SHEET_ID_HERE'
-IMAGE_COL = 'Upload your document'   # your upload question's exact title</pre>
-<ol>
-  <li><b>Steps 1–4:</b> connect to Google, load the responses into a table.</li>
-  <li><b>Steps 5–6:</b> describe + <b>visualize</b> the answers (auto bar/line charts).</li>
-  <li><b>Interpret:</b> write 2–3 sentences on what the charts show.</li>
-  <li><b>Steps 7–8:</b> upload your <b>Teachable Machine</b> model <code>.zip</code> — it auto-arranges and loads (no folders).</li>
-  <li><b>Step 9:</b> the notebook downloads each uploaded image from its Drive link and <b>identifies it</b>.</li>
-  <li><b>Step 10:</b> <b>test confidence</b> — distribution, average, and which uploads are below 80% (need review).</li>
-</ol>
+print(&quot;\nMissing values per column:&quot;)
+miss = df.isnull().sum()
+print(miss[miss &gt; 0] if miss.sum() else &quot;  None&quot;)</pre>
+<h3>4.6 &mdash; Visualize the responses</h3><pre># ============= VISUALIZE THE FORM DATA =============
+# Bar charts for short text/choice answers; histograms for numbers.
+skip = {IMAGE_COL, &#x27;Timestamp&#x27;, &#x27;Email Address&#x27;, &#x27;Email address&#x27;}
+cat_cols = [c for c in df.columns
+            if c not in skip and df[c].dtype == object and 1 &lt; df[c].nunique() &lt;= 15]
+num_cols = df.select_dtypes(include=[np.number]).columns.tolist()
 
-<h2>🧩 The twist — unscramble the notebook first</h2>
-<p>The notebook you're given has its cells <b>out of order</b>. Before anything runs, your group must work out the
-<b>correct sequence</b> and rearrange the cells (use the <b>↑ / ↓ move-cell buttons</b> in Colab), then run top to bottom.</p>
-<p>Reason from <b>dependencies</b> — what has to happen before what:</p>
-<ul>
-  <li>Install packages <b>before</b> importing them; import libraries <b>before</b> using them.</li>
-  <li>Sign in to Google <b>before</b> opening the Sheet.</li>
-  <li>Load the data <b>before</b> describing / charting it.</li>
-  <li>Upload &amp; load the model <b>before</b> classifying; classify <b>before</b> testing confidence.</li>
-</ul>
-<p>Each cell is labelled <b>A–J</b> with a one-line hint. When the order is right, the whole thing runs with no errors.</p>
+plots = cat_cols[:3] + num_cols[:3]
+if plots:
+    n = len(plots); cols = 3; rows = (n + cols - 1) // cols
+    fig, axes = plt.subplots(rows, cols, figsize=(6*cols, 4.2*rows))
+    axes = np.array(axes).flatten()
+    for i, c in enumerate(plots):
+        if c in num_cols:
+            axes[i].hist(df[c].dropna(), bins=10, color=&#x27;steelblue&#x27;, edgecolor=&#x27;black&#x27;, alpha=0.8)
+        else:
+            vc = df[c].value_counts()
+            axes[i].bar(vc.index.astype(str), vc.values, color=&#x27;teal&#x27;, alpha=0.85)
+            axes[i].tick_params(axis=&#x27;x&#x27;, rotation=45)
+        axes[i].set_title(str(c)[:40], fontweight=&#x27;bold&#x27;)
+    for j in range(len(plots), len(axes)):
+        axes[j].axis(&#x27;off&#x27;)
+    plt.tight_layout(); plt.show()
+else:
+    print(&quot;No chartable columns detected yet — collect a few more responses.&quot;)
 
-<h2>3-hour timetable</h2>
-<table>
-  <tr><th>Time</th><th>What happens</th></tr>
-  <tr><td>0:00–0:15</td><td>Brief, groups, pick form type + model classes</td></tr>
-  <tr><td>0:15–1:00</td><td>Build the form (with image upload) + collect a few responses</td></tr>
-  <tr><td>1:00–1:45</td><td>Connect notebook → analyze + visualize + interpret</td></tr>
-  <tr><td>1:45–2:30</td><td>Teachable Machine: classify the uploaded images + test confidence</td></tr>
-  <tr><td>2:30–3:00</td><td>Polish (findings + 1 recommendation) + dry-run the 3-min story</td></tr>
-  <tr><td>Hour 4</td><td>Presentations &amp; closing</td></tr>
-</table>
-<div class="tip"><b>Save time on the model:</b> reuse a Teachable Machine model from Day 2 (just classes like <i>valid / not valid</i>, <i>ID / not ID</i>) instead of training a fresh one.</div>
+print(&quot;\nINTERPRETATION (write 2-3 sentences): what stands out in the responses above?&quot;)</pre>
+<p><b>Then write your interpretation</b> (2&ndash;3 sentences): what stands out about your applicants / enrollees?</p>
+<h3>4.7 &mdash; Upload your Teachable Machine model .zip (auto-arranged)</h3><pre># ============= UPLOAD YOUR TEACHABLE MACHINE MODEL (.zip) =============
+# Export Model -&gt; Tensorflow -&gt; &quot;Download my model&quot; gives a .zip. Upload it here; it auto-arranges.
+import zipfile, glob, shutil
+from PIL import Image
+from google.colab import files
 
-<h2>Deliverables (tick to pass)</h2>
-<p>
-  <span class="box"></span> Google Form with an image upload + linked Sheet &nbsp;
-  <span class="box"></span> Notebook connected to the Sheet<br>
-  <span class="box"></span> Charts + written interpretation &nbsp;
-  <span class="box"></span> Each uploaded image identified by the model<br>
-  <span class="box"></span> Confidence tested (average + items &lt;80%) &nbsp;
-  <span class="box"></span> 3-minute story
-</p>
+print(&quot;Choose your Teachable Machine model .zip ...&quot;)
+uploaded = files.upload()
+zip_names = [n for n in uploaded if n.lower().endswith(&#x27;.zip&#x27;)]
+if not zip_names:
+    raise SystemExit(&quot;No .zip found. Re-run and select your model zip.&quot;)
 
-<h2>Scoring rubric (20 points)</h2>
-<table>
-  <tr><th>Criteria</th><th>Points</th></tr>
-  <tr><td><b>Form + data</b> — working form with image upload, responses in a Sheet</td><td>4</td></tr>
-  <tr><td><b>Analysis &amp; visualization</b> — notebook connected, clear charts</td><td>4</td></tr>
-  <tr><td><b>Interpretation</b> — sensible reading of the data</td><td>4</td></tr>
-  <tr><td><b>AI identification</b> — model classifies the uploaded images</td><td>4</td></tr>
-  <tr><td><b>Confidence + presentation</b> — confidence tested; clear 3-min story ending in a decision</td><td>4</td></tr>
-  <tr><td style="text-align:right"><b>Total</b></td><td><b>20</b></td></tr>
-</table>
+MODEL_ROOT = &#x27;/content/model&#x27;
+if os.path.exists(MODEL_ROOT):
+    shutil.rmtree(MODEL_ROOT)
+os.makedirs(MODEL_ROOT, exist_ok=True)
+with zipfile.ZipFile(zip_names[0]) as z:
+    z.extractall(MODEL_ROOT)
 
-<h2 style="border-left-color:#ef4444;color:#b91c1c">Facilitator answer key 🔑</h2>
-<p>Correct cell order for the scrambled notebook:</p>
-<pre>D  →  H  →  F  →  I  →  B  →  A  →  J  →  E  →  C  →  G</pre>
-<table>
-  <tr><th>Order</th><th>Cell</th><th>What it does</th></tr>
-  <tr><td>1</td><td>D</td><td>Install packages</td></tr>
-  <tr><td>2</td><td>H</td><td>Import libraries</td></tr>
-  <tr><td>3</td><td>F</td><td>Sign in to Google (Sheets + Drive)</td></tr>
-  <tr><td>4</td><td>I</td><td>Open the Google Sheet into a table</td></tr>
-  <tr><td>5</td><td>B</td><td>Describe the data</td></tr>
-  <tr><td>6</td><td>A</td><td>Visualize the responses</td></tr>
-  <tr><td>7</td><td>J</td><td>Upload &amp; unzip the model</td></tr>
-  <tr><td>8</td><td>E</td><td>Load model + predict function</td></tr>
-  <tr><td>9</td><td>C</td><td>Classify each uploaded image</td></tr>
-  <tr><td>10</td><td>G</td><td>Test the confidence</td></tr>
-</table>
-<div class="tip">Accept small variations that still run (e.g. B and A can swap; D+H can be one step) — the must-hold rule is:
-install/import → sign in → load sheet → analyze → upload/load model → classify → confidence.</div>
+savedmodel = glob.glob(f&#x27;{MODEL_ROOT}/**/saved_model.pb&#x27;, recursive=True)
+keras_files = glob.glob(f&#x27;{MODEL_ROOT}/**/*.h5&#x27;, recursive=True)
+label_files = glob.glob(f&#x27;{MODEL_ROOT}/**/labels.txt&#x27;, recursive=True)
+labels_path = label_files[0] if label_files else None
+print(&quot;Found -&gt; SavedModel:&quot;, bool(savedmodel), &quot;| Keras:&quot;, bool(keras_files), &quot;| labels:&quot;, bool(labels_path))</pre>
+<h3>4.8 &mdash; Load the model + prediction function</h3><pre># ============= LOAD THE MODEL + PREDICTION FUNCTION =============
+import tensorflow as tf
 
-<div class="foot">DICT Data Science Seminar · Day 3 · June 2026 · To save as PDF: Ctrl + P → Save as PDF.</div>
-</body>
-</html>
+if savedmodel:
+    model = tf.saved_model.load(os.path.dirname(savedmodel[0]))
+    predict_fn = model.signatures[&#x27;serving_default&#x27;]; MODE = &#x27;savedmodel&#x27;
+elif keras_files:
+    model = tf.keras.models.load_model(keras_files[0], compile=False)
+    predict_fn = None; MODE = &#x27;keras&#x27;
+else:
+    raise SystemExit(&quot;No model found in the zip.&quot;)
+
+class_names = []
+if labels_path:
+    with open(labels_path) as f:
+        for line in f:
+            t = line.strip()
+            if t:
+                p = t.split(&#x27; &#x27;, 1)
+                class_names.append(p[1] if len(p) == 2 and p[0].isdigit() else t)
+print(f&quot;Model loaded ({MODE}). Classes:&quot;, class_names)
+
+def predict_image(path):
+    img = Image.open(path)
+    if img.mode != &#x27;RGB&#x27;:
+        img = img.convert(&#x27;RGB&#x27;)
+    arr = np.asarray(img.resize((224, 224))).astype(np.float32)
+    x = (arr / 255.0)[None, ...] if MODE == &#x27;savedmodel&#x27; else ((arr / 127.5) - 1.0)[None, ...]
+    if MODE == &#x27;savedmodel&#x27;:
+        out = predict_fn(tf.constant(x)); probs = out[list(out.keys())[0]].numpy()[0]
+    else:
+        probs = model.predict(x, verbose=0)[0]
+    idx = int(np.argmax(probs))
+    label = class_names[idx] if idx &lt; len(class_names) else f&#x27;Class {idx}&#x27;
+    return label, float(probs[idx])</pre>
+<h3>4.9 &mdash; Identify each uploaded document</h3><pre># ============= CLASSIFY EACH UPLOADED DOCUMENT + CONFIDENCE =============
+def extract_drive_id(url):
+    m = re.search(r&#x27;[-\w]{25,}&#x27;, str(url))
+    return m.group(0) if m else None
+
+def download_drive_file(file_id, dest):
+    req = drive_service.files().get_media(fileId=file_id)
+    fh = io.FileIO(dest, &#x27;wb&#x27;)
+    dl = MediaIoBaseDownload(fh, req); done = False
+    while not done:
+        _, done = dl.next_chunk()
+    fh.close(); return dest
+
+os.makedirs(&#x27;/content/form_images&#x27;, exist_ok=True)
+preds, confs = [], []
+for i, row in df.iterrows():
+    fid = extract_drive_id(row.get(IMAGE_COL, &#x27;&#x27;))
+    if not fid:
+        preds.append(None); confs.append(None); continue
+    try:
+        dest = download_drive_file(fid, f&#x27;/content/form_images/row{i}.jpg&#x27;)
+        label, conf = predict_image(dest)
+        preds.append(label); confs.append(conf)
+    except Exception as e:
+        print(f&quot;Row {i}: {e}&quot;); preds.append(None); confs.append(None)
+
+df[&#x27;AI_Prediction&#x27;] = preds
+df[&#x27;AI_Confidence&#x27;] = confs
+done = df.dropna(subset=[&#x27;AI_Confidence&#x27;])
+print(f&quot;Classified {len(done)} of {len(df)} uploaded documents.&quot;)
+display(df[[IMAGE_COL, &#x27;AI_Prediction&#x27;, &#x27;AI_Confidence&#x27;]].head(20))</pre>
+<h3>4.10 &mdash; Test the model's confidence</h3><pre># ============= TEST THE MODEL&#x27;S CONFIDENCE =============
+if len(done) == 0:
+    print(&quot;No images classified yet — check SHEET_ID, IMAGE_COL, and that responses have uploads.&quot;)
+else:
+    fig, axes = plt.subplots(1, 2, figsize=(13, 5))
+    axes[0].hist(done[&#x27;AI_Confidence&#x27;], bins=10, color=&#x27;gold&#x27;, edgecolor=&#x27;black&#x27;)
+    axes[0].axvline(done[&#x27;AI_Confidence&#x27;].mean(), color=&#x27;red&#x27;, linestyle=&#x27;--&#x27;,
+                    label=f&quot;Mean {done[&#x27;AI_Confidence&#x27;].mean():.1%}&quot;)
+    axes[0].axvline(0.8, color=&#x27;orange&#x27;, linestyle=&#x27;:&#x27;, label=&#x27;80% review line&#x27;)
+    axes[0].set_title(&#x27;Model Confidence Distribution&#x27;); axes[0].set_xlabel(&#x27;Confidence&#x27;); axes[0].legend()
+
+    by = done.groupby(&#x27;AI_Prediction&#x27;)[&#x27;AI_Confidence&#x27;].mean().sort_values()
+    axes[1].barh(by.index, by.values, color=&#x27;teal&#x27;)
+    axes[1].set_xlim(0, 1); axes[1].set_title(&#x27;Average Confidence by Predicted Class&#x27;)
+    plt.tight_layout(); plt.show()
+
+    print(&quot;CONFIDENCE REPORT&quot;)
+    print(f&quot;  Average confidence: {done[&#x27;AI_Confidence&#x27;].mean():.1%}&quot;)
+    print(f&quot;  High (&gt;=90%): {(done[&#x27;AI_Confidence&#x27;] &gt;= 0.9).sum()}  |  &quot;
+          f&quot;Low (&lt;80%, review): {(done[&#x27;AI_Confidence&#x27;] &lt; 0.8).sum()}  of {len(done)}&quot;)
+    print(&quot;  Predictions per class:&quot;)
+    for cls, n in done[&#x27;AI_Prediction&#x27;].value_counts().items():
+        print(f&quot;    {cls}: {n}&quot;)
+    print(&quot;\nINTERPRETATION: Is the model confident? Which uploads need a human to review (&lt;80%)?&quot;)</pre>
+<h2>3-hour timetable</h2><table><tr><th>Time</th><th>What happens</th></tr><tr><td>0:00&ndash;0:15</td><td>Brief, groups, pick form type + model classes</td></tr><tr><td>0:15&ndash;1:00</td><td>Build the form (with image upload) + collect a few responses</td></tr><tr><td>1:00&ndash;1:45</td><td>Connect Colab to the Sheet &rarr; analyze + visualize + interpret</td></tr><tr><td>1:45&ndash;2:30</td><td>Train/reuse the Teachable Machine model &rarr; classify the uploads &rarr; test confidence</td></tr><tr><td>2:30&ndash;3:00</td><td>Polish (findings + 1 recommendation) + dry-run the 3-min story</td></tr><tr><td>Hour 4</td><td>Presentations &amp; closing</td></tr></table><div class="tip"><b>Save time:</b> reuse a Teachable Machine model from Day 2 instead of training a fresh one.</div>
+<h2>Deliverables (tick to pass)</h2><p><span class="bx"></span> Google Form with image upload + linked Sheet &nbsp; <span class="bx"></span> Notebook connected to the Sheet<br><span class="bx"></span> Charts + written interpretation &nbsp; <span class="bx"></span> Each uploaded image identified by the model<br><span class="bx"></span> Confidence tested (average + items &lt;80%) &nbsp; <span class="bx"></span> 3-minute story</p>
+<h2>Scoring rubric (20 points)</h2><table><tr><th>Criteria</th><th>Points</th></tr><tr><td><b>Form + data</b> &mdash; working form with image upload, responses in a Sheet</td><td>4</td></tr><tr><td><b>Analysis &amp; visualization</b> &mdash; notebook connected, clear charts</td><td>4</td></tr><tr><td><b>Interpretation</b> &mdash; sensible reading of the data</td><td>4</td></tr><tr><td><b>AI identification</b> &mdash; model classifies the uploaded images</td><td>4</td></tr><tr><td><b>Confidence + presentation</b> &mdash; confidence tested; clear 3-min story ending in a decision</td><td>4</td></tr><tr><td style="text-align:right"><b>Total</b></td><td><b>20</b></td></tr></table>
+<h2 style="border-left-color:#ef4444;color:#b91c1c">Facilitator answer key &#128273; (scrambled notebook)</h2><p>Correct cell order: <code>D &rarr; H &rarr; F &rarr; I &rarr; B &rarr; A &rarr; J &rarr; E &rarr; C &rarr; G</code> (install &rarr; import &rarr; sign in &rarr; open sheet &rarr; describe &rarr; visualize &rarr; upload model &rarr; load model &rarr; classify &rarr; confidence).</p>
+<div class="foot">DICT Data Science Seminar · Cordillera Administrative Region (CAR) · June 2026 · To save as PDF: Ctrl + P &rarr; Save as PDF.</div></body></html>

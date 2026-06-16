@@ -4,7 +4,7 @@ Guidance for Claude Code when working in this folder. Keep this file updated as 
 
 ## What this folder is
 
-Materials for a **DICT** 3-day Data Science seminar (Baguio, CAR region, June 2026). Audience:
+Materials for a **DICT** 3-day Data Science seminar (CAR region, June 2026). Audience:
 beginners learning **Data Science / Data Analysis** and **Data Engineering**. Deliverables are
 **Google Colab notebooks** + a static website (deployed on Railway via `serve`).
 

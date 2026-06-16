@@ -1,6 +1,6 @@
-# DICT Data Science Seminar — Baguio
+# DICT Data Science Seminar — CAR Region
 
-**DICT** · Baguio (CAR Region) · June 2026 · 3-day hands-on workshop
+**DICT** · CAR Region · June 2026 · 3-day hands-on workshop
 
 A beginner-friendly, hands-on workshop on **Data Science / Data Analysis** and **Data Engineering**
 using Google Colab. Deployed as a static site; the landing page links to each day's materials.
