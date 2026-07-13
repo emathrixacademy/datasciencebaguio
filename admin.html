@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Attendance Admin — PUP Santa Rosa</title>
+<title>Attendance Admin — eMathrix Education</title>
 <style>
   :root{--bg:#0f172a;--card:#1e293b;--line:#334155;--accent:#38bdf8;--good:#34d399;--text:#e2e8f0;--muted:#94a3b8;}
   *{box-sizing:border-box;margin:0;padding:0}
@@ -77,13 +77,13 @@
         tb.appendChild(tr);
       });
       status.className='status'; status.textContent = 'Loaded '+data.count+' record(s) · '+new Date().toLocaleString();
-      sessionStorage.setItem('dict_admin_token', token);
+      sessionStorage.setItem('pup_admin_token', token);
     }catch(e){ status.className='status err'; status.textContent='Network error: '+e.message; }
   }
 
   $('loadBtn').addEventListener('click', load);
   $('token').addEventListener('keydown', e=>{ if(e.key==='Enter') load(); });
-  const saved = sessionStorage.getItem('dict_admin_token');
+  const saved = sessionStorage.getItem('pup_admin_token') || sessionStorage.getItem('dict_admin_token');
   if(saved){ $('token').value = saved; }
   if($('token').value){ load(); }
 </script>

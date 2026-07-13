@@ -1,6 +1,6 @@
 # Classroom ↔ Website Parity Check
 
-PUP Santa Rosa · Data Science & Data Analytics. Google Classroom is the **source of truth**; the website
+eMathrix Education · Data Science & Data Analytics. Google Classroom is the **source of truth**; the website
 below is realigned to match it exactly. Applies identically to **both** classes:
 - **Class 1:** Data Science & Analytics — IT Electives 3
 - **Class 2:** Data Science & Analytics — BSIT 3-2 (IT Elective 3)

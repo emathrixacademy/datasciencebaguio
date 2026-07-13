@@ -27,15 +27,37 @@
 <script src="../../assets/study-tracker.js" defer></script>
 </head>
 <body>
-<div class="kicker">PUP Santa Rosa · Data Science &amp; Data Analytics · Week 1</div>
-<h1>Activity 2 — Web Scraping with Python</h1>
+<div class="kicker">eMathrix Education · Data Science &amp; Data Analytics · Week 1</div>
+<h1>Activity 2 — Go Out, Observe, and Count Your Own Dataset</h1>
 
-<h2>What you'll learn</h2>
+<div style="background:#FDF6E3;border-left:5px solid #6A0F1A;border-radius:10px;padding:1rem 1.2rem;margin:1rem 0">
+<h2 style="margin-top:0;color:#6A0F1A">🚶 Fieldwork FIRST — count real things yourself</h2>
+<p><b>The real work:</b> no web scraping of a ready-made page this time. You physically go somewhere, <b>OBSERVE</b>, and <b>COUNT real things with your own eyes</b>, and build a dataset by hand. This is field data collection — the messiest, most honest kind. <i>Bilangin nyo mismo, sa totoong lugar.</i></p>
+<p><b>Pick ONE thing to count/measure repeatedly and build at least <span style="color:#6A0F1A">30 rows</span> of your own observations.</b> Examples:</p>
+<ul>
+  <li>Vehicles passing a corner, counted in 15-minute blocks across different hours.</li>
+  <li>Prices of the same ~15 items across 3 different sari-sari stores / markets.</li>
+  <li>People entering a store / jeepney load counts, across time slots.</li>
+  <li>Any real, countable thing with a <b>location, a time, and a number</b>.</li>
+</ul>
+<p>Record each observation as a row (what, where, when, how many). Pairs/small groups may count together.</p>
+<p><b>PROOF (both required):</b></p>
+<ul>
+  <li><b>PHOTOS</b> of the location(s) and your tally sheet / notes as you counted.</li>
+  <li>A short <b>VIDEO (15–30 sec)</b> of you at the site actually counting/recording.</li>
+</ul>
+<p style="margin-bottom:0"><b>Shared rules:</b> photo AND video both required (no proof = not accepted) · pairs/groups may collect together but each submits their own · reduced/desk data only with teacher's prior permission (message first) · your raw data file is a required deliverable.</p>
+</div>
+
+<p>Then bring your hand-collected data into Colab: load it, do the first-pass <b>CLEAN</b> (check for gaps, mistakes, and duplicates you made while counting — real collection <i>is</i> messy), summarize it, and chart it. <b>Reuse the cleaning + charting code below, pointed at YOUR file.</b> Because YOU collected it, the missing values and errors are real, and fixing them is the real lesson.</p>
+<p><b>Interpretation (3–4 sentences):</b> what did you count, where, and what did the numbers show? What surprised you? What was messy about collecting it?</p>
+
+<h2>Technique reference — the scraping + cleaning code</h2>
 <p><b>Web scraping</b> means pulling data straight off a web page with code. You'll scrape the
-<b>CAR Region Open Data Portal</b> — a live web page with three tables (weather stations, schools,
+<b>Laguna Open Data Portal</b> — a live web page with three tables (weather stations, schools,
 and tourism sites) — do a <b>first pass of data cleaning</b> (handle missing values and duplicates),
 and build an analysis dashboard.</p>
-<div class="note"><b>The page we scrape:</b> <code>https://datasciencebaguio-production.up.railway.app/datasets/car_data</code><br>
+<div class="note"><b>The page we scrape:</b> <code>https://datasciencebaguio-production.up.railway.app/datasets/laguna_data</code><br>
 <b>Honest note:</b> this portal holds <b>simulated sample data</b> made for this workshop. The numbers are realistic but invented — not official government figures. What's real is the <b>skill</b>.</div>
 
 <h2>Before you start</h2>
@@ -64,7 +86,7 @@ print("Libraries loaded.")</pre>
 <h3>Step 3 — Download the web page</h3>
 <p><code>requests.get</code> fetches the raw page from the portal. A status of <b>200</b> means success.</p>
 <div class="copy">Copy this code</div>
-<pre>url = 'https://datasciencebaguio-production.up.railway.app/datasets/car_data'
+<pre>url = 'https://datasciencebaguio-production.up.railway.app/datasets/laguna_data'
 
 try:
     response = requests.get(url, timeout=15)
@@ -213,7 +235,7 @@ plt.show()</pre>
 <p>Six charts in one figure, pulling from all three scraped tables.</p>
 <div class="copy">Copy this code</div>
 <pre>fig, axes = plt.subplots(2, 3, figsize=(18, 10))
-fig.suptitle('CAR Region Data Dashboard (Simulated Sample Data)', fontsize=15, fontweight='bold')
+fig.suptitle('Laguna Data Dashboard (Simulated Sample Data)', fontsize=15, fontweight='bold')
 
 # 1. Temperature by province
 weather_df.boxplot(column='Temperature_C', by='Province', ax=axes[0, 0])
@@ -256,7 +278,7 @@ axes[1, 2].set_ylabel('Stations')
 
 plt.tight_layout()
 plt.show()
-print("Dashboard built from the scraped CAR data.")</pre>
+print("Dashboard built from the scraped Laguna data.")</pre>
 <div class="see"><b>You should see:</b> a 6-chart dashboard (boxplot, pie, scatter, histogram, bar, bar).</div>
 
 <h2>Tips &amp; common errors</h2>
@@ -270,7 +292,20 @@ print("Dashboard built from the scraped CAR data.")</pre>
 <h2>What's next</h2>
 <p>In <b>Activity 3</b> you'll take this scraped tourism data and run a full <b>exploratory data analysis</b>.</p>
 
-<div class="foot">PUP Santa Rosa · Data Science &amp; Data Analytics ·
+<div style="margin-top:1.8rem;background:#FFF9E6;border-left:5px solid #6A0F1A;border-radius:10px;padding:1rem 1.2rem">
+<h2 style="margin-top:0;color:#6A0F1A">📌 Proof &amp; Submit — required to unlock the next activity</h2>
+<p><b>Submit these on the activity page (the "Paste your link" box):</b></p>
+<ol>
+  <li>Your notebook / Colab link (the analysis).</li>
+  <li>Your RAW collected data — data file, Sheet link, or image-folder link.</li>
+  <li>Your PROOF: the required PHOTO(s) <b>and</b> the short VIDEO of your fieldwork.</li>
+  <li>Your written interpretation.</li>
+</ol>
+<p><b>No fieldwork proof = the activity is NOT accepted, even if the code runs.</b> <i>Kung talagang hindi kayo makakalabas para mag-collect, mag-message muna sa teacher BEFORE the activity para sa permission na gumamit ng reduced desk-based dataset.</i></p>
+<p style="font-size:.9rem;color:#6B5B60;margin-bottom:0"><b>Under the DPA / privacy notice:</b> only collect data people agree to give; for photos/videos of people, ask their okay first; don't collect sensitive personal info you don't need.</p>
+</div>
+
+<div class="foot">© eMathrix Education · Data Science &amp; Data Analytics ·
 To save as PDF: press <b>Ctrl + P</b> → Destination <b>Save as PDF</b> → Save.</div>
 </body>
 </html>

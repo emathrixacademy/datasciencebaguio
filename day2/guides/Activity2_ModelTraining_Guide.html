@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 2 · Activity 2 — Model Training Guide | eMathrix Education</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Segoe UI",system-ui,sans-serif;color:#241017;background:#fff;padding:18px 20px}
+  .kicker{color:#6A0F1A;font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:.78rem}
+  h1{color:#6A0F1A;font-size:1.5rem;margin:.2rem 0 .3rem;border-bottom:3px solid #6A0F1A;padding-bottom:.4rem}
+  .bar{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin:.7rem 0}
+  a.btn{display:inline-block;background:#6A0F1A;color:#fff;text-decoration:none;font-weight:800;border-radius:9px;
+    padding:.5rem 1rem;box-shadow:inset 0 -3px 0 #F5C518}
+  a.btn:hover{background:#4A0A12}
+  a.back{color:#6A0F1A;text-decoration:none;font-weight:600;font-size:.9rem}
+  .frame{width:100%;height:82vh;border:1px solid #E7D7DA;border-radius:10px;margin-top:.4rem}
+  .muted{color:#6B5B60;font-size:.85rem;margin-top:.5rem}
+</style>
+<link rel="stylesheet" href="../../assets/pup-theme.css">
+<script src="../../assets/gate-guard.js"></script>
+<script src="../../assets/study-tracker.js" defer></script>
+</head>
+<body>
+  <div class="kicker">eMathrix Education · Data Science &amp; Data Analytics — for PUP Santa Rosa students · Week 2</div>
+  <h1>Activity 2 — Signature Detection: Model Training Guide</h1>
+  <div class="bar">
+    <a class="back" href="../index.html">← Back to Week 2 activities</a>
+    <a class="btn" href="Activity2_ModelTraining_Guide.pdf" target="_blank" rel="noopener">⬇ Open / Download PDF</a>
+  </div>
+  <div style="background:#FDF6E3;border-left:5px solid #6A0F1A;border-radius:10px;padding:1rem 1.2rem;margin:1rem 0">
+    <h2 style="margin-top:0;color:#6A0F1A">🚶 Fieldwork FIRST — build a REAL image dataset with your own hands</h2>
+    <p><b>The real work:</b> this is the heaviest collection task and the most real. You cannot train an honest image model on images you didn't gather. You go get <b>REAL documents, from REAL people</b>, and photograph or scan them yourself. <i>Kayo mismo ang kukuha ng totoong dokumento at litrato.</i></p>
+    <p><b>Build your own image set of at least <span style="color:#6A0F1A">40 signed + 40 unsigned</span> real document images (80 total minimum).</b> Get real people to sign and to leave blank; photograph or scan forms, papers, slips. Vary the <b>lighting, angle, and paper</b> so the model learns real variation. Pairs/small groups may collect together, but each person submits their own trained result.</p>
+    <p><b>PROOF (both required):</b></p>
+    <ul>
+      <li>The RAW image <b>FOLDER</b> (your 80+ collected images), organized into <b>signed / unsigned</b>.</li>
+      <li>PHOTOS <b>+</b> a short <b>VIDEO (20–40 sec)</b> of you actually collecting — people signing, you photographing the documents. This proves the dataset is real and yours.</li>
+    </ul>
+    <p>Then follow the Teachable Machine + Colab steps in the guide below: train on <b>YOUR</b> images, run the classifier over <b>YOUR</b> folder, save the results CSV, and do the confidence EDA. Because the images are real and varied, the confidence scores and the "needs review" cases will be real.</p>
+    <p><b>Interpretation:</b> how many did the model get confidently right vs send to review? Where did it struggle (bad lighting? faint signatures?) — that struggle is real because your data is real.</p>
+    <p style="margin-bottom:0"><b>Shared rules:</b> photo AND video both required (no proof = not accepted) · pairs/groups may collect together but each submits their own trained result · reduced/desk data only with teacher's prior permission (message first) · your raw image folder is a required deliverable.</p>
+  </div>
+
+  <h2 style="color:#6A0F1A;font-size:1.2rem">The model-training + Colab guide</h2>
+  <iframe class="frame" src="Activity2_ModelTraining_Guide.pdf" title="Model Training Guide (PDF)"></iframe>
+  <p class="muted">If the guide doesn't display above, use the <b>Open / Download PDF</b> button. Kung hindi lumabas ang guide, i-click ang PDF button.</p>
+
+  <div style="margin-top:1.4rem;background:#FFF9E6;border-left:5px solid #6A0F1A;border-radius:10px;padding:1rem 1.2rem">
+    <h2 style="margin-top:0;color:#6A0F1A;font-size:1.2rem">📌 Proof &amp; Submit — required to unlock the next activity</h2>
+    <ol>
+      <li>Your notebook / Colab link (classifier + confidence EDA).</li>
+      <li>Your RAW image folder (80+ images, signed / unsigned).</li>
+      <li>Your PROOF: the PHOTO(s) <b>and</b> the short VIDEO of you collecting.</li>
+      <li>Your written interpretation.</li>
+    </ol>
+    <p><b>No fieldwork proof = the activity is NOT accepted, even if the model trains.</b> <i>Kung hindi kayo makakakuha ng totoong dokumento, mag-message muna sa teacher BEFORE the activity.</i></p>
+    <p style="font-size:.9rem;color:#6B5B60;margin-bottom:0"><b>Under the DPA / privacy notice:</b> only collect data people agree to give; for photos/videos of people, ask their okay first; don't collect sensitive personal info you don't need.</p>
+  </div>
+</body>
+</html>

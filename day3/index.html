@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Week 3 — Capstone | PUP Santa Rosa · Data Science & Data Analytics</title>
+<title>Week 3 — Capstone | eMathrix Education · Data Science & Data Analytics</title>
 <style>
   :root{--bg:#0f172a;--card:#1e293b;--line:#334155;--accent:#38bdf8;--accent2:#a78bfa;--good:#34d399;--warn:#f59e0b;--text:#e2e8f0;--muted:#94a3b8;}
   *{box-sizing:border-box;margin:0;padding:0}
@@ -44,28 +44,43 @@
 </style>
 <link rel="stylesheet" href="../assets/pup-theme.css">
 <script src="../assets/study-tracker.js" defer></script>
+<script src="../assets/gating.js" defer></script>
 </head>
 <body>
   <a class="back" href="../home.html">← All weeks</a>
   <div class="badge">Week 3 of 3 · Capstone</div>
-  <div class="kicker">PUP Santa Rosa · Data Science &amp; Data Analytics</div>
+  <div class="kicker">eMathrix Education · Data Science &amp; Data Analytics</div>
   <h1>Week 3 — <span class="accent">Form to AI</span></h1>
   <p class="sub">Each group builds one end-to-end data product: a Google Form (application / enrollment) with an image-document upload, stored in a Sheet, then analyzed in Colab and run through your own AI model.</p>
 
   <div class="btnrow">
-    <a class="btn g" href="guides/Capstone_Guide.pdf">📄 Capstone Guide (PDF) — your instructions</a>
+    <a class="btn g" href="guides/Capstone_Guide.html">📄 Capstone Guide — your instructions</a>
     <a class="btn g" href="https://drive.google.com/drive/folders/1yAMg_b0UAqKXff_PQoeDakTPazuSvNAG" target="_blank" rel="noopener">📁 Week 3 Materials (Drive)</a>
   </div>
   <p style="color:var(--warn);max-width:64ch;font-size:.95rem;margin-bottom:.4rem">📄 Open the <b>Capstone Guide (PDF)</b> above — it has your full step-by-step instructions and the code to type into Colab yourself.</p>
 
   <h2>Start here — read first</h2>
-  <div class="grid" style="grid-template-columns:1fr">
+  <div class="grid">
     <a class="card cta-primary" href="reading.html">
       <div class="num">📖</div><h3>① Reading — Capstone primer</h3>
       <p>From data collection to AI, end to end — the full form → sheet → analysis → model flow, plus how the 20-point rubric works. <b>Read this before you start building.</b></p>
     </a>
+    <a class="card" href="presentation.html">
+      <div class="num">▶</div><h3>Week 3 Presentation</h3>
+      <p>Slide walkthrough of the capstone flow + rubric. ← → to navigate, F for fullscreen.</p>
+    </a>
   </div>
   <h2>Then build the capstone</h2>
+
+  <div class="activity" data-activity-key="w3cap">
+    <div class="grid" style="grid-template-columns:1fr">
+      <a class="card" data-launch href="https://colab.research.google.com/github/emathrixacademy/datasciencebaguio/blob/main/day3/notebooks/Capstone_FormToAI_Colab.ipynb">
+        <div class="num">🚀</div><h3>Capstone — Form to AI (open the notebook)</h3>
+        <p>Connect your Form's Sheet, analyze &amp; visualize, then run your Teachable Machine model to identify each uploaded image and test confidence. Opens in Colab.</p>
+      </a>
+    </div>
+  </div>
+  <div class="submitbox" data-submit-key="w3cap"></div>
 
   <div class="flow">
     <span class="node">Google Form + image upload</span><span class="arrow">→</span>
@@ -113,6 +128,6 @@
     <a class="chip" href="../day2/guides/Activity2_ModelTraining_Guide.pdf" target="_blank" rel="noopener">Model-training guide</a>
   </div>
 
-  <footer>PUP Santa Rosa · Data Science &amp; Data Analytics · all data is for training.</footer>
+  <footer>© eMathrix Education · Data Science &amp; Data Analytics · all data is for training.</footer>
 </body>
 </html>

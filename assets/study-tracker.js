@@ -14,9 +14,20 @@
 (function () {
   "use strict";
 
+  // One-time migration: old dict_* keys -> pup_* (keep already-registered students signed in).
+  try {
+    ["attendance", "attendee"].forEach(function (k) {
+      var old = localStorage.getItem("dict_" + k);
+      if (old !== null) {
+        if (localStorage.getItem("pup_" + k) === null) localStorage.setItem("pup_" + k, old);
+        localStorage.removeItem("dict_" + k);
+      }
+    });
+  } catch (e) {}
+
   // Reuse the identity captured at the attendance gate.
   var identity = null;
-  try { identity = JSON.parse(localStorage.getItem("dict_attendee") || "null"); } catch (e) {}
+  try { identity = JSON.parse(localStorage.getItem("pup_attendee") || "null"); } catch (e) {}
   if (!identity || !identity.email) return; // not signed in — nothing to track
 
   var HEARTBEAT_MS = 60 * 1000;
@@ -81,8 +92,8 @@
   function logout() {
     end();
     try {
-      localStorage.removeItem("dict_attendance");
-      localStorage.removeItem("dict_attendee");
+      localStorage.removeItem("pup_attendance");
+      localStorage.removeItem("pup_attendee");
     } catch (e) {}
     if (location.protocol.indexOf("http") === 0) location.replace("/index.html");
   }

@@ -6,20 +6,20 @@
 <title>Week 2 · Activity 1 — n8n Stock Pipeline Guide</title>
 <style>
   body{font-family:"Segoe UI",system-ui,sans-serif;color:#1a202c;line-height:1.6;max-width:840px;margin:0 auto;padding:40px 28px}
-  h1{font-size:2rem;color:#0b69a3;border-bottom:3px solid #0b69a3;padding-bottom:.4rem}
-  h2{font-size:1.3rem;color:#0b69a3;margin-top:2rem;border-left:5px solid #38bdf8;padding-left:.6rem}
+  h1{font-size:2rem;color:#6A0F1A;border-bottom:3px solid #6A0F1A;padding-bottom:.4rem}
+  h2{font-size:1.3rem;color:#6A0F1A;margin-top:2rem;border-left:5px solid #F5C518;padding-left:.6rem}
   h3{font-size:1.05rem;margin-top:1.3rem}
-  .kicker{color:#7c3aed;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.8rem}
+  .kicker{color:#6A0F1A;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.8rem}
   code,pre{font-family:"Consolas","Courier New",monospace}
-  pre{background:#0f172a;color:#e2e8f0;padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:.85rem;white-space:pre-wrap;word-break:break-word}
-  .copy{font-size:.78rem;font-weight:700;color:#0b69a3;text-transform:uppercase;letter-spacing:.05em;margin:1rem 0 .3rem}
-  .warn{background:#fef2f2;border-left:4px solid #ef4444;padding:.7rem 1rem;border-radius:6px;margin:1rem 0}
-  .note{background:#eff6ff;border-left:4px solid #3b82f6;padding:.7rem 1rem;border-radius:6px;margin:1rem 0}
+  pre{background:#2E0810;color:#F3E7E9;padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:.85rem;white-space:pre-wrap;word-break:break-word}
+  .copy{font-size:.78rem;font-weight:700;color:#6A0F1A;text-transform:uppercase;letter-spacing:.05em;margin:1rem 0 .3rem}
+  .warn{background:#fdf2f2;border-left:4px solid #b91c1c;padding:.7rem 1rem;border-radius:6px;margin:1rem 0}
+  .note{background:#FFF9E6;border-left:4px solid #F5C518;padding:.7rem 1rem;border-radius:6px;margin:1rem 0}
   ul,ol{margin:.4rem 0 .4rem 1.3rem}
   .flow{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin:1rem 0}
-  .node{background:#e0f2fe;border:1px solid #0b69a3;border-radius:8px;padding:.4rem .8rem;font-size:.9rem}
-  .arrow{color:#0b69a3;font-weight:700}
-  .foot{margin-top:2.5rem;border-top:1px solid #cbd5e1;padding-top:1rem;color:#64748b;font-size:.85rem}
+  .node{background:#F7ECEE;border:1px solid #6A0F1A;border-radius:8px;padding:.4rem .8rem;font-size:.9rem;color:#6A0F1A}
+  .arrow{color:#6A0F1A;font-weight:700}
+  .foot{margin-top:2.5rem;border-top:2px solid #6A0F1A;padding-top:1rem;color:#6B5B60;font-size:.85rem}
   @media print{body{padding:0}h2,h3{break-after:avoid}pre{break-inside:avoid}}
 </style>
 <link rel="stylesheet" href="../../assets/pup-theme.css">
@@ -27,10 +27,25 @@
 <script src="../../assets/study-tracker.js" defer></script>
 </head>
 <body>
-<div class="kicker">PUP Santa Rosa · Data Science &amp; Data Analytics · Week 2</div>
-<h1>Activity 1 — n8n Stock Data Pipeline</h1>
+<div class="kicker">eMathrix Education · Data Science &amp; Data Analytics · Week 2</div>
+<h1>Activity 1 — Real-World Manual Tracking vs the Pipeline</h1>
 
-<p>This guide covers the <b>automation half</b> of Activity 1: an <b>n8n</b> workflow that fetches daily
+<div style="background:#FDF6E3;border-left:5px solid #6A0F1A;border-radius:10px;padding:1rem 1.2rem;margin:1rem 0">
+<h2 style="margin-top:0;color:#6A0F1A;border:none">🚶 Fieldwork — track something real, by hand, for 5+ days</h2>
+<p><b>The real work:</b> the automated pipeline is half of it. The OTHER half is <b>you, by hand</b>, tracking something real over several days and checking whether the automation matches reality. Machines lie silently; the analyst verifies. <i>Ikaw mismo ang mag-track araw-araw, tapos ihambing sa automation.</i></p>
+<p>Choose something numeric you can observe daily and <b>track it by hand for at least <span style="color:#6A0F1A">5 separate days</span></b> (or 5 real readings over time): a stock price, fuel prices at a local station, market prices, weather readings, a currency rate. Log each with the <b>date</b> and <b>where</b> you got it.</p>
+<p><b>PROOF (both required):</b></p>
+<ul>
+  <li><b>Dated PHOTOS</b> — one per reading/day — showing the real source at the moment you recorded it (the price board, the screen, the station sign), so the log is clearly kept over real days, not backfilled.</li>
+  <li>A short <b>VIDEO (15–30 sec)</b> explaining your tracking: what, where, how often.</li>
+</ul>
+<p>Then run the analysis notebook and <b>ADD a comparison</b>: put your hand-tracked numbers beside the automated / pipeline (or sample) numbers and note where they differ. The labor is the daily discipline and the reconciliation.</p>
+<p><b>Interpretation:</b> did your manual readings match the automated data? Where and why did they differ? Which would you trust to show a client, and why?</p>
+<p style="margin-bottom:0"><b>Shared rules:</b> photo AND video both required (no proof = not accepted) · pairs/groups may collect together but each submits their own · reduced/desk data only with teacher's prior permission (message first) · your raw tracking log is a required deliverable.</p>
+</div>
+
+<h2>The automation half — n8n pipeline</h2>
+<p>This guide also covers the <b>automation half</b> of Activity 1: an <b>n8n</b> workflow that fetches daily
 stock data from <b>Polygon.io</b>, analyzes it, logs it to a <b>Google Sheet</b>, and emails an alert.
 The <b>analysis half</b> (reading that sheet in Colab) is in the companion notebook.</p>
 
@@ -155,6 +170,19 @@ return [{
 <div class="note"><b>Next:</b> let the pipeline run for a while so the sheet fills with rows, then open the
 <b>Activity 1 Colab notebook</b> and point it at your sheet to analyze the collected data.</div>
 
-<div class="foot">PUP Santa Rosa · Data Science &amp; Data Analytics · Week 2 · replace all API keys/IDs with your own.</div>
+<div style="margin-top:1.8rem;background:#FFF9E6;border-left:5px solid #6A0F1A;border-radius:10px;padding:1rem 1.2rem">
+<h2 style="margin-top:0;color:#6A0F1A;border:none">📌 Proof &amp; Submit — required to unlock the next activity</h2>
+<p><b>Submit these on the activity page (the "Paste your link" box):</b></p>
+<ol>
+  <li>Your notebook / Colab link (the analysis + manual-vs-automated comparison).</li>
+  <li>Your RAW hand-tracked log (with dates + sources).</li>
+  <li>Your PROOF: the dated PHOTO(s) <b>and</b> the short VIDEO of your tracking.</li>
+  <li>Your written interpretation (did manual match automated? where/why differ?).</li>
+</ol>
+<p><b>No fieldwork proof = the activity is NOT accepted, even if the code runs.</b> <i>Kung hindi kayo makakapag-track araw-araw, mag-message muna sa teacher BEFORE the activity.</i></p>
+<p style="font-size:.9rem;color:#6B5B60;margin-bottom:0"><b>Under the DPA / privacy notice:</b> only collect data people agree to give; for photos/videos of people, ask their okay first; don't collect sensitive personal info you don't need.</p>
+</div>
+
+<div class="foot">© eMathrix Education · Data Science &amp; Data Analytics · Week 2 · replace all API keys/IDs with your own.</div>
 </body>
 </html>

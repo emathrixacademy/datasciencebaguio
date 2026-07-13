@@ -1,9 +1,11 @@
-# PUP Santa Rosa — Drive & Google Classroom Setup Checklist
+# eMathrix Education — Drive & Google Classroom Setup Checklist
 
 **Data Science & Data Analytics** · Manual setup guide (you build the folders + Classrooms by hand).
 
-**Drive parent folder:**
-https://drive.google.com/drive/folders/1XLfznCN7C5cxNPx4pLh0gJeBab4Z-_fS
+**Canonical per-week Drive folders** (these match Google Classroom and the website):
+- Week 1: https://drive.google.com/drive/folders/1KU0iJm5X_InzAx-r_M67oGqCOq2gECku
+- Week 2: https://drive.google.com/drive/folders/1q6XNr2UT-uZybCjIDowSuCuPLnK9AYRH
+- Week 3: https://drive.google.com/drive/folders/1yAMg_b0UAqKXff_PQoeDakTPazuSvNAG
 
 You will build the **same tree twice** — once per section:
 

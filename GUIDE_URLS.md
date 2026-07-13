@@ -13,7 +13,7 @@ The `/day1/`, `/day2/`, `/day3/` URL slugs are **unchanged** — only the page C
 | 1 | Activity 2 — Web Scraping + Cleaning | `day1/guides/Activity2_Guide.html` | https://datasciencebaguio-production.up.railway.app/day1/guides/Activity2_Guide.html |
 | 1 | Activity 3 — Exploratory Data Analysis (EDA) | `day1/guides/Activity3_Guide.html` | https://datasciencebaguio-production.up.railway.app/day1/guides/Activity3_Guide.html |
 | 2 | Activity 1 — Stock Analysis | `day2/guides/Activity1_n8n_Pipeline.html` | https://datasciencebaguio-production.up.railway.app/day2/guides/Activity1_n8n_Pipeline.html |
-| 2 | Activity 2 — Signature Detection | `day2/guides/Activity2_ModelTraining_Guide.pdf` | https://datasciencebaguio-production.up.railway.app/day2/guides/Activity2_ModelTraining_Guide.pdf |
+| 2 | Activity 2 — Signature Detection | `day2/guides/Activity2_ModelTraining_Guide.html` (tracked wrapper embedding the PDF) | https://datasciencebaguio-production.up.railway.app/day2/guides/Activity2_ModelTraining_Guide.html |
 | 3 | Capstone — Form to AI | `day3/guides/Capstone_Guide.html` | https://datasciencebaguio-production.up.railway.app/day3/guides/Capstone_Guide.html |
 
 > All guides also exist as `.pdf` (same path, `.pdf` extension) for offline download — e.g.
@@ -28,7 +28,7 @@ Append these to each existing assignment's Instructions (both classes), keeping 
 - **Week 1 — Activity 2:** `Guide: https://datasciencebaguio-production.up.railway.app/day1/guides/Activity2_Guide.html`
 - **Week 1 — Activity 3:** `Guide: https://datasciencebaguio-production.up.railway.app/day1/guides/Activity3_Guide.html`
 - **Week 2 — Activity 1:** `Guide: https://datasciencebaguio-production.up.railway.app/day2/guides/Activity1_n8n_Pipeline.html`
-- **Week 2 — Activity 2:** `Guide: https://datasciencebaguio-production.up.railway.app/day2/guides/Activity2_ModelTraining_Guide.pdf`
+- **Week 2 — Activity 2:** `Guide: https://datasciencebaguio-production.up.railway.app/day2/guides/Activity2_ModelTraining_Guide.html`
 - **Week 3 — Capstone:** `Guide: https://datasciencebaguio-production.up.railway.app/day3/guides/Capstone_Guide.html`
 
 ## Confirmation

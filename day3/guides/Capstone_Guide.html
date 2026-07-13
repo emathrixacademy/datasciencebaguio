@@ -17,9 +17,25 @@
   .foot{margin-top:2rem;border-top:1px solid #cbd5e1;padding-top:.8rem;color:#64748b;font-size:.82rem}
   @media print{body{padding:0}h2,h3{break-after:avoid}pre{white-space:pre-wrap;word-break:break-word;break-inside:avoid}}
 </style><link rel="stylesheet" href="../../assets/pup-theme.css"><script src="../../assets/gate-guard.js"></script><script src="../../assets/study-tracker.js" defer></script></head><body>
-<div class="kicker">PUP Santa Rosa · Data Science &amp; Data Analytics · Week 3</div>
+<div class="kicker">eMathrix Education · Data Science &amp; Data Analytics · Week 3</div>
 <h1>Capstone — Group Task &amp; Colab Code (Form &rarr; Sheet &rarr; Analyze &rarr; AI)</h1>
 <div class="mission"><b>Your group's mission:</b> build one complete data product. Create a <b>Google survey / application form</b> with an <b>image-document upload</b>, collect responses into a <b>Google Sheet</b>, then in <b>Google Colab</b> connect to that Sheet, <b>analyze and visualize</b> the data and write an interpretation, and finally use a <b>Teachable Machine</b> model to <b>identify the uploaded images</b> and <b>test the model's confidence</b>.</div>
+
+<div style="background:#FDF6E3;border-left:5px solid #6A0F1A;border-radius:10px;padding:1rem 1.2rem;margin:1rem 0">
+<h2 style="margin-top:0;color:#6A0F1A">🚶 Fieldwork (group) — real respondents, real uploads</h2>
+<p><b>The real work:</b> your group runs a real, small data product on <b>REAL people's submissions</b> — not your own recycled files. You collect, store, analyze, and let AI identify real uploaded documents, then <b>defend it</b>. <i>Totoong tao, totoong upload — hindi recycled na files.</i></p>
+<ul>
+  <li>Collect from at least <b>15 real respondents</b> outside your group who each <b>upload a real document/image</b> to your form.</li>
+  <li>Train (or reuse) a Teachable Machine model on <b>REAL images your group gathered</b>.</li>
+</ul>
+<p><b>PROOF (both required):</b></p>
+<ul>
+  <li>The linked response <b>SHEET</b> showing the real submissions (timestamps spread over real time).</li>
+  <li>PHOTOS <b>+</b> a <b>VIDEO</b> of your group collecting responses / people submitting — the field evidence.</li>
+</ul>
+<p><b>Defense (the anti-LLM core):</b> in your 3 minutes you must answer, live: <b>where did the data come from, who collected it, where could this pipeline fail, and what would you NOT trust it to decide.</b> A group that outsourced the thinking cannot survive these questions.</p>
+<p style="margin-bottom:0"><b>Shared rules:</b> photo AND video both required (no proof = not accepted) · groups collect together but each student submits their own notebook/writeup · reduced/desk data only with teacher's prior permission (message first) · your raw response Sheet is a required deliverable.</p>
+</div>
 <div class="tip"><b>How to work:</b> open a new <b>Google Colab</b> notebook and add the code below cell by cell (one cell per numbered block in Step 4), in order, then run from top to bottom.</div>
 <h2>Step 1 &mdash; Create the Google survey form (with image upload)</h2><ol><li>Go to <b>forms.google.com</b> &rarr; blank form. Title it (e.g. <i>Scholarship Application</i> / <i>Enrollment Form</i>).</li><li>Add a few questions: Name, Age or Grade, Course/Program, 1&ndash;2 multiple-choice questions.</li><li>Add a <b>File upload</b> question titled <code>Upload your document</code> &rarr; allow <b>1 file</b>, type <b>Image</b>.</li><li><b>Responses</b> &rarr; green <b>Sheets</b> icon &rarr; <b>Create spreadsheet</b> (links a response Sheet).</li><li>Submit the form a few times, each time uploading an image (document / ID / form photo).</li></ol>
 <div class="tip"><b>Important:</b> a file-upload question makes responders <b>sign in with Google</b>, and uploads save to the <b>form owner's Drive</b>. The teammate who <b>owns the form</b> must run the Colab notebook (same Google account in the login popup) so it can read the images.</div>
@@ -212,4 +228,16 @@ else:
 <h2>3-hour timetable</h2><table><tr><th>Time</th><th>What happens</th></tr><tr><td>0:00&ndash;0:15</td><td>Brief, groups, pick form type + model classes</td></tr><tr><td>0:15&ndash;1:00</td><td>Build the form (with image upload) + collect a few responses</td></tr><tr><td>1:00&ndash;1:45</td><td>Connect Colab to the Sheet &rarr; analyze + visualize + interpret</td></tr><tr><td>1:45&ndash;2:30</td><td>Train/reuse the Teachable Machine model &rarr; classify the uploads &rarr; test confidence</td></tr><tr><td>2:30&ndash;3:00</td><td>Polish (findings + 1 recommendation) + dry-run the 3-min story</td></tr><tr><td>Hour 4</td><td>Presentations &amp; closing</td></tr></table><div class="tip"><b>Save time:</b> reuse a Teachable Machine model from Week 2 instead of training a fresh one.</div>
 <h2>Deliverables (tick to pass)</h2><p><span class="bx"></span> Google Form with image upload + linked Sheet &nbsp; <span class="bx"></span> Notebook connected to the Sheet<br><span class="bx"></span> Charts + written interpretation &nbsp; <span class="bx"></span> Each uploaded image identified by the model<br><span class="bx"></span> Confidence tested (average + items &lt;80%) &nbsp; <span class="bx"></span> 3-minute story</p>
 <h2>Scoring rubric (20 points)</h2><table><tr><th>Criteria</th><th>Points</th></tr><tr><td><b>Form + data</b> &mdash; working form with image upload, responses in a Sheet</td><td>4</td></tr><tr><td><b>Analysis &amp; visualization</b> &mdash; notebook connected, clear charts</td><td>4</td></tr><tr><td><b>Interpretation</b> &mdash; sensible reading of the data</td><td>4</td></tr><tr><td><b>AI identification</b> &mdash; model classifies the uploaded images</td><td>4</td></tr><tr><td><b>Confidence + presentation</b> &mdash; confidence tested; clear 3-min story ending in a decision</td><td>4</td></tr><tr><td style="text-align:right"><b>Total</b></td><td><b>20</b></td></tr></table>
-<div class="foot">PUP Santa Rosa · Data Science &amp; Data Analytics · To save as PDF: Ctrl + P &rarr; Save as PDF.</div></body></html>
+<div style="margin-top:1.4rem;background:#FFF9E6;border-left:5px solid #6A0F1A;border-radius:10px;padding:1rem 1.2rem">
+<h2 style="margin-top:0;color:#6A0F1A">📌 Proof &amp; Submit — required to complete the capstone</h2>
+<ol>
+<li>Your notebook / Colab link (connect Sheet → analyze → visualize → classify → confidence).</li>
+<li>Your linked response <b>Sheet</b> (the raw real submissions).</li>
+<li>Your PROOF: the PHOTO(s) <b>and</b> the VIDEO of your group collecting responses.</li>
+<li>Your written interpretation + the 3-minute defense notes.</li>
+</ol>
+<p><b>No fieldwork proof = the capstone is NOT accepted, even if the code runs.</b> <i>Kung hindi kayo makakakuha ng totoong respondents, mag-message muna sa teacher BEFORE the activity.</i></p>
+<p style="font-size:.9rem;color:#6B5B60;margin-bottom:0"><b>Under the DPA / privacy notice:</b> only collect data people agree to give; for photos/videos of people, ask their okay first; don't collect sensitive personal info you don't need.</p>
+</div>
+
+<div class="foot">© eMathrix Education · Data Science &amp; Data Analytics · To save as PDF: Ctrl + P &rarr; Save as PDF.</div></body></html>

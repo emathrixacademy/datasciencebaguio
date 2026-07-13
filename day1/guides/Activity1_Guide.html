@@ -27,7 +27,7 @@
 <script src="../../assets/study-tracker.js" defer></script>
 </head>
 <body>
-<div class="kicker">PUP Santa Rosa · Data Science &amp; Data Analytics · Week 1</div>
+<div class="kicker">eMathrix Education · Data Science &amp; Data Analytics · Week 1</div>
 <h1>Activity 1 — Data Science with Google Colab</h1>
 
 <div class="note" style="border-left:4px solid var(--pup-maroon,#6A0F1A)"><b>Step 1 — Answer the class intake form first.</b>
@@ -35,19 +35,28 @@ Before any Colab work, answer the class intake &amp; prior-knowledge form:
 <b>https://forms.gle/Z2AJpKTMx5CZcdFq7</b> (opens in a new tab). <i>Sagutan muna ito bago magsimula.</i>
 Everything below is <b>Step 2 onward</b>.</div>
 
-<h2>What you'll learn</h2>
-<p>You'll connect <b>your own Google Form survey</b> to Google Colab and turn the responses into charts —
-the same thing a data analyst does, just with smaller data. By the end you'll have bar charts, pie charts,
-a comparison between two questions, and a full survey dashboard built from data <b>you</b> collected.</p>
-
-<h2>Before you start</h2>
+<div style="background:#FDF6E3;border-left:5px solid #6A0F1A;border-radius:10px;padding:1rem 1.2rem;margin:1rem 0">
+<h2 style="margin-top:0;color:#6A0F1A">🚶 Fieldwork FIRST — Real Survey Fieldwork</h2>
+<p><b>The real work:</b> you are <b>not</b> filling this out yourself. You go out and interview <b>REAL people, face to face</b>, and record their answers. This is what a data analyst actually does before any chart exists — they collect. <i>Hindi puwedeng kayo-kayo lang sa loob ng room. Lumabas kayo at mag-survey ng totoong tao.</i></p>
+<p><b>Do this BEFORE the Colab steps:</b></p>
 <ul>
-  <li>A <b>Google account</b> (the same one you'll use in Colab).</li>
-  <li>A short <b>Google Form</b> (4–6 questions, mostly multiple choice) with a <b>linked response Sheet</b>.</li>
-  <li><b>5–6 responses</b> in your form, so your charts aren't empty. <i>Pwede kayong mag-sagutan ng katabi nyo.</i></li>
-  <li>Your <b>Sheet ID</b> (you'll copy it from the Sheet's URL — see Step&nbsp;4).</li>
+  <li>Design a short survey (<b>4–6 questions</b>, mostly multiple choice) about a real topic in your community — commuting, food spending, phone/load use, study habits — anything you can ask strangers about.</li>
+  <li>Collect at least <b>15 real respondents</b> — real people outside your own group (a terminal, a market, a canteen, your barangay, classmates from OTHER sections).</li>
+  <li>Record each answer into your Google Form / Sheet as you go (or on paper then encode). Answers should come from <b>different people at different times</b> — not 15 rows typed in one minute.</li>
 </ul>
-<div class="note"><b>Make your form first.</b> Go to <b>forms.google.com</b> → create a form → Responses tab → green Sheets icon → <b>Create spreadsheet</b>. Fill it out 5–6 times. Use the <b>same Google account</b> that owns the form when you log into Colab — <i>magkaiba ang account, hindi gagana.</i></div>
+<p><b>PROOF (both required):</b></p>
+<ul>
+  <li>A <b>PHOTO</b> of you actually surveying people in the field (you + a respondent, or you at the location with your form).</li>
+  <li>A short <b>VIDEO (15–30 sec)</b> of you asking at least one real respondent your questions.</li>
+</ul>
+<p style="margin-bottom:0"><b>Shared rules:</b> photo AND video are both required (no proof = not accepted) · pairs/small groups may survey together but each student needs their own 15+ and submits their own notebook · reduced/desk-based data only with the teacher's prior permission (message first) · your raw Sheet is a required deliverable, not just the charts.</p>
+</div>
+
+<h2>Then: connect it in Colab</h2>
+<p>You'll connect <b>your own Google Form survey</b> to Google Colab and turn the <b>real responses you collected</b> into charts — bar charts, pie charts, a comparison between two questions, and a full survey dashboard built from data <b>you</b> gathered in the field.</p>
+<div class="note"><b>Set up the form.</b> Go to <b>forms.google.com</b> → create a form → Responses tab → green Sheets icon → <b>Create spreadsheet</b>. Use the <b>same Google account</b> that owns the form when you log into Colab — <i>magkaiba ang account, hindi gagana.</i> You'll copy the <b>Sheet ID</b> from the Sheet's URL (see Step&nbsp;4).</div>
+
+<p><b>Interpretation (write 3–4 sentences):</b> who did you survey, where, and what is the ONE clearest pattern in your real data? What would you tell someone who could act on it?</p>
 
 <p>Run each cell in Colab by clicking it and pressing <b>Shift + Enter</b>. Go in order, top to bottom.</p>
 
@@ -266,7 +275,20 @@ else:
 <h2>What's next</h2>
 <p>In <b>Activity 2</b> you'll collect data a different way — by <b>scraping it off the web</b> with code.</p>
 
-<div class="foot">PUP Santa Rosa · Data Science &amp; Data Analytics ·
+<div style="margin-top:1.8rem;background:#FFF9E6;border-left:5px solid #6A0F1A;border-radius:10px;padding:1rem 1.2rem">
+<h2 style="margin-top:0;color:#6A0F1A">📌 Proof &amp; Submit — required to unlock the next activity</h2>
+<p><b>Submit these on the activity page (the "Paste your link" box):</b></p>
+<ol>
+  <li>Your notebook / Colab link (the analysis).</li>
+  <li>Your RAW collected data — Sheet link, data file, or image-folder link.</li>
+  <li>Your PROOF: the required PHOTO(s) <b>and</b> the short VIDEO of your fieldwork.</li>
+  <li>Your written interpretation.</li>
+</ol>
+<p><b>No fieldwork proof = the activity is NOT accepted, even if the code runs.</b> <i>Kung talagang hindi kayo makakalabas para mag-collect, mag-message muna sa teacher BEFORE the activity para sa permission na gumamit ng reduced desk-based dataset — kung hindi, kailangan talaga ng fieldwork.</i></p>
+<p style="font-size:.9rem;color:#6B5B60;margin-bottom:0"><b>Under the DPA / privacy notice:</b> only collect data people agree to give; for photos/videos of people, ask their okay first; don't collect sensitive personal info you don't need.</p>
+</div>
+
+<div class="foot">© eMathrix Education · Data Science &amp; Data Analytics ·
 To save as PDF: press <b>Ctrl + P</b> → Destination <b>Save as PDF</b> → Save.</div>
 </body>
 </html>

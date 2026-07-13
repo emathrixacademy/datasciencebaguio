@@ -81,9 +81,33 @@ footer,.foot{color:var(--pup-muted)!important;border-top-color:var(--pup-line)}
 .foot{border-top:2px solid var(--pup-maroon);padding-top:10px}
 pre{background:var(--pup-gray);border:1px solid var(--pup-line);border-radius:6px}
 
+/* ---- Form fields (kill any leftover dark-navy input backgrounds) ---- */
+input,textarea,select{background:var(--pup-white)!important;color:var(--pup-ink)!important;
+  border:1px solid var(--pup-line)!important}
+
 /* ---- Accessible focus ring (yellow) ---- */
 :focus-visible{outline:3px solid var(--pup-yellow);outline-offset:2px}
-input:focus{border-color:var(--pup-maroon)!important}
+input:focus,textarea:focus{border-color:var(--pup-maroon)!important}
+
+/* ---- Sequential activity gating (locked cards + submission box) ---- */
+a.card.locked,.card.locked,.activity.locked .card{opacity:.55;filter:grayscale(.5);pointer-events:none}
+.activity{position:relative}
+.activity.locked{position:relative}
+.lock-note{display:inline-block;margin-top:.6rem;font-size:.8rem;font-weight:700;color:var(--pup-maroon);
+  background:var(--pup-gray);border:1px solid var(--pup-line);border-radius:999px;padding:.1rem .6rem}
+.submitbox{margin-top:1rem;background:var(--pup-gray);border:1px solid var(--pup-line);
+  border-left:4px solid var(--pup-maroon);border-radius:10px;padding:1rem 1.1rem;max-width:720px}
+.submitbox label{display:block;font-weight:700;color:var(--pup-ink);margin-bottom:.5rem}
+.submitbox .row{display:flex;gap:.5rem;flex-wrap:wrap}
+.submitbox input[type=url],.submitbox input[type=text]{flex:1;min-width:240px}
+.submitbox button{background:var(--pup-maroon);color:#fff;border:none;border-radius:9px;
+  padding:.6rem 1.1rem;font-weight:800;cursor:pointer}
+.submitbox button:hover{background:var(--pup-maroon-dark)}
+.submitbox .ok{margin-top:.6rem;font-weight:800;color:var(--pup-maroon)}
+.submitbox .ok.on{box-shadow:inset 0 -3px 0 var(--pup-yellow)}
+.submitbox .warn{margin-top:.5rem;font-size:.85rem;color:var(--pup-maroon-dark)}
+.gate-msg{background:#FFF9E6;border-left:4px solid var(--pup-yellow);color:var(--pup-ink);
+  padding:.7rem 1rem;border-radius:8px;margin:1rem 0;font-weight:600}
 
 /* ---- Reading-primer specific bits ---- */
 .reading .lead{color:var(--pup-muted)}

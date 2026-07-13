@@ -1,6 +1,6 @@
 # Study-Time Tracking — Notes for Grading
 
-PUP Santa Rosa · Data Science & Data Analytics. This explains the session-time tracking added on top of the
+eMathrix Education · Data Science & Data Analytics. This explains the session-time tracking added on top of the
 existing attendance system, how to pull it for grading, and the privacy basis.
 
 ## What is logged
@@ -62,6 +62,23 @@ Example (browser or curl):
 ```
 https://<your-app>.up.railway.app/admin/study.csv?token=<ADMIN_TOKEN>
 ```
+
+## Purging test/junk rows (clean grading)
+
+Test entries (e.g. from audits) shouldn't pollute grading. A token-guarded endpoint deletes them from
+**all three** tables (`attendance`, `study_sessions`, `submissions`):
+
+```
+# delete everything with an @example.com email (default test pattern):
+POST /admin/purge-test?token=<ADMIN_TOKEN>
+
+# or purge one specific student:
+POST /admin/purge-test?token=<ADMIN_TOKEN>&email=someone@x.com
+```
+
+Returns `{ok:true, deleted:{attendance, study_sessions, submissions}}`. It's a no-op with a 503 if no DB
+is attached, and 403 without the correct `ADMIN_TOKEN`. Use `@example.com` addresses when generating any
+test data so they're easy to purge in one call.
 
 ## Privacy note
 

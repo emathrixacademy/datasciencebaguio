@@ -11,6 +11,7 @@ const ROOT = __dirname;
 
 // ---- Backward-compatible short URLs (datasets moved under /datasets) ----
 const REWRITES = {
+  // old short URLs (keep working so already-downloaded notebooks don't break)
   '/car_data': '/datasets/car_data.html',
   '/car_data1': '/datasets/car_data1.html',
   '/car_data2': '/datasets/car_data2.html',
@@ -18,6 +19,15 @@ const REWRITES = {
   '/forest_data': '/datasets/forest_data.html',
   '/wildlife_data': '/datasets/wildlife_data.html',
   '/airquality_data': '/datasets/airquality_data.html',
+  // new student-facing Laguna aliases -> same underlying files (data shape unchanged)
+  '/laguna_data': '/datasets/car_data.html',
+  '/laguna_data1': '/datasets/car_data1.html',
+  '/laguna_data2': '/datasets/car_data2.html',
+  '/laguna_data3': '/datasets/car_data3.html',
+  '/datasets/laguna_data': '/datasets/car_data.html',
+  '/datasets/laguna_data1': '/datasets/car_data1.html',
+  '/datasets/laguna_data2': '/datasets/car_data2.html',
+  '/datasets/laguna_data3': '/datasets/car_data3.html',
 };
 
 // ---- Database ----
@@ -67,6 +77,32 @@ async function initDb() {
       city TEXT,
       country TEXT
     );
+  `);
+
+  // Sequential activity gating: one row per (student, activity) once they submit their work link.
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS submissions (
+      id SERIAL PRIMARY KEY,
+      student_email TEXT,
+      student_name TEXT,
+      activity_key TEXT,
+      submitted_link TEXT,
+      submitted_at TIMESTAMPTZ DEFAULT now(),
+      ip TEXT,
+      city TEXT,
+      country TEXT,
+      UNIQUE (student_email, activity_key)
+    );
+  `);
+
+  // Which activity_keys each student has completed.
+  await pool.query(`
+    CREATE OR REPLACE VIEW student_progress AS
+    SELECT student_email,
+           array_agg(DISTINCT activity_key) AS completed_keys,
+           COUNT(DISTINCT activity_key) AS completed_count
+    FROM submissions
+    GROUP BY student_email;
   `);
 
   // Per-student rollup for grading. If a student abandons a tab without firing 'end'
@@ -176,6 +212,155 @@ app.post('/api/session/end', async (req, res) => {
   }
 });
 
+// ---- Sequential activity gating ----
+// The unlock order and each activity's Colab target + home page (for the "locked" redirect).
+const ACTIVITY_ORDER = ['w1a1', 'w1a2', 'w1a3', 'w2a1', 'w2a2', 'w3cap'];
+const GH = 'https://colab.research.google.com/github/emathrixacademy/datasciencebaguio/blob/main';
+const ACTIVITY_TARGET = {
+  w1a1: `${GH}/day1/notebooks/Activity1_DataScience_Colab.ipynb`,
+  w1a2: `${GH}/day1/notebooks/Activity2_WebScraping_Colab.ipynb`,
+  w1a3: `${GH}/day1/notebooks/Activity3_EDA_Colab.ipynb`,
+  w2a1: `${GH}/day2/notebooks/Activity1_StockAnalysis_Colab.ipynb`,
+  w2a2: `${GH}/day2/notebooks/Activity2_ImageClassifier_Colab.ipynb`,
+  w3cap: `${GH}/day3/notebooks/Capstone_FormToAI_Colab.ipynb`,
+};
+const ACTIVITY_PAGE = {
+  w1a1: '/day1/index.html', w1a2: '/day1/index.html', w1a3: '/day1/index.html',
+  w2a1: '/day2/index.html', w2a2: '/day2/index.html', w3cap: '/day3/index.html',
+};
+
+// Given a set of completed keys, the keys that are currently unlocked (all priors done).
+function unlockedKeys(completed) {
+  const done = new Set(completed || []);
+  const unlocked = [];
+  for (let i = 0; i < ACTIVITY_ORDER.length; i++) {
+    const k = ACTIVITY_ORDER[i];
+    const priorsDone = ACTIVITY_ORDER.slice(0, i).every(p => done.has(p));
+    if (priorsDone) unlocked.push(k);
+  }
+  return unlocked;
+}
+
+async function completedFor(email) {
+  if (!pool || !email) return [];
+  const { rows } = await pool.query(
+    'SELECT DISTINCT activity_key FROM submissions WHERE student_email = $1', [email]);
+  return rows.map(r => r.activity_key);
+}
+
+// Record a submission (the student's Drive/Colab link) -> marks the activity complete.
+app.post('/api/submit', async (req, res) => {
+  const b = req.body || {};
+  const key = b.activity_key;
+  const link = (b.link || '').trim();
+  if (!ACTIVITY_ORDER.includes(key)) return res.status(400).json({ ok: false, message: 'bad activity_key' });
+  const looksUrl = /^https?:\/\/.+/i.test(link);
+  const looksDriveOrColab = /(drive\.google\.com|colab\.research\.google\.com|docs\.google\.com)/i.test(link);
+  if (!looksUrl) return res.status(400).json({ ok: false, message: 'Please paste a valid http(s) link.' });
+  if (!pool) return res.json({ ok: true, stored: false, unlocked_next: null, warn: !looksDriveOrColab });
+  try {
+    await pool.query(
+      `INSERT INTO submissions (student_email, student_name, activity_key, submitted_link, ip, city, country)
+       VALUES ($1,$2,$3,$4,$5,$6,$7)
+       ON CONFLICT (student_email, activity_key)
+       DO UPDATE SET submitted_link = EXCLUDED.submitted_link, submitted_at = now()`,
+      [b.email || '', b.name || '', key, link, b.ip || clientIp(req), b.city || '', b.country || '']
+    );
+    const completed = await completedFor(b.email || '');
+    const idx = ACTIVITY_ORDER.indexOf(key);
+    const next = ACTIVITY_ORDER[idx + 1] || null;
+    res.json({ ok: true, stored: true, unlocked_next: next, completed,
+               warn: !looksDriveOrColab ? 'Link accepted, but it is not a Google Drive/Colab link.' : null });
+  } catch (e) {
+    console.error('[submit] failed:', e.message);
+    res.status(500).json({ ok: false });
+  }
+});
+
+// A student's progress (completed + currently-unlocked keys). Identity via ?email= (from the gate).
+app.get('/api/progress', async (req, res) => {
+  const email = req.query.email || '';
+  if (!pool) return res.json({ ok: true, stored: false, completed: [], unlocked: ACTIVITY_ORDER });
+  try {
+    const completed = await completedFor(email);
+    res.json({ ok: true, stored: true, completed, unlocked: unlockedKeys(completed), order: ACTIVITY_ORDER });
+  } catch (e) {
+    res.status(500).json({ ok: false });
+  }
+});
+
+// Server-enforced launcher: /go?key=w1a2&e=<email>. Opens the activity only if all priors are done,
+// so editing the URL / un-hiding a card in the browser can't skip the order. (Typing a public Colab
+// URL directly is outside our control — that's inherent to external Colab; see GATING_NOTES.md.)
+app.get('/go', async (req, res) => {
+  const key = req.query.key;
+  const email = req.query.e || '';
+  if (!ACTIVITY_ORDER.includes(key)) return res.status(404).send('Unknown activity');
+  // No DB -> don't lock anyone out (mirror the {stored:false} philosophy).
+  if (!pool) return res.redirect(ACTIVITY_TARGET[key]);
+  try {
+    const completed = await completedFor(email);
+    if (unlockedKeys(completed).includes(key)) return res.redirect(ACTIVITY_TARGET[key]);
+    // Find earliest incomplete prior and bounce there with a themed notice.
+    const idx = ACTIVITY_ORDER.indexOf(key);
+    const firstMissing = ACTIVITY_ORDER.slice(0, idx).find(p => !completed.includes(p)) || key;
+    return res.redirect(`${ACTIVITY_PAGE[firstMissing]}?locked=${key}&need=${firstMissing}`);
+  } catch (e) {
+    return res.redirect(ACTIVITY_TARGET[key]); // fail open, don't strand students
+  }
+});
+
+// ---- Admin: export submissions as CSV (protected by ADMIN_TOKEN) ----
+app.get('/admin/submissions.csv', async (req, res) => {
+  if (!process.env.ADMIN_TOKEN || req.query.token !== process.env.ADMIN_TOKEN) {
+    return res.status(403).send('Forbidden');
+  }
+  if (!pool) return res.status(503).send('No database configured');
+  try {
+    const { rows } = await pool.query(
+      `SELECT student_email, student_name, activity_key, submitted_link, submitted_at
+         FROM submissions ORDER BY student_email, activity_key`);
+    const cols = ['student_email','student_name','activity_key','submitted_link','submitted_at'];
+    const esc = (v) => {
+      const s = v === null || v === undefined ? '' : String(v);
+      return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+    };
+    const csv = [cols.join(',')].concat(rows.map(r => cols.map(c => esc(r[c])).join(','))).join('\n');
+    res.setHeader('Content-Type', 'text/csv');
+    res.setHeader('Content-Disposition', 'attachment; filename="submissions.csv"');
+    res.send(csv);
+  } catch (e) {
+    res.status(500).send('error: ' + e.message);
+  }
+});
+
+// ---- Admin: purge test/junk rows so they don't pollute grading (token-guarded) ----
+// Deletes rows whose email looks like a test address (default: ends with @example.com).
+// Pass ?email=someone@x to purge a specific student instead. Affects attendance,
+// study_sessions, and submissions.
+app.post('/admin/purge-test', async (req, res) => {
+  if (!process.env.ADMIN_TOKEN || req.query.token !== process.env.ADMIN_TOKEN) {
+    return res.status(403).json({ error: 'forbidden' });
+  }
+  if (!pool) return res.status(503).json({ error: 'no database configured' });
+  const exact = req.query.email;
+  try {
+    let att, ses, sub;
+    if (exact) {
+      att = await pool.query('DELETE FROM attendance WHERE email = $1', [exact]);
+      ses = await pool.query('DELETE FROM study_sessions WHERE student_email = $1', [exact]);
+      sub = await pool.query('DELETE FROM submissions WHERE student_email = $1', [exact]);
+    } else {
+      att = await pool.query("DELETE FROM attendance WHERE email ILIKE '%@example.com'");
+      ses = await pool.query("DELETE FROM study_sessions WHERE student_email ILIKE '%@example.com'");
+      sub = await pool.query("DELETE FROM submissions WHERE student_email ILIKE '%@example.com'");
+    }
+    res.json({ ok: true, deleted: { attendance: att.rowCount, study_sessions: ses.rowCount, submissions: sub.rowCount } });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 // ---- Admin: export per-student study totals as CSV (protected by ADMIN_TOKEN) ----
 app.get('/admin/study.csv', async (req, res) => {
   if (!process.env.ADMIN_TOKEN || req.query.token !== process.env.ADMIN_TOKEN) {
@@ -256,8 +441,8 @@ app.use((req, res, next) => {
 });
 app.use(express.static(ROOT, { extensions: ['html'] }));   // /home -> home.html, /day1/ -> day1/index.html
 
-// Fallback to the gate
-app.use((req, res) => res.status(404).sendFile(path.join(ROOT, 'index.html')));
+// Unknown routes -> a real themed 404 page (not the sign-in gate).
+app.use((req, res) => res.status(404).sendFile(path.join(ROOT, '404.html')));
 
 const PORT = process.env.PORT || 3000;
 initDb()
