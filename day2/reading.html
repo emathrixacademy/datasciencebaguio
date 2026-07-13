@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 2 Reading — Automation & AI | PUP Santa Rosa</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Segoe UI",system-ui,sans-serif;line-height:1.6;padding:5vh 6vw;max-width:900px;margin:0 auto}
+  a.back{text-decoration:none;font-size:.9rem}
+  .badge{display:inline-block;border-radius:999px;padding:.2rem .8rem;font-size:.8rem;font-weight:700;margin:1rem 0 .6rem}
+  .kicker{font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:.8rem;margin-bottom:.5rem}
+  h1{font-size:clamp(1.7rem,4vw,2.6rem);line-height:1.15;margin-bottom:.6rem}
+  h2{margin:1.8rem 0 .6rem;font-size:1.3rem}
+  p,li{margin-bottom:.7rem}
+  ul,ol{margin-left:1.3rem}
+  .lead{font-size:1.1rem;margin-bottom:1.2rem}
+  .tl{font-style:italic;opacity:.9}
+  .cta{display:inline-block;margin-top:1.4rem;border-radius:10px;padding:.7rem 1.3rem;text-decoration:none;font-weight:800}
+  footer{margin-top:2.5rem;padding-top:1.2rem;font-size:.85rem}
+</style>
+<link rel="stylesheet" href="../assets/pup-theme.css">
+<script src="../assets/study-tracker.js" defer></script>
+</head>
+<body class="reading">
+  <a class="back" href="../home.html">← All weeks</a>
+  <div class="badge">Start here · Reading</div>
+  <div class="kicker">PUP Santa Rosa · Data Science &amp; Data Analytics · Week 2</div>
+  <h1>Automation &amp; AI: Pipelines and Machine Learning basics</h1>
+  <p class="lead">Read this first. It explains the concepts behind Week 2 — automation and AI — before you build anything. Basahin muna ito.</p>
+
+  <div class="orderflow">
+    <span class="node now">1 · Reading (you are here)</span><span class="arrow">→</span>
+    <span class="node">2 · Activity 1</span><span class="arrow">→</span>
+    <span class="node">3 · Activity 2</span>
+  </div>
+
+  <h2>1. What is automation? What is a pipeline?</h2>
+  <p><b>Automation</b> means a computer does a repetitive task for you, on a schedule, without you clicking anything.
+  A <b>data pipeline</b> is a chain of automated steps that moves data from a <i>source</i> to a <i>destination</i>,
+  transforming it along the way — for example: <b>fetch stock prices → score them → append to a Google Sheet → send an alert</b>.</p>
+  <p class="tl">Tagalog: ang <b>pipeline</b> ay parang linya ng produksyon para sa data — kunin, ayusin, itago, mag-abiso — awtomatiko, walang manu-manong pindot.</p>
+  <div class="concept"><b>Key idea:</b> once a pipeline is built, data keeps arriving on its own. Your notebook then
+  just <i>analyzes whatever the pipeline has collected</i>. Tools like <b>n8n</b> connect the steps without heavy coding.</div>
+
+  <h2>2. What is a model (machine learning)?</h2>
+  <p>A <b>model</b> is a program that <i>learns patterns from examples</i> instead of being told exact rules. You show it
+  many labeled examples ("this is signed", "this is unsigned"); it adjusts itself until it can guess the label for a
+  <b>new</b> image it has never seen. That guess comes with a <b>confidence</b> — how sure the model is (e.g. 92%).</p>
+  <p class="tl">Tagalog: ang <b>model</b> ay natututo mula sa mga halimbawa, hindi mula sa mga patakarang isinulat mo. Bawat hula ay may <b>confidence</b> — gaano ito kasigurado.</p>
+
+  <h2>3. What does Teachable Machine do?</h2>
+  <p><b>Teachable Machine</b> (by Google) lets you train an image model <b>with no code</b>: you create classes, add
+  example pictures, click <b>Train</b>, then <b>export</b> the model as a <code>.zip</code>. In Week 2 you upload that
+  zip into Colab, run it over a folder of images, and let it classify each one and report its confidence.</p>
+  <div class="concept"><b>Why confidence matters:</b> low-confidence guesses (say under 80%) should be sent to a human to
+  double-check. AI assists judgement — it does not replace it.</div>
+
+  <h2>4. Honest limits</h2>
+  <ul>
+    <li>A model is only as good as its examples — biased or few examples give bad guesses.</li>
+    <li>High confidence is <b>not</b> the same as being correct. Always sanity-check.</li>
+    <li>Keep secrets safe: never paste real API keys into a shared notebook.</li>
+  </ul>
+
+  <a class="cta cta-primary" href="index.html">Proceed to the activities →</a>
+
+  <footer>PUP Santa Rosa · Data Science &amp; Data Analytics · Week 2 reading primer.</footer>
+</body>
+</html>

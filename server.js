@@ -1,4 +1,4 @@
-// DICT Data Science Seminar — static site + attendance API (Express + Postgres)
+// PUP Santa Rosa — Data Science & Data Analytics — static site + attendance API (Express + Postgres)
 const express = require('express');
 const path = require('path');
 const { Pool } = require('pg');
@@ -51,7 +51,44 @@ async function initDb() {
       user_agent TEXT
     );
   `);
-  console.log('[attendance] table ready.');
+
+  // Event-based study-time tracking (how long / how often each student uses the system).
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS study_sessions (
+      id SERIAL PRIMARY KEY,
+      student_email TEXT,
+      student_name TEXT,
+      session_start TIMESTAMPTZ DEFAULT now(),
+      session_end TIMESTAMPTZ,
+      last_heartbeat TIMESTAMPTZ DEFAULT now(),
+      duration_seconds INT,
+      page TEXT,
+      ip TEXT,
+      city TEXT,
+      country TEXT
+    );
+  `);
+
+  // Per-student rollup for grading. If a student abandons a tab without firing 'end'
+  // (session_end stays NULL), we fall back to (last_heartbeat - session_start) so idle
+  // time after the last heartbeat (which stops after ~5 min of no visible tab) doesn't
+  // inflate the total. GREATEST(0, ...) guards against clock skew.
+  await pool.query(`
+    CREATE OR REPLACE VIEW study_totals AS
+    SELECT
+      student_email,
+      MAX(student_name) AS student_name,
+      SUM(COALESCE(duration_seconds,
+                   GREATEST(0, EXTRACT(EPOCH FROM (last_heartbeat - session_start)))::int)) AS total_seconds,
+      COUNT(*) AS session_count,
+      MIN(session_start) AS first_seen,
+      MAX(COALESCE(session_end, last_heartbeat)) AS last_seen,
+      COUNT(DISTINCT (session_start AT TIME ZONE 'Asia/Manila')::date) AS active_days
+    FROM study_sessions
+    GROUP BY student_email;
+  `);
+
+  console.log('[attendance] tables + study_totals view ready.');
 }
 
 // ---- API: record a sign-in ----
@@ -80,6 +117,93 @@ app.post('/api/attendance', async (req, res) => {
   } catch (e) {
     console.error('[attendance] insert failed:', e.message);
     res.status(500).json({ status: 'error', message: 'could not store sign-in' });
+  }
+});
+
+// ---- Study-session tracking (how long / how often a student uses the system) ----
+function clientIp(req) {
+  return (req.headers['x-forwarded-for'] || '').split(',')[0].trim()
+    || req.socket.remoteAddress || '';
+}
+
+// Start a study session on page load (after the student is identified).
+app.post('/api/session/start', async (req, res) => {
+  const b = req.body || {};
+  if (!pool) return res.json({ status: 'ok', stored: false });
+  try {
+    const { rows } = await pool.query(
+      `INSERT INTO study_sessions (student_email, student_name, page, ip, city, country)
+       VALUES ($1,$2,$3,$4,$5,$6) RETURNING id`,
+      [b.email || '', b.name || '', b.page || '', b.ip || clientIp(req), b.city || '', b.country || '']
+    );
+    res.json({ status: 'ok', stored: true, session_id: rows[0].id });
+  } catch (e) {
+    console.error('[study] start failed:', e.message);
+    res.status(500).json({ status: 'error' });
+  }
+});
+
+// Heartbeat every 60s while the tab is visible.
+app.post('/api/session/heartbeat', async (req, res) => {
+  const id = (req.body || {}).session_id;
+  if (!pool) return res.json({ status: 'ok', stored: false });
+  if (!id) return res.status(400).json({ status: 'error', message: 'session_id required' });
+  try {
+    await pool.query('UPDATE study_sessions SET last_heartbeat = now() WHERE id = $1', [id]);
+    res.json({ status: 'ok', stored: true });
+  } catch (e) {
+    res.status(500).json({ status: 'error' });
+  }
+});
+
+// End a session on tab close/hide (sent via navigator.sendBeacon).
+app.post('/api/session/end', async (req, res) => {
+  const id = (req.body || {}).session_id;
+  if (!pool) return res.json({ status: 'ok', stored: false });
+  if (!id) return res.status(400).json({ status: 'error', message: 'session_id required' });
+  try {
+    await pool.query(
+      `UPDATE study_sessions
+         SET session_end = now(),
+             last_heartbeat = now(),
+             duration_seconds = GREATEST(0, EXTRACT(EPOCH FROM (now() - session_start)))::int
+       WHERE id = $1 AND session_end IS NULL`,
+      [id]
+    );
+    res.json({ status: 'ok', stored: true });
+  } catch (e) {
+    res.status(500).json({ status: 'error' });
+  }
+});
+
+// ---- Admin: export per-student study totals as CSV (protected by ADMIN_TOKEN) ----
+app.get('/admin/study.csv', async (req, res) => {
+  if (!process.env.ADMIN_TOKEN || req.query.token !== process.env.ADMIN_TOKEN) {
+    return res.status(403).send('Forbidden');
+  }
+  if (!pool) return res.status(503).send('No database configured');
+  try {
+    const { rows } = await pool.query(
+      `SELECT student_email, student_name, total_seconds,
+              round(total_seconds/60.0, 1) AS total_minutes,
+              session_count, active_days, first_seen, last_seen
+         FROM study_totals
+        ORDER BY total_seconds DESC NULLS LAST`
+    );
+    const cols = ['student_email','student_name','total_seconds','total_minutes',
+                  'session_count','active_days','first_seen','last_seen'];
+    const esc = (v) => {
+      const s = v === null || v === undefined ? '' : String(v);
+      return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+    };
+    const csv = [cols.join(',')]
+      .concat(rows.map(r => cols.map(c => esc(r[c])).join(',')))
+      .join('\n');
+    res.setHeader('Content-Type', 'text/csv');
+    res.setHeader('Content-Disposition', 'attachment; filename="study_totals.csv"');
+    res.send(csv);
+  } catch (e) {
+    res.status(500).send('error: ' + e.message);
   }
 });
 

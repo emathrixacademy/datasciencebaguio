@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Day 1 — Foundations | DICT Data Science Seminar</title>
+<title>Week 1 — Foundations | PUP Santa Rosa · Data Science & Data Analytics</title>
 <style>
   :root{--bg:#0f172a;--card:#1e293b;--line:#334155;--accent:#38bdf8;--accent2:#a78bfa;--good:#34d399;--text:#e2e8f0;--muted:#94a3b8;}
   *{box-sizing:border-box;margin:0;padding:0}
@@ -27,36 +27,48 @@
   .note{color:var(--muted);max-width:680px;margin-bottom:1rem;font-size:.98rem}
   footer{margin-top:3rem;padding-top:1.4rem;border-top:1px solid var(--line);color:var(--muted);font-size:.88rem}
 </style>
+<link rel="stylesheet" href="../assets/pup-theme.css">
+<script src="../assets/study-tracker.js" defer></script>
 </head>
 <body>
-  <a class="back" href="../home.html">← All days</a>
-  <div class="badge">Day 1 of 3</div>
-  <div class="kicker">DICT Data Science Seminar · CAR Region</div>
-  <h1>Day 1 — <span class="accent">Foundations</span></h1>
-  <p class="sub">Collect data, scrape and clean it, then analyze it. Open the presentation first, then work through the three activities in Colab.</p>
-  <p><a href="https://drive.google.com/drive/folders/1GIg20iuYOqzCEVQ7T0-HYiHLJhxnLTdN?usp=sharing" target="_blank" rel="noopener" style="display:inline-block;background:var(--card);border:1px solid var(--good);color:var(--good);border-radius:10px;padding:.6rem 1.1rem;text-decoration:none;font-weight:700">📁 Day 1 Materials (Google Drive)</a></p>
+  <a class="back" href="../home.html">← All weeks</a>
+  <div class="badge">Week 1 of 3</div>
+  <div class="kicker">PUP Santa Rosa · Data Science &amp; Data Analytics</div>
+  <h1>Week 1 — <span class="accent">Foundations</span></h1>
+  <p class="sub">Collect data, scrape and clean it, then analyze it. <b>Start with the Reading</b>, then work through the activities in order.</p>
+  <p><a href="https://drive.google.com/drive/folders/1KU0iJm5X_InzAx-r_M67oGqCOq2gECku" target="_blank" rel="noopener" style="display:inline-block;background:var(--card);border:1px solid var(--good);color:var(--good);border-radius:10px;padding:.6rem 1.1rem;text-decoration:none;font-weight:700">📁 Week 1 Materials (Google Drive)</a></p>
 
-  <h2>Start here</h2>
+  <h2>Start here — read first</h2>
   <div class="grid">
-    <a class="card feature" href="presentation.html">
+    <a class="card feature cta-primary" href="reading.html">
+      <div class="num">📖</div>
+      <h3>① Reading — Foundations</h3>
+      <p>What is Data Science &amp; Data Analytics: data vs. information, the workflow, EDA, and why cleaning matters. <b>Read this before the activities.</b></p>
+    </a>
+    <a class="card" href="presentation.html">
       <div class="num">▶</div>
-      <h3>Day 1 Presentation</h3>
+      <h3>Week 1 Presentation</h3>
       <p>Intro to data science + a walkthrough of all three activities. ← → to navigate, F for fullscreen.</p>
     </a>
   </div>
 
-  <h2>Activities (open in Colab)</h2>
+  <h2>Then do the activities (in order)</h2>
   <div class="grid">
+    <a class="card feature" href="https://forms.gle/Z2AJpKTMx5CZcdFq7" target="_blank" rel="noopener">
+      <div class="num">1</div><h3>Activity 1 — Data Science (Form → Colab) · Step 1: Answer the intake form</h3>
+      <p><b>Do this first.</b> Answer the class intake &amp; prior-knowledge form (opens in a new tab): <br>
+      <span class="accent">https://forms.gle/Z2AJpKTMx5CZcdFq7</span> — then continue to Step 2 (the Colab notebook) below.</p>
+    </a>
     <a class="card" href="https://colab.research.google.com/github/emathrixacademy/datasciencebaguio/blob/main/day1/notebooks/Activity1_DataScience_Colab.ipynb">
-      <div class="num">1</div><h3>Data Science</h3>
-      <p>Connect your own Google Form to Colab and chart the responses.</p>
+      <div class="num">1</div><h3>Activity 1 — Data Science (Form → Colab) · Step 2: Colab</h3>
+      <p>Build your own Google Form → Sheet, connect it to Colab, and chart the responses.</p>
     </a>
     <a class="card" href="https://colab.research.google.com/github/emathrixacademy/datasciencebaguio/blob/main/day1/notebooks/Activity2_WebScraping_Colab.ipynb">
-      <div class="num">2</div><h3>Web Scraping + Cleaning</h3>
+      <div class="num">2</div><h3>Activity 2 — Web Scraping + Cleaning</h3>
       <p>Scrape the live CAR portal, do a first pass of cleaning, correlate, and build a dashboard.</p>
     </a>
     <a class="card" href="https://colab.research.google.com/github/emathrixacademy/datasciencebaguio/blob/main/day1/notebooks/Activity3_EDA_Colab.ipynb">
-      <div class="num">3</div><h3>Exploratory Analysis</h3>
+      <div class="num">3</div><h3>Activity 3 — Exploratory Data Analysis (EDA)</h3>
       <p>Generic EDA — pick a dataset, set the labels, analyze, and answer the questions.</p>
     </a>
   </div>
@@ -85,6 +97,6 @@
     <a class="card" href="../datasets/airquality_data.html"><div class="num">🌫️</div><h3>Air Quality Stations</h3><p>Download <code>airquality.csv</code></p></a>
   </div>
 
-  <footer>DICT Data Science Seminar · Cordillera Administrative Region · June 2026 · all data is simulated for training.</footer>
+  <footer>PUP Santa Rosa · Data Science &amp; Data Analytics · all data is simulated for training.</footer>
 </body>
 </html>

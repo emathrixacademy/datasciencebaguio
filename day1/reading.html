@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Week 1 Reading — Foundations | PUP Santa Rosa</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Segoe UI",system-ui,sans-serif;line-height:1.6;padding:5vh 6vw;max-width:900px;margin:0 auto}
+  a.back{text-decoration:none;font-size:.9rem}
+  .badge{display:inline-block;border-radius:999px;padding:.2rem .8rem;font-size:.8rem;font-weight:700;margin:1rem 0 .6rem}
+  .kicker{font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:.8rem;margin-bottom:.5rem}
+  h1{font-size:clamp(1.7rem,4vw,2.6rem);line-height:1.15;margin-bottom:.6rem}
+  h2{margin:1.8rem 0 .6rem;font-size:1.3rem}
+  p,li{margin-bottom:.7rem}
+  ul,ol{margin-left:1.3rem}
+  .lead{font-size:1.1rem;margin-bottom:1.2rem}
+  .tl{font-style:italic;opacity:.9}
+  .cta{display:inline-block;margin-top:1.4rem;border-radius:10px;padding:.7rem 1.3rem;text-decoration:none;font-weight:800}
+  footer{margin-top:2.5rem;padding-top:1.2rem;font-size:.85rem}
+</style>
+<link rel="stylesheet" href="../assets/pup-theme.css">
+<script src="../assets/study-tracker.js" defer></script>
+</head>
+<body class="reading">
+  <a class="back" href="../home.html">← All weeks</a>
+  <div class="badge">Start here · Reading</div>
+  <div class="kicker">PUP Santa Rosa · Data Science &amp; Data Analytics · Week 1</div>
+  <h1>Foundations: What is Data Science &amp; Data Analytics</h1>
+  <p class="lead">Read this first. It explains the ideas behind Week 1 — no code yet. Basahin muna ito bago ang mga activity.</p>
+
+  <div class="orderflow">
+    <span class="node now">1 · Reading (you are here)</span><span class="arrow">→</span>
+    <span class="node">2 · Activity 1</span><span class="arrow">→</span>
+    <span class="node">3 · Activity 2</span><span class="arrow">→</span>
+    <span class="node">4 · Activity 3</span>
+  </div>
+
+  <h2>1. Data vs. Information</h2>
+  <p><b>Data</b> are raw facts — numbers, text, dates — with no meaning yet on their own (e.g. <i>23, 61, "Sunny"</i>).
+  <b>Information</b> is data that has been organized and interpreted so it answers a question (e.g. <i>"The average
+  temperature across our stations is 18°C"</i>).</p>
+  <p class="tl">Tagalog: Ang <b>data</b> ay hilaw na impormasyon — mga numero o salita na wala pang kahulugan.
+  Nagiging <b>information</b> ito kapag inayos at binigyang-kahulugan para sagutin ang isang tanong.</p>
+  <div class="concept"><b>Key idea:</b> a data analyst's job is to turn data into information someone can act on.</div>
+
+  <h2>2. The data workflow</h2>
+  <p>Almost every data project follows the same loop. You will do each step in Week 1:</p>
+  <ol>
+    <li><b>Collect</b> — gather the data (a survey/form, a web page, a sensor, a file).</li>
+    <li><b>Clean</b> — fix missing values, remove duplicates, correct types.</li>
+    <li><b>Explore &amp; analyze</b> — summarize, group, and compare.</li>
+    <li><b>Visualize</b> — turn numbers into charts people can read.</li>
+    <li><b>Interpret</b> — say what it means and what to do next.</li>
+  </ol>
+  <p class="tl">Tagalog: halos lahat ng proyekto ay sumusunod sa parehong hakbang — kolekta → linis → suri → i-chart → bigyang-kahulugan.</p>
+
+  <h2>3. What is EDA (Exploratory Data Analysis)?</h2>
+  <p><b>EDA</b> is the "get to know your data" step — before any conclusions. You look at how many rows and columns
+  you have, what types they are, the min/max/average of the numbers, how categories split, and whether two things
+  move together (<b>correlation</b>). EDA is about <i>asking questions</i>, not proving a point.</p>
+  <div class="concept"><b>Remember:</b> a correlation near <b>0</b> means "no clear relationship" — and reporting that
+  honestly is just as valuable as finding a strong one.</div>
+
+  <h2>4. Why cleaning matters</h2>
+  <p>Real collected data is messy: blank cells, duplicate rows, wrong formats. If you analyze dirty data you get
+  <b>wrong answers that look convincing</b>. A first-pass clean — drop duplicates, fill missing numbers with the
+  average, fill missing text with the most common value — makes the analysis trustworthy.</p>
+  <p class="tl">Tagalog: kung marumi ang data, mali ang lalabas na sagot kahit maganda tingnan. Kaya naglilinis muna bago mag-analyze.</p>
+
+  <div class="concept"><b>One more honest rule:</b> always say whether your data is <b>real or simulated</b>. In this
+  class the datasets are <b>simulated sample data</b> for training — the <i>skills</i> are real, the numbers are invented.</div>
+
+  <a class="cta cta-primary" href="index.html">Proceed to the activities →</a>
+
+  <footer>PUP Santa Rosa · Data Science &amp; Data Analytics · Week 1 reading primer.</footer>
+</body>
+</html>

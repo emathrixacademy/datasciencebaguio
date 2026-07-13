@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Day 2 — Automation & AI | DICT Data Science Seminar</title>
+<title>Week 2 — Automation & AI | PUP Santa Rosa · Data Science & Data Analytics</title>
 <style>
   :root{--bg:#0f172a;--card:#1e293b;--line:#334155;--accent:#38bdf8;--accent2:#a78bfa;--good:#34d399;--text:#e2e8f0;--muted:#94a3b8;}
   *{box-sizing:border-box;margin:0;padding:0}
@@ -25,16 +25,26 @@
   .note{color:var(--muted);max-width:680px;margin-bottom:1rem;font-size:.98rem}
   footer{margin-top:3rem;padding-top:1.4rem;border-top:1px solid var(--line);color:var(--muted);font-size:.88rem}
 </style>
+<link rel="stylesheet" href="../assets/pup-theme.css">
+<script src="../assets/study-tracker.js" defer></script>
 </head>
 <body>
-  <a class="back" href="../home.html">← All days</a>
-  <div class="badge">Day 2 of 3</div>
-  <div class="kicker">DICT Data Science Seminar · CAR Region</div>
-  <h1>Day 2 — <span class="accent">Automation & AI</span></h1>
+  <a class="back" href="../home.html">← All weeks</a>
+  <div class="badge">Week 2 of 3</div>
+  <div class="kicker">PUP Santa Rosa · Data Science &amp; Data Analytics</div>
+  <h1>Week 2 — <span class="accent">Automation & AI</span></h1>
   <p class="sub">Build an automated data pipeline that collects and alerts on stock data, and train a no-code AI model to classify documents — then analyze both in Colab.</p>
-  <p><a href="https://drive.google.com/drive/folders/1WhnX-_lmVox6YiiqerHRVZ7eYLtTq8d2?usp=sharing" target="_blank" rel="noopener" style="display:inline-block;background:var(--card);border:1px solid var(--good);color:var(--good);border-radius:10px;padding:.6rem 1.1rem;text-decoration:none;font-weight:700">📁 Day 2 Materials (Google Drive)</a></p>
+  <p><a href="https://drive.google.com/drive/folders/1q6XNr2UT-uZybCjIDowSuCuPLnK9AYRH" target="_blank" rel="noopener" style="display:inline-block;background:var(--card);border:1px solid var(--good);color:var(--good);border-radius:10px;padding:.6rem 1.1rem;text-decoration:none;font-weight:700">📁 Week 2 Materials (Google Drive)</a></p>
 
-  <h2>Activity 1 — Stock Data Pipeline (n8n + Polygon.io)</h2>
+  <h2>Start here — read first</h2>
+  <div class="grid">
+    <a class="card cta-primary" href="reading.html">
+      <div class="num">📖</div><h3>① Reading — Automation &amp; AI</h3>
+      <p>Pipelines and Machine Learning basics: what automation does, what a model is, and what Teachable Machine does. <b>Read this before the activities.</b></p>
+    </a>
+  </div>
+
+  <h2>Then do: Activity 1 — Stock Analysis</h2>
   <div class="grid">
     <a class="card" href="https://colab.research.google.com/github/emathrixacademy/datasciencebaguio/blob/main/day2/notebooks/Activity1_StockAnalysis_Colab.ipynb">
       <div class="num">📈</div><h3>Analysis Notebook</h3><p>Read the Google Sheet your pipeline fills and build a stock dashboard. Opens in Colab.</p>
@@ -44,7 +54,7 @@
     </a>
   </div>
 
-  <h2>Activity 2 — Train Your Own Image Classifier (AI)</h2>
+  <h2>Activity 2 — Signature Detection</h2>
   <div class="grid">
     <a class="card" href="https://colab.research.google.com/github/emathrixacademy/datasciencebaguio/blob/main/day2/notebooks/Activity2_ImageClassifier_Colab.ipynb">
       <div class="num">🖼️</div><h3>Classifier Notebook</h3><p>Upload your model zip (auto-arranged), classify a Drive folder of images, sort by class, and analyze. Generic — any classes. Opens in Colab.</p>
@@ -57,20 +67,7 @@
     </a>
   </div>
 
-  <h2>Activity 3 — Smart Mushroom Farm IoT App</h2>
-  <div class="grid">
-    <a class="card" href="https://colab.research.google.com/github/emathrixacademy/datasciencebaguio/blob/main/day2/notebooks/Activity3_IoT_Analysis_Colab.ipynb">
-      <div class="num">📊</div><h3>IoT Analysis Notebook</h3><p>Universal EDA that auto-detects the simulator type and analyzes the Sheet your app fills. Opens in Colab.</p>
-    </a>
-    <a class="card" href="guides/Activity3_IoT_AppSheet.html">
-      <div class="num">📱</div><h3>Build Guide</h3><p>Google Sheet + Apps Script backend + simulator + AppSheet mobile app, step by step.</p>
-    </a>
-    <a class="card" href="https://setcertification.com/datascience/baguio/session5/">
-      <div class="num">🎮</div><h3>Sensor Simulator</h3><p>The ESP32-style simulator that sends data to your Apps Script web app.</p>
-    </a>
-  </div>
-
   <p class="note" style="margin-top:1.5rem">Tip: replace all API keys, Sheet IDs, and file paths with your own. Never commit secrets.</p>
-  <footer>DICT Data Science Seminar · Cordillera Administrative Region · June 2026.</footer>
+  <footer>PUP Santa Rosa · Data Science &amp; Data Analytics.</footer>
 </body>
 </html>

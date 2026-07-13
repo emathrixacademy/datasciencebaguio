@@ -1,0 +1,97 @@
+/* ============================================================
+   PUP Santa Rosa — Data Science & Data Analytics
+   Single source of truth for the Maroon / White / Yellow theme.
+   Linked from every page (after each page's inline <style> so it wins ties).
+   Maroon = dominant brand · White = canvas · Yellow = SPARING accent.
+   ============================================================ */
+:root{
+  --pup-maroon:#6A0F1A;        /* primary: headers, nav, buttons, table headers */
+  --pup-maroon-dark:#4A0A12;   /* hover / active */
+  --pup-white:#FFFFFF;         /* backgrounds, cards */
+  --pup-yellow:#F5C518;        /* SMALL accents only */
+  --pup-gray:#F2F2F2;          /* zebra rows, subtle section bg */
+  --pup-ink:#241017;           /* body text */
+  --pup-muted:#6B5B60;         /* secondary text */
+  --pup-line:#E7D7DA;          /* hairline borders */
+
+  /* Remap the legacy dark-theme variable names the inline styles use,
+     so the existing rules recolor to the PUP palette automatically. */
+  --bg:var(--pup-white);
+  --card:var(--pup-white);
+  --line:var(--pup-line);
+  --accent:var(--pup-maroon);
+  --accent2:var(--pup-maroon);
+  --good:var(--pup-maroon);
+  --warn:var(--pup-maroon-dark);
+  --text:var(--pup-ink);
+  --muted:var(--pup-muted);
+}
+
+/* ---- Canvas ---- */
+body{background:var(--pup-white)!important;color:var(--pup-ink)!important}
+
+/* ---- Headings / accents ---- */
+.accent{color:var(--pup-maroon)!important}
+.kicker{color:var(--pup-maroon)!important}
+h1,h2,h3{color:var(--pup-ink)}
+/* headings that were white-on-dark would vanish on white — force maroon */
+.card h3,.step h3,.feature h3{color:var(--pup-maroon)!important}
+.day,.num,.step .n{color:var(--pup-maroon)!important}
+
+/* ---- Cards & panels ---- */
+a.card,.card,.step,.time,.stat,form,.wrap{background:var(--pup-white);border-color:var(--pup-line)}
+a.card:hover{border-color:var(--pup-maroon)!important;transform:translateY(-4px)}
+.feature{background:linear-gradient(135deg,rgba(106,15,26,.06),rgba(245,197,24,.10))!important}
+
+/* ---- Buttons / CTAs (maroon fill, white text) ---- */
+button,a.btn,a.drivelink,.dlbtn{
+  background:var(--pup-maroon)!important;color:var(--pup-white)!important;border-color:var(--pup-maroon)!important}
+button:hover,a.btn:hover,a.drivelink:hover,.dlbtn:hover{
+  background:var(--pup-maroon-dark)!important;color:var(--pup-white)!important;filter:none}
+a.btn.ghost{background:var(--pup-white)!important;color:var(--pup-maroon)!important;border:1px solid var(--pup-maroon)!important}
+/* the one KEY call-to-action gets a yellow highlight bar */
+.cta-primary{box-shadow:inset 0 -4px 0 var(--pup-yellow)!important}
+
+/* ---- Links ---- */
+a{color:var(--pup-maroon)}
+a.back{color:var(--pup-maroon)!important}
+a:hover{color:var(--pup-maroon-dark)}
+/* active / current link gets the yellow underline accent */
+a.active,.navlink.active{box-shadow:inset 0 -3px 0 var(--pup-yellow)}
+
+/* ---- Badges & pills = yellow accent, maroon text ---- */
+.badge,.pill.ready,.pill{
+  background:var(--pup-yellow)!important;color:var(--pup-maroon-dark)!important;border:1px solid var(--pup-maroon)!important}
+.pill.wip{background:var(--pup-gray)!important;color:var(--pup-muted)!important;border:1px solid var(--pup-line)!important}
+
+/* ---- Tables (portals + admin): maroon header, zebra gray ---- */
+table{border-collapse:collapse}
+th{background:var(--pup-maroon)!important;color:var(--pup-white)!important;border-color:var(--pup-maroon-dark)!important}
+td{border-color:var(--pup-line)}
+tbody tr:nth-child(even){background:var(--pup-gray)}
+/* give the unstyled car_data portals a readable base */
+.data-table th,.data-table td{padding:5px 9px;font-size:13px;text-align:left;border:1px solid var(--pup-line)}
+
+/* ---- Notices ---- */
+.notice{background:#FFF9E6!important;border-left:4px solid var(--pup-yellow)!important;color:var(--pup-ink)!important;
+  padding:8px 12px;border-radius:6px}
+
+/* ---- Footers / guide chrome ---- */
+footer,.foot{color:var(--pup-muted)!important;border-top-color:var(--pup-line)}
+.foot{border-top:2px solid var(--pup-maroon);padding-top:10px}
+pre{background:var(--pup-gray);border:1px solid var(--pup-line);border-radius:6px}
+
+/* ---- Accessible focus ring (yellow) ---- */
+:focus-visible{outline:3px solid var(--pup-yellow);outline-offset:2px}
+input:focus{border-color:var(--pup-maroon)!important}
+
+/* ---- Reading-primer specific bits ---- */
+.reading .lead{color:var(--pup-muted)}
+.reading .concept{background:var(--pup-gray);border-left:4px solid var(--pup-maroon);
+  padding:.8rem 1rem;border-radius:8px;margin:1rem 0}
+.orderflow{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin:1rem 0}
+.orderflow .node{background:var(--pup-white);border:1px solid var(--pup-maroon);border-radius:10px;padding:.5rem .9rem;font-weight:600;color:var(--pup-maroon)}
+.orderflow .node.now{background:var(--pup-maroon);color:var(--pup-white)}
+.orderflow .arrow{color:var(--pup-maroon)}
+.step-order{display:inline-block;background:var(--pup-yellow);color:var(--pup-maroon-dark);font-weight:800;
+  border-radius:999px;padding:.05rem .6rem;margin-right:.4rem}

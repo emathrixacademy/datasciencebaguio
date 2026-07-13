@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sign in — DICT Data Science Seminar</title>
+<title>Sign in — PUP Santa Rosa · Data Science & Data Analytics</title>
 <style>
   :root{--bg:#0f172a;--card:#1e293b;--line:#334155;--accent:#38bdf8;--accent2:#a78bfa;--good:#34d399;--text:#e2e8f0;--muted:#94a3b8;}
   *{box-sizing:border-box;margin:0;padding:0}
@@ -29,13 +29,14 @@
   .privacy{margin-top:1.2rem;font-size:.78rem;color:var(--muted);line-height:1.5;text-align:center}
   .err{color:#fca5a5}
 </style>
+<link rel="stylesheet" href="assets/pup-theme.css">
 </head>
 <body>
   <div class="wrap">
-    <div class="badge">DICT · Attendance</div>
-    <div class="kicker">Data Science Seminar · CAR Region</div>
+    <div class="badge">PUP Santa Rosa · Attendance</div>
+    <div class="kicker">Data Science &amp; Data Analytics</div>
     <h1>Please <span class="accent">sign in</span> to continue</h1>
-    <p class="sub">Register your attendance to access the seminar materials.</p>
+    <p class="sub">Register your attendance to access the class materials.</p>
 
     <form id="regForm" autocomplete="on">
       <label for="fullName">Full name *</label>
@@ -52,15 +53,23 @@
     </form>
 
     <p class="privacy">We record your name, email, contact, sign-in time, and approximate location (from your IP)
-      for seminar attendance only.</p>
+      for class attendance only.</p>
   </div>
 
 <script>
   // Attendance is stored in Railway Postgres via this site's own /api/attendance endpoint.
 
-  // Already signed in on this device? Go straight in.
+  // Where to go after sign-in: a same-origin ?return= path (e.g. a deep guide link), else the hub.
+  function safeReturn() {
+    var r = new URLSearchParams(location.search).get('return') || '';
+    // only allow same-origin absolute paths ("/day1/guides/..."), never "//evil.com"
+    if (r && r.charAt(0) === '/' && r.charAt(1) !== '/') return r;
+    return 'home.html';
+  }
+
+  // Already signed in on this device? Go straight to the return target (or hub).
   if (localStorage.getItem('dict_attendance')) {
-    location.replace('home.html');
+    location.replace(safeReturn());
   }
 
   async function getGeo() {
@@ -107,8 +116,8 @@
 
     localStorage.setItem('dict_attendance', '1');
     localStorage.setItem('dict_attendee', JSON.stringify({ fullName: payload.fullName, email: payload.email }));
-    status.textContent = 'Welcome! Opening the seminar…';
-    location.href = 'home.html';
+    status.textContent = 'Welcome! Opening your materials…';
+    location.href = safeReturn();
   });
 </script>
 </body>

@@ -2,3 +2,13 @@ node_modules/
 npm-debug.log
 package-lock.json
 .DS_Store
+
+# Excluded from GitHub per instructor request
+README.md
+CLAUDE.md
+.claude/
+
+# Private grading files (do not publish)
+attendance/*.docx
+*Report of Grades*
+Terminal Report*.pdf

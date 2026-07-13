@@ -1,6 +1,6 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Day 3 Capstone — Group Task &amp; Code</title><style>
+<title>Week 3 Capstone — Group Task &amp; Code</title><style>
   body{font-family:"Segoe UI",system-ui,sans-serif;color:#1a202c;line-height:1.55;max-width:840px;margin:0 auto;padding:34px 28px}
   h1{font-size:1.85rem;color:#0b69a3;border-bottom:3px solid #0b69a3;padding-bottom:.35rem}
   h2{font-size:1.25rem;color:#0b69a3;margin-top:1.7rem;border-left:5px solid #38bdf8;padding-left:.6rem}
@@ -16,8 +16,8 @@
   .bx{display:inline-block;width:14px;height:14px;border:1.5px solid #475569;border-radius:3px;vertical-align:middle;margin-right:6px}
   .foot{margin-top:2rem;border-top:1px solid #cbd5e1;padding-top:.8rem;color:#64748b;font-size:.82rem}
   @media print{body{padding:0}h2,h3{break-after:avoid}pre{white-space:pre-wrap;word-break:break-word;break-inside:avoid}}
-</style></head><body>
-<div class="kicker">DICT Data Science Seminar · CAR Region · Day 3</div>
+</style><link rel="stylesheet" href="../../assets/pup-theme.css"><script src="../../assets/gate-guard.js"></script><script src="../../assets/study-tracker.js" defer></script></head><body>
+<div class="kicker">PUP Santa Rosa · Data Science &amp; Data Analytics · Week 3</div>
 <h1>Capstone — Group Task &amp; Colab Code (Form &rarr; Sheet &rarr; Analyze &rarr; AI)</h1>
 <div class="mission"><b>Your group's mission:</b> build one complete data product. Create a <b>Google survey / application form</b> with an <b>image-document upload</b>, collect responses into a <b>Google Sheet</b>, then in <b>Google Colab</b> connect to that Sheet, <b>analyze and visualize</b> the data and write an interpretation, and finally use a <b>Teachable Machine</b> model to <b>identify the uploaded images</b> and <b>test the model's confidence</b>.</div>
 <div class="tip"><b>How to work:</b> open a new <b>Google Colab</b> notebook and add the code below cell by cell (one cell per numbered block in Step 4), in order, then run from top to bottom.</div>
@@ -209,7 +209,7 @@ else:
     for cls, n in done[&#x27;AI_Prediction&#x27;].value_counts().items():
         print(f&quot;    {cls}: {n}&quot;)
     print(&quot;\nINTERPRETATION: Is the model confident? Which uploads need a human to review (&lt;80%)?&quot;)</pre>
-<h2>3-hour timetable</h2><table><tr><th>Time</th><th>What happens</th></tr><tr><td>0:00&ndash;0:15</td><td>Brief, groups, pick form type + model classes</td></tr><tr><td>0:15&ndash;1:00</td><td>Build the form (with image upload) + collect a few responses</td></tr><tr><td>1:00&ndash;1:45</td><td>Connect Colab to the Sheet &rarr; analyze + visualize + interpret</td></tr><tr><td>1:45&ndash;2:30</td><td>Train/reuse the Teachable Machine model &rarr; classify the uploads &rarr; test confidence</td></tr><tr><td>2:30&ndash;3:00</td><td>Polish (findings + 1 recommendation) + dry-run the 3-min story</td></tr><tr><td>Hour 4</td><td>Presentations &amp; closing</td></tr></table><div class="tip"><b>Save time:</b> reuse a Teachable Machine model from Day 2 instead of training a fresh one.</div>
+<h2>3-hour timetable</h2><table><tr><th>Time</th><th>What happens</th></tr><tr><td>0:00&ndash;0:15</td><td>Brief, groups, pick form type + model classes</td></tr><tr><td>0:15&ndash;1:00</td><td>Build the form (with image upload) + collect a few responses</td></tr><tr><td>1:00&ndash;1:45</td><td>Connect Colab to the Sheet &rarr; analyze + visualize + interpret</td></tr><tr><td>1:45&ndash;2:30</td><td>Train/reuse the Teachable Machine model &rarr; classify the uploads &rarr; test confidence</td></tr><tr><td>2:30&ndash;3:00</td><td>Polish (findings + 1 recommendation) + dry-run the 3-min story</td></tr><tr><td>Hour 4</td><td>Presentations &amp; closing</td></tr></table><div class="tip"><b>Save time:</b> reuse a Teachable Machine model from Week 2 instead of training a fresh one.</div>
 <h2>Deliverables (tick to pass)</h2><p><span class="bx"></span> Google Form with image upload + linked Sheet &nbsp; <span class="bx"></span> Notebook connected to the Sheet<br><span class="bx"></span> Charts + written interpretation &nbsp; <span class="bx"></span> Each uploaded image identified by the model<br><span class="bx"></span> Confidence tested (average + items &lt;80%) &nbsp; <span class="bx"></span> 3-minute story</p>
 <h2>Scoring rubric (20 points)</h2><table><tr><th>Criteria</th><th>Points</th></tr><tr><td><b>Form + data</b> &mdash; working form with image upload, responses in a Sheet</td><td>4</td></tr><tr><td><b>Analysis &amp; visualization</b> &mdash; notebook connected, clear charts</td><td>4</td></tr><tr><td><b>Interpretation</b> &mdash; sensible reading of the data</td><td>4</td></tr><tr><td><b>AI identification</b> &mdash; model classifies the uploaded images</td><td>4</td></tr><tr><td><b>Confidence + presentation</b> &mdash; confidence tested; clear 3-min story ending in a decision</td><td>4</td></tr><tr><td style="text-align:right"><b>Total</b></td><td><b>20</b></td></tr></table>
-<div class="foot">DICT Data Science Seminar · Cordillera Administrative Region (CAR) · June 2026 · To save as PDF: Ctrl + P &rarr; Save as PDF.</div></body></html>
+<div class="foot">PUP Santa Rosa · Data Science &amp; Data Analytics · To save as PDF: Ctrl + P &rarr; Save as PDF.</div></body></html>
