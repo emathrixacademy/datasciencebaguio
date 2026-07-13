@@ -63,6 +63,28 @@ Example (browser or curl):
 https://<your-app>.up.railway.app/admin/study.csv?token=<ADMIN_TOKEN>
 ```
 
+## Admin panel — filters, exports, delete (all token-guarded)
+
+The gate now also captures **Section** (two class sections + "Other") and **Student Number**, stored on
+`attendance` (columns auto-migrated; old ~128 rows show blank). On a returning student's next sign-in,
+their existing rows are **backfilled by email** (section/student_no updated), so no rows are duplicated or
+broken. A canonical `student_identity` view (latest sign-in per email) feeds section/student_no/name into
+all three admin tabs.
+
+Each admin tab (Attendance / Study time / Activity submissions) supports:
+- **Server-side filters** (combine with AND): free-text (name/email/student_no), Section, Week (from
+  `activity_key` w1/w2/w3), Activity (w1a1…w3cap). Live "showing X of Y" count. Filtering runs on the
+  token-guarded endpoints, so nothing is exposed pre-auth.
+- **CSV export** (`/admin/<tab>.csv?<filters>`) — respects the current filters and includes
+  `section` + `student_no`.
+- **PDF export** — a themed (maroon/white/yellow) report of the *currently filtered* rows with the active
+  filters + timestamp + footer, generated via the browser print path (built from already-authorized data).
+- **Delete (PERMANENT / hard delete):** single row (by id, or by email for study) after a confirm; and
+  **bulk delete by filter** via `POST /admin/delete` — filtered deletes require typing **DELETE**, and a
+  whole-table wipe (no filter) requires **DELETE ALL**. `POST /admin/purge-test` still clears `@example.com`
+  rows in one click. Every delete route is server-guarded by `requireAdmin` (wrong/no token → 403, no delete).
+  **Deletes cannot be undone.**
+
 ## Admin access & security (hardened)
 
 Admin data is protected **server-side on every request** — there is no client-only check and no data is

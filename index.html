@@ -38,6 +38,8 @@
     <div class="kicker">Data Science &amp; Data Analytics — for PUP Santa Rosa students</div>
     <h1>Please <span class="accent">sign in</span> to continue</h1>
     <p class="sub">Register your attendance to access the class materials.</p>
+    <p class="sub" style="font-size:.85rem;background:#FFF9E6;border-left:4px solid var(--yellow);padding:.5rem .7rem;border-radius:8px;margin-bottom:1.2rem">
+      <b>Returning students:</b> please re-enter so we can record your <b>section</b> and <b>student number</b>.</p>
 
     <form id="regForm" autocomplete="on">
       <label for="fullName">Full name *</label>
@@ -49,12 +51,24 @@
       <label for="contact">Contact number *</label>
       <input id="contact" name="contact" type="tel" required placeholder="09xx xxx xxxx">
 
+      <label for="section">Section *</label>
+      <select id="section" name="section" required
+        style="width:100%;background:#fff;border:1px solid var(--line);border-radius:9px;padding:.7rem .9rem;color:var(--text);font-size:1rem">
+        <option value="" disabled selected>Choose your section…</option>
+        <option value="IT Electives 3 (Mon 5-8PM / Thu)">IT Electives 3 (Mon 5-8PM / Thu)</option>
+        <option value="BSIT 3-2 (Mon 2-5PM / Fri)">BSIT 3-2 (Mon 2-5PM / Fri)</option>
+        <option value="Other / not sure">Other / not sure</option>
+      </select>
+
+      <label for="studentNo">Student number *</label>
+      <input id="studentNo" name="studentNo" type="text" required placeholder="e.g. 2023-00123-SR-0">
+
       <button id="submitBtn" type="submit">Sign in &amp; enter →</button>
       <div class="status" id="status"></div>
     </form>
 
-    <p class="privacy">We record your name, email, contact, sign-in time, and approximate location (from your IP)
-      for class attendance only.</p>
+    <p class="privacy">We record your name, email, contact, <b>section, student number</b>, sign-in time, and
+      approximate location (from your IP) for class attendance only.</p>
   </div>
 
 <script>
@@ -118,6 +132,8 @@
       fullName: document.getElementById('fullName').value.trim(),
       email: document.getElementById('email').value.trim(),
       contact: document.getElementById('contact').value.trim(),
+      section: document.getElementById('section').value,
+      studentNo: document.getElementById('studentNo').value.trim(),
       date: now.toISOString().split('T')[0],
       time: now.toLocaleTimeString(),
       timestamp: now.toISOString(),

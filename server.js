@@ -161,6 +161,9 @@ async function initDb() {
       user_agent TEXT
     );
   `);
+  // Section + Student Number (added later; existing rows get NULL). Auto-migrate on boot.
+  await pool.query(`ALTER TABLE attendance ADD COLUMN IF NOT EXISTS section TEXT;`);
+  await pool.query(`ALTER TABLE attendance ADD COLUMN IF NOT EXISTS student_no TEXT;`);
 
   // Event-based study-time tracking (how long / how often each student uses the system).
   await pool.query(`
@@ -224,7 +227,15 @@ async function initDb() {
     GROUP BY student_email;
   `);
 
-  console.log('[attendance] tables + study_totals view ready.');
+  // Canonical Section / Student No. / name per email (latest sign-in wins). Joined by the admin tabs.
+  await pool.query(`
+    CREATE OR REPLACE VIEW student_identity AS
+    SELECT DISTINCT ON (email) email, full_name, section, student_no
+    FROM attendance WHERE email IS NOT NULL AND email <> ''
+    ORDER BY email, created_at DESC;
+  `);
+
+  console.log('[attendance] tables + views ready (section/student_no migrated).');
 }
 
 // ---- API: record a sign-in ----
@@ -243,12 +254,25 @@ app.post('/api/attendance', async (req, res) => {
     // Site still works before the DB is attached (cookie set, row not stored).
     return res.json({ status: 'ok', stored: false, note: 'no database configured yet' });
   }
+  const section = b.section || '';
+  const studentNo = b.studentNo || b.student_no || '';
   try {
+    // Backfill: give this student's EXISTING rows the section/student_no when provided (returning
+    // students who signed in before these fields existed get their record completed by email).
+    if (section || studentNo) {
+      await pool.query(
+        `UPDATE attendance SET
+           section = COALESCE(NULLIF($2,''), section),
+           student_no = COALESCE(NULLIF($3,''), student_no)
+         WHERE email = $1`,
+        [b.email, section, studentNo]
+      );
+    }
     await pool.query(
       `INSERT INTO attendance
-        (full_name, email, contact, client_timestamp, sign_date, sign_time, ip, city, region, country, user_agent)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)`,
-      [b.fullName, b.email, b.contact || '', b.timestamp || '', b.date || '', b.time || '',
+        (full_name, email, contact, section, student_no, client_timestamp, sign_date, sign_time, ip, city, region, country, user_agent)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)`,
+      [b.fullName, b.email, b.contact || '', section, studentNo, b.timestamp || '', b.date || '', b.time || '',
        ip, b.city || '', b.region || '', b.country || '', b.userAgent || '']
     );
     res.json({ status: 'ok', stored: true });
@@ -443,49 +467,127 @@ app.post('/admin/logout', (req, res) => {
   res.json({ ok: true });
 });
 
-// ---- Admin JSON feeds for the admin page (all guarded by requireAdmin) ----
+// ================= Admin data: shared filtering, CSV, rows =================
+const csvEsc = (v) => { const s = v == null ? '' : String(v); return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+function sendCsv(res, filename, cols, rows) {
+  const csv = [cols.join(',')].concat(rows.map(r => cols.map(c => csvEsc(r[c])).join(','))).join('\n');
+  res.setHeader('Content-Type', 'text/csv');
+  res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+  res.send(csv);
+}
+// Filters come from query (JSON+CSV) or body (delete) so exports/deletes match the on-screen view.
+function readFilters(src) {
+  return {
+    q: (src.q || '').toString().trim(),
+    section: (src.section || '').toString().trim(),
+    week: (src.week || '').toString().trim(),         // 'Week 1'|'Week 2'|'Week 3'|''
+    activity: (src.activity || '').toString().trim(), // 'w1a1'… | ''
+  };
+}
+const WEEK_PREFIX = { 'Week 1': 'w1', 'Week 2': 'w2', 'Week 3': 'w3' };
+
+async function attendanceRows(f) {
+  const w = []; const p = [];
+  if (f.q) { p.push('%' + f.q + '%'); w.push(`(full_name ILIKE $${p.length} OR email ILIKE $${p.length} OR COALESCE(student_no,'') ILIKE $${p.length})`); }
+  if (f.section) { p.push(f.section); w.push(`COALESCE(section,'') = $${p.length}`); }
+  const clause = w.length ? 'WHERE ' + w.join(' AND ') : '';
+  const { rows } = await pool.query(
+    `SELECT id, created_at, full_name, email, contact, COALESCE(section,'') AS section, COALESCE(student_no,'') AS student_no,
+            sign_date, sign_time, ip, city, region, country
+       FROM attendance ${clause} ORDER BY created_at DESC`, p);
+  return rows;
+}
+async function studyRows(f) {
+  const w = []; const p = [];
+  if (f.q) { p.push('%' + f.q + '%'); w.push(`(COALESCE(i.full_name, st.student_name,'') ILIKE $${p.length} OR st.student_email ILIKE $${p.length} OR COALESCE(i.student_no,'') ILIKE $${p.length})`); }
+  if (f.section) { p.push(f.section); w.push(`COALESCE(i.section,'') = $${p.length}`); }
+  const clause = w.length ? 'WHERE ' + w.join(' AND ') : '';
+  const { rows } = await pool.query(
+    `SELECT st.student_email, COALESCE(i.full_name, st.student_name) AS student_name,
+            COALESCE(i.section,'') AS section, COALESCE(i.student_no,'') AS student_no,
+            st.total_seconds, round(st.total_seconds/60.0,1) AS total_minutes,
+            st.session_count, st.active_days, st.first_seen, st.last_seen
+       FROM study_totals st LEFT JOIN student_identity i ON i.email = st.student_email
+       ${clause} ORDER BY st.total_seconds DESC NULLS LAST`, p);
+  return rows;
+}
+async function submissionRows(f) {
+  const w = []; const p = [];
+  if (f.q) { p.push('%' + f.q + '%'); w.push(`(COALESCE(i.full_name, s.student_name,'') ILIKE $${p.length} OR s.student_email ILIKE $${p.length} OR COALESCE(i.student_no,'') ILIKE $${p.length})`); }
+  if (f.section) { p.push(f.section); w.push(`COALESCE(i.section,'') = $${p.length}`); }
+  if (f.week && WEEK_PREFIX[f.week]) { p.push(WEEK_PREFIX[f.week] + '%'); w.push(`s.activity_key LIKE $${p.length}`); }
+  if (f.activity) { p.push(f.activity); w.push(`s.activity_key = $${p.length}`); }
+  const clause = w.length ? 'WHERE ' + w.join(' AND ') : '';
+  const { rows } = await pool.query(
+    `SELECT s.id, s.student_email, COALESCE(i.full_name, s.student_name) AS student_name,
+            COALESCE(i.section,'') AS section, COALESCE(i.student_no,'') AS student_no,
+            s.activity_key, s.submitted_link, s.submitted_at
+       FROM submissions s LEFT JOIN student_identity i ON i.email = s.student_email
+       ${clause} ORDER BY s.submitted_at DESC`, p);
+  return rows;
+}
+async function totalCount(tab) {
+  const t = tab === 'attendance' ? 'attendance' : tab === 'study' ? 'study_totals' : 'submissions';
+  const { rows } = await pool.query(`SELECT COUNT(*)::int AS n FROM ${t}`);
+  return rows[0].n;
+}
+
+// ---- Admin JSON feeds (guarded; filtered; return total for "showing X of Y") ----
+app.get('/admin/attendance.json', async (req, res) => {
+  if (!requireAdmin(req, res)) return;
+  if (!pool) return res.json({ rows: [], count: 0, total: 0 });
+  try { const rows = await attendanceRows(readFilters(req.query)); res.json({ rows, count: rows.length, total: await totalCount('attendance') }); }
+  catch (e) { res.status(500).json({ error: e.message }); }
+});
 app.get('/admin/study.json', async (req, res) => {
   if (!requireAdmin(req, res)) return;
-  if (!pool) return res.json({ rows: [] });
-  try {
-    const { rows } = await pool.query(
-      `SELECT student_email, student_name, total_seconds,
-              round(total_seconds/60.0,1) AS total_minutes, session_count, active_days, first_seen, last_seen
-         FROM study_totals ORDER BY total_seconds DESC NULLS LAST`);
-    res.json({ rows });
-  } catch (e) { res.status(500).json({ error: e.message }); }
+  if (!pool) return res.json({ rows: [], count: 0, total: 0 });
+  try { const rows = await studyRows(readFilters(req.query)); res.json({ rows, count: rows.length, total: await totalCount('study') }); }
+  catch (e) { res.status(500).json({ error: e.message }); }
 });
 app.get('/admin/submissions.json', async (req, res) => {
   if (!requireAdmin(req, res)) return;
-  if (!pool) return res.json({ rows: [] });
+  if (!pool) return res.json({ rows: [], count: 0, total: 0 });
+  try { const rows = await submissionRows(readFilters(req.query)); res.json({ rows, count: rows.length, total: await totalCount('submissions') }); }
+  catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+// ---- Admin DELETE: single (by id/email) + bulk-by-filter (permanent hard delete) ----
+app.post('/admin/delete', async (req, res) => {
+  if (!requireAdmin(req, res)) return;
+  if (!pool) return res.status(503).json({ error: 'no database configured' });
+  const b = req.body || {};
+  const tab = b.tab, mode = b.mode, confirm = (b.confirm || '').toString();
+  const f = readFilters(b);
   try {
-    const { rows } = await pool.query(
-      `SELECT student_email, student_name, activity_key, submitted_link, submitted_at
-         FROM submissions ORDER BY submitted_at DESC`);
-    res.json({ rows });
+    if (mode === 'single') {
+      if (tab === 'attendance') { const r = await pool.query('DELETE FROM attendance WHERE id = $1', [b.id]); return res.json({ ok: true, deleted: r.rowCount }); }
+      if (tab === 'submissions') { const r = await pool.query('DELETE FROM submissions WHERE id = $1', [b.id]); return res.json({ ok: true, deleted: r.rowCount }); }
+      if (tab === 'study') { const r = await pool.query('DELETE FROM study_sessions WHERE student_email = $1', [b.email]); return res.json({ ok: true, deleted: r.rowCount }); }
+      return res.status(400).json({ error: 'bad tab' });
+    }
+    if (mode === 'bulk') {
+      const hasFilter = !!(f.q || f.section || f.week || f.activity);
+      // Guardrail: whole-table wipe needs "DELETE ALL"; any filtered delete needs "DELETE".
+      if (!hasFilter && confirm !== 'DELETE ALL') return res.status(400).json({ error: 'type "DELETE ALL" to remove the whole table' });
+      if (hasFilter && confirm !== 'DELETE') return res.status(400).json({ error: 'type "DELETE" to confirm' });
+      if (tab === 'attendance') { const ids = (await attendanceRows(f)).map(r => r.id); if (!ids.length) return res.json({ ok: true, deleted: 0 }); const r = await pool.query('DELETE FROM attendance WHERE id = ANY($1)', [ids]); return res.json({ ok: true, deleted: r.rowCount }); }
+      if (tab === 'submissions') { const ids = (await submissionRows(f)).map(r => r.id); if (!ids.length) return res.json({ ok: true, deleted: 0 }); const r = await pool.query('DELETE FROM submissions WHERE id = ANY($1)', [ids]); return res.json({ ok: true, deleted: r.rowCount }); }
+      if (tab === 'study') { const emails = (await studyRows(f)).map(r => r.student_email); if (!emails.length) return res.json({ ok: true, deleted: 0 }); const r = await pool.query('DELETE FROM study_sessions WHERE student_email = ANY($1)', [emails]); return res.json({ ok: true, deleted: r.rowCount }); }
+      return res.status(400).json({ error: 'bad tab' });
+    }
+    return res.status(400).json({ error: 'bad mode' });
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-// ---- Admin: export submissions as CSV (protected) ----
+// ---- Admin CSV exports (filtered to match the on-screen view; include section + student_no) ----
 app.get('/admin/submissions.csv', async (req, res) => {
   if (!requireAdmin(req, res)) return;
   if (!pool) return res.status(503).send('No database configured');
-  try {
-    const { rows } = await pool.query(
-      `SELECT student_email, student_name, activity_key, submitted_link, submitted_at
-         FROM submissions ORDER BY student_email, activity_key`);
-    const cols = ['student_email','student_name','activity_key','submitted_link','submitted_at'];
-    const esc = (v) => {
-      const s = v === null || v === undefined ? '' : String(v);
-      return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
-    };
-    const csv = [cols.join(',')].concat(rows.map(r => cols.map(c => esc(r[c])).join(','))).join('\n');
-    res.setHeader('Content-Type', 'text/csv');
-    res.setHeader('Content-Disposition', 'attachment; filename="submissions.csv"');
-    res.send(csv);
-  } catch (e) {
-    res.status(500).send('error: ' + e.message);
-  }
+  try { sendCsv(res, 'submissions.csv',
+    ['student_email','student_name','section','student_no','activity_key','submitted_link','submitted_at'],
+    await submissionRows(readFilters(req.query))); }
+  catch (e) { res.status(500).send('error: ' + e.message); }
 });
 
 // ---- Admin: purge test/junk rows so they don't pollute grading (token-guarded) ----
@@ -513,68 +615,21 @@ app.post('/admin/purge-test', async (req, res) => {
   }
 });
 
-// ---- Admin: export per-student study totals as CSV (protected by ADMIN_TOKEN) ----
 app.get('/admin/study.csv', async (req, res) => {
   if (!requireAdmin(req, res)) return;
   if (!pool) return res.status(503).send('No database configured');
-  try {
-    const { rows } = await pool.query(
-      `SELECT student_email, student_name, total_seconds,
-              round(total_seconds/60.0, 1) AS total_minutes,
-              session_count, active_days, first_seen, last_seen
-         FROM study_totals
-        ORDER BY total_seconds DESC NULLS LAST`
-    );
-    const cols = ['student_email','student_name','total_seconds','total_minutes',
-                  'session_count','active_days','first_seen','last_seen'];
-    const esc = (v) => {
-      const s = v === null || v === undefined ? '' : String(v);
-      return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
-    };
-    const csv = [cols.join(',')]
-      .concat(rows.map(r => cols.map(c => esc(r[c])).join(',')))
-      .join('\n');
-    res.setHeader('Content-Type', 'text/csv');
-    res.setHeader('Content-Disposition', 'attachment; filename="study_totals.csv"');
-    res.send(csv);
-  } catch (e) {
-    res.status(500).send('error: ' + e.message);
-  }
+  try { sendCsv(res, 'study_totals.csv',
+    ['student_email','student_name','section','student_no','total_minutes','session_count','active_days','first_seen','last_seen'],
+    await studyRows(readFilters(req.query))); }
+  catch (e) { res.status(500).send('error: ' + e.message); }
 });
-
-// ---- Admin: export attendance as CSV (protected by ADMIN_TOKEN) ----
 app.get('/admin/attendance.csv', async (req, res) => {
   if (!requireAdmin(req, res)) return;
   if (!pool) return res.status(503).send('No database configured');
-  try {
-    const { rows } = await pool.query('SELECT * FROM attendance ORDER BY created_at');
-    const cols = ['id','created_at','full_name','email','contact','client_timestamp',
-                  'sign_date','sign_time','ip','city','region','country','user_agent'];
-    const esc = (v) => {
-      const s = v === null || v === undefined ? '' : String(v);
-      return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
-    };
-    const csv = [cols.join(',')]
-      .concat(rows.map(r => cols.map(c => esc(r[c])).join(',')))
-      .join('\n');
-    res.setHeader('Content-Type', 'text/csv');
-    res.setHeader('Content-Disposition', 'attachment; filename="attendance.csv"');
-    res.send(csv);
-  } catch (e) {
-    res.status(500).send('error: ' + e.message);
-  }
-});
-
-// ---- Admin: attendance as JSON (for the admin page) ----
-app.get('/admin/attendance.json', async (req, res) => {
-  if (!requireAdmin(req, res)) return;
-  if (!pool) return res.status(503).json({ error: 'no database configured' });
-  try {
-    const { rows } = await pool.query('SELECT * FROM attendance ORDER BY created_at DESC');
-    res.json({ count: rows.length, rows });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
+  try { sendCsv(res, 'attendance.csv',
+    ['created_at','full_name','email','contact','section','student_no','sign_date','sign_time','ip','city','region','country'],
+    await attendanceRows(readFilters(req.query))); }
+  catch (e) { res.status(500).send('error: ' + e.message); }
 });
 
 app.get('/api/health', (req, res) => res.json({ ok: true, db: hasDb }));
