@@ -1,41 +1,41 @@
 Forest ID,Forest Name,Location,Province,Forest_Type,Area_Hectares,Carbon_Tons,Biodiversity_Score,Protection_Status
-FOR001,Conner Mangrove Forest,Conner,Kalinga,Mangrove,15005,67063,4.7,Protected
-FOR002,Tabuk City Mangrove Forest,Tabuk City,Kalinga,Mangrove,20839,80972,4.6,Protected
-FOR003,Conner Mossy Forest,Conner,Apayao,Mossy,3171,71107,4.6,Unprotected
-FOR004,La Trinidad Mangrove Forest,La Trinidad,Kalinga,Mangrove,15043,86210,4.5,Unprotected
-FOR005,Tabuk City Pine Forest,Tabuk City,Kalinga,Pine,27453,69755,3.1,Protected
-FOR006,Bangued Bamboo Forest,Bangued,Abra,Bamboo,1185,102488,3.9,Reserve
-FOR007,Bangued Mossy Forest,Bangued,Kalinga,Mossy,21181,39055,4.0,Unprotected
-FOR008,Sagada Tropical Forest,Sagada,Ifugao,Tropical,13529,72755,5.0,Protected
-FOR009,Lagawe Mossy Forest,Lagawe,Apayao,Mossy,17006,38385,3.1,Unprotected
-FOR010,Bontoc Pine Forest,Bontoc,Ifugao,Pine,27940,38629,3.8,Protected
-FOR011,Baguio City Mossy Forest,Baguio City,Abra,Mossy,1914,62102,3.8,Unprotected
-FOR012,Lubuagan Pine Forest,Lubuagan,Ifugao,Pine,18754,83003,3.4,Unprotected
-FOR013,Lagawe Pine Forest,Lagawe,Apayao,Pine,10397,44092,3.0,Reserve
-FOR014,Bontoc Mossy Forest,Bontoc,Abra,Mossy,23367,13744,3.0,Reserve
-FOR015,Pilar Bamboo Forest,Pilar,Abra,Bamboo,6373,59144,4.0,Unprotected
-FOR016,Banaue Mangrove Forest,Banaue,Ifugao,Mangrove,4017,52254,3.8,Protected
-FOR017,Baguio City Bamboo Forest,Baguio City,Apayao,Bamboo,10166,116481,3.0,Protected
-FOR018,Lubuagan Bamboo Forest,Lubuagan,Kalinga,Bamboo,3487,6019,5.0,Protected
-FOR019,Conner Pine Forest,Conner,Apayao,Pine,25519,80497,3.7,Reserve
-FOR020,Lubuagan Pine Forest,Lubuagan,Benguet,Pine,3152,27859,4.2,Protected
-FOR021,Baguio City Tropical Forest,Baguio City,Kalinga,Tropical,12379,82046,3.9,Unprotected
-FOR022,Pilar Mossy Forest,Pilar,Kalinga,Mossy,28594,51106,3.4,Protected
-FOR023,Mankayan Bamboo Forest,Mankayan,Abra,Bamboo,8375,95578,3.4,Unprotected
-FOR024,Kiangan Mangrove Forest,Kiangan,Abra,Mangrove,29107,63744,4.2,Reserve
-FOR025,La Trinidad Pine Forest,La Trinidad,Benguet,Pine,1468,67655,4.9,Protected
-FOR026,Lubuagan Mangrove Forest,Lubuagan,Apayao,Mangrove,27191,119097,4.2,Reserve
-FOR027,Bauko Pine Forest,Bauko,Abra,Pine,4341,30436,4.0,Unprotected
-FOR028,Sagada Mossy Forest,Sagada,Apayao,Mossy,6883,98670,3.0,Reserve
-FOR029,Hungduan Mossy Forest,Hungduan,Ifugao,Mossy,2181,6607,3.4,Reserve
-FOR030,Bauko Mossy Forest,Bauko,Kalinga,Mossy,3220,47967,3.3,Reserve
-FOR031,Itogon Bamboo Forest,Itogon,Mountain Province,Bamboo,19350,18895,4.2,Protected
-FOR032,Pilar Tropical Forest,Pilar,Apayao,Tropical,1299,3286,4.2,Protected
-FOR033,Pilar Tropical Forest,Pilar,Benguet,Tropical,10649,18405,5.0,Protected
-FOR034,Conner Tropical Forest,Conner,Kalinga,Tropical,24350,6328,4.8,Unprotected
-FOR035,Banaue Tropical Forest,Banaue,Apayao,Tropical,2982,90303,3.9,Protected
-FOR036,Hungduan Mangrove Forest,Hungduan,Benguet,Mangrove,18969,2404,4.2,Reserve
-FOR037,Lubuagan Pine Forest,Lubuagan,Kalinga,Pine,20151,9969,3.2,Unprotected
-FOR038,Bontoc Mangrove Forest,Bontoc,Apayao,Mangrove,24061,43773,3.8,Unprotected
-FOR039,Conner Mangrove Forest,Conner,Ifugao,Mangrove,27671,71442,3.2,Unprotected
-FOR040,Baguio City Bamboo Forest,Baguio City,Apayao,Bamboo,3074,63539,3.0,Unprotected
+FOR001,Santa Cruz Mangrove Forest,Santa Cruz,Laguna,Mangrove,15005,67063,4.7,Protected
+FOR002,San Pablo Mangrove Forest,San Pablo,Laguna,Mangrove,20839,80972,4.6,Protected
+FOR003,Santa Cruz Mossy Forest,Santa Cruz,Laguna,Mossy,3171,71107,4.6,Unprotected
+FOR004,Pangil Mangrove Forest,Pangil,Laguna,Mangrove,15043,86210,4.5,Unprotected
+FOR005,San Pablo Pine Forest,San Pablo,Laguna,Pine,27453,69755,3.1,Protected
+FOR006,San Pablo Bamboo Forest,San Pablo,Laguna,Bamboo,1185,102488,3.9,Reserve
+FOR007,San Pablo Mossy Forest,San Pablo,Laguna,Mossy,21181,39055,4.0,Unprotected
+FOR008,Pila Tropical Forest,Pila,Laguna,Tropical,13529,72755,5.0,Protected
+FOR009,Famy Mossy Forest,Famy,Laguna,Mossy,17006,38385,3.1,Unprotected
+FOR010,Calauan Pine Forest,Calauan,Laguna,Pine,27940,38629,3.8,Protected
+FOR011,Calamba Mossy Forest,Calamba,Laguna,Mossy,1914,62102,3.8,Unprotected
+FOR012,Sta. Maria Pine Forest,Sta. Maria,Laguna,Pine,18754,83003,3.4,Unprotected
+FOR013,Famy Pine Forest,Famy,Laguna,Pine,10397,44092,3.0,Reserve
+FOR014,Calauan Mossy Forest,Calauan,Laguna,Mossy,23367,13744,3.0,Reserve
+FOR015,Cabuyao Bamboo Forest,Cabuyao,Laguna,Bamboo,6373,59144,4.0,Unprotected
+FOR016,Los Baños Mangrove Forest,Los Baños,Laguna,Mangrove,4017,52254,3.8,Protected
+FOR017,Calamba Bamboo Forest,Calamba,Laguna,Bamboo,10166,116481,3.0,Protected
+FOR018,Sta. Maria Bamboo Forest,Sta. Maria,Laguna,Bamboo,3487,6019,5.0,Protected
+FOR019,Santa Cruz Pine Forest,Santa Cruz,Laguna,Pine,25519,80497,3.7,Reserve
+FOR020,Sta. Maria Pine Forest,Sta. Maria,Laguna,Pine,3152,27859,4.2,Protected
+FOR021,Calamba Tropical Forest,Calamba,Laguna,Tropical,12379,82046,3.9,Unprotected
+FOR022,Cabuyao Mossy Forest,Cabuyao,Laguna,Mossy,28594,51106,3.4,Protected
+FOR023,Majayjay Bamboo Forest,Majayjay,Laguna,Bamboo,8375,95578,3.4,Unprotected
+FOR024,Paete Mangrove Forest,Paete,Laguna,Mangrove,29107,63744,4.2,Reserve
+FOR025,Pangil Pine Forest,Pangil,Laguna,Pine,1468,67655,4.9,Protected
+FOR026,Sta. Maria Mangrove Forest,Sta. Maria,Laguna,Mangrove,27191,119097,4.2,Reserve
+FOR027,San Pedro Pine Forest,San Pedro,Laguna,Pine,4341,30436,4.0,Unprotected
+FOR028,Pila Mossy Forest,Pila,Laguna,Mossy,6883,98670,3.0,Reserve
+FOR029,Alaminos Mossy Forest,Alaminos,Laguna,Mossy,2181,6607,3.4,Reserve
+FOR030,San Pedro Mossy Forest,San Pedro,Laguna,Mossy,3220,47967,3.3,Reserve
+FOR031,Rizal Bamboo Forest,Rizal,Laguna,Bamboo,19350,18895,4.2,Protected
+FOR032,Cabuyao Tropical Forest,Cabuyao,Laguna,Tropical,1299,3286,4.2,Protected
+FOR033,Cabuyao Tropical Forest,Cabuyao,Laguna,Tropical,10649,18405,5.0,Protected
+FOR034,Santa Cruz Tropical Forest,Santa Cruz,Laguna,Tropical,24350,6328,4.8,Unprotected
+FOR035,Los Baños Tropical Forest,Los Baños,Laguna,Tropical,2982,90303,3.9,Protected
+FOR036,Alaminos Mangrove Forest,Alaminos,Laguna,Mangrove,18969,2404,4.2,Reserve
+FOR037,Sta. Maria Pine Forest,Sta. Maria,Laguna,Pine,20151,9969,3.2,Unprotected
+FOR038,Calauan Mangrove Forest,Calauan,Laguna,Mangrove,24061,43773,3.8,Unprotected
+FOR039,Santa Cruz Mangrove Forest,Santa Cruz,Laguna,Mangrove,27671,71442,3.2,Unprotected
+FOR040,Calamba Bamboo Forest,Calamba,Laguna,Bamboo,3074,63539,3.0,Unprotected

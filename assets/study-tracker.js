@@ -91,6 +91,8 @@
   var idleTimer = null;
   function logout() {
     end();
+    // Clear the server session cookie too, so attendance stays honest (localStorage clear alone isn't enough).
+    post("/api/session/logout", {}, true);
     try {
       localStorage.removeItem("pup_attendance");
       localStorage.removeItem("pup_attendee");

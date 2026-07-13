@@ -1,48 +1,48 @@
 Station ID,Location,Province,Temperature_C,Humidity_pct,Rainfall_mm,Condition,Elevation_m
-WS001,Baguio City,Benguet,15,61.0,17.0,Partly Cloudy,1064
-WS002,La Trinidad,Benguet,16,66.0,43.0,Foggy,2383
-WS003,Itogon,Benguet,15,,,Sunny,533
-WS004,Tuba,Benguet,17,74.0,32.0,Moderate Rain,258
-WS005,Sablan,Benguet,22,72.0,45.0,Foggy,2382
-WS006,Atok,Benguet,20,74.0,28.0,Moderate Rain,1289
-WS007,Bokod,Benguet,14,70.0,44.0,Light Rain,1543
-WS008,Buguias,Benguet,18,69.0,,Windy,1528
-WS009,Kabayan,Benguet,15,65.0,24.0,Sunny,1620
-WS010,Mankayan,Benguet,19,76.0,2.0,Foggy,2031
-WS011,Bangued,Abra,30,67.0,24.0,Sunny,1190
-WS012,Dolores,Abra,26,83.0,36.0,,202
-WS013,Lagangilang,Abra,22,74.0,18.0,Sunny,536
-WS014,La Paz,Abra,23,84.0,17.0,Light Rain,1361
-WS015,Manabo,Abra,27,70.0,23.0,Cloudy,489
-WS016,Pidigan,Abra,26,,38.0,Foggy,410
-WS017,Pilar,Abra,30,75.0,10.0,Light Rain,837
-WS018,Tayum,Abra,26,74.0,43.0,Cloudy,174
-WS019,Kabugao,Apayao,25,62.0,20.0,Light Rain,608
-WS020,Conner,Apayao,23,73.0,36.0,Foggy,704
-WS021,Calanasan,Apayao,25,91.0,25.0,,999
-WS022,Flora,Apayao,24,76.0,8.0,Partly Cloudy,1209
-WS023,Luna,Apayao,30,76.0,37.0,Light Rain,1255
-WS024,Pudtol,Apayao,28,83.0,14.0,Partly Cloudy,1103
-WS025,Santa Marcela,Apayao,29,65.0,3.0,Windy,284
-WS026,Lagawe,Ifugao,24,70.0,43.0,Light Rain,1281
-WS027,Banaue,Ifugao,23,84.0,24.0,Moderate Rain,1018
-WS028,Kiangan,Ifugao,30,76.0,35.0,Windy,83
-WS029,Lamut,Ifugao,23,77.0,,Cloudy,288
-WS030,Mayoyao,Ifugao,26,87.0,10.0,Light Rain,66
-WS031,Hingyon,Ifugao,26,92.0,11.0,Moderate Rain,277
-WS032,Hungduan,Ifugao,26,92.0,38.0,Partly Cloudy,373
-WS033,Tabuk City,Kalinga,27,70.0,34.0,Windy,1146
-WS034,Balbalan,Kalinga,22,,31.0,Sunny,289
-WS035,Lubuagan,Kalinga,27,79.0,15.0,Sunny,553
-WS036,Pasil,Kalinga,31,65.0,5.0,Foggy,1055
-WS037,Pinukpuk,Kalinga,23,68.0,8.0,Foggy,1033
-WS038,Rizal,Kalinga,30,70.0,16.0,Moderate Rain,1302
-WS039,Tanudan,Kalinga,28,73.0,34.0,Windy,471
-WS040,Bontoc,Mountain Province,26,85.0,42.0,Foggy,824
-WS041,Bauko,Mountain Province,29,88.0,7.0,Partly Cloudy,520
-WS042,Besao,Mountain Province,23,81.0,1.0,Moderate Rain,1194
-WS043,Sabangan,Mountain Province,25,74.0,0.0,Sunny,1352
-WS044,Sadanga,Mountain Province,22,74.0,4.0,Sunny,736
-WS045,Sagada,Mountain Province,23,92.0,15.0,Cloudy,1054
-WS046,Tadian,Mountain Province,25,68.0,36.0,Moderate Rain,1028
-WS001,Baguio City,Benguet,15,61.0,17.0,Partly Cloudy,1064
+WS001,Calamba,Laguna,15,61.0,17.0,Partly Cloudy,1064
+WS002,Pangil,Laguna,16,66.0,43.0,Foggy,2383
+WS003,Rizal,Laguna,15,,,Sunny,533
+WS004,Los Baños,Laguna,17,74.0,32.0,Moderate Rain,258
+WS005,Calauan,Laguna,22,72.0,45.0,Foggy,2382
+WS006,Santa Rosa,Laguna,20,74.0,28.0,Moderate Rain,1289
+WS007,Bay,Laguna,14,70.0,44.0,Light Rain,1543
+WS008,Victoria,Laguna,18,69.0,,Windy,1528
+WS009,Kalayaan,Laguna,15,65.0,24.0,Sunny,1620
+WS010,Majayjay,Laguna,19,76.0,2.0,Foggy,2031
+WS011,San Pablo,Laguna,30,67.0,24.0,Sunny,1190
+WS012,Pagsanjan,Laguna,26,83.0,36.0,,202
+WS013,Siniloan,Laguna,22,74.0,18.0,Sunny,536
+WS014,Pakil,Laguna,23,84.0,17.0,Light Rain,1361
+WS015,Magdalena,Laguna,27,70.0,23.0,Cloudy,489
+WS016,Biñan,Laguna,26,,38.0,Foggy,410
+WS017,Cabuyao,Laguna,30,75.0,10.0,Light Rain,837
+WS018,Pagsanjan,Laguna,26,74.0,43.0,Cloudy,174
+WS019,Lumban,Laguna,25,62.0,20.0,Light Rain,608
+WS020,Santa Cruz,Laguna,23,73.0,36.0,Foggy,704
+WS021,Pila,Laguna,25,91.0,25.0,,999
+WS022,Nagcarlan,Laguna,24,76.0,8.0,Partly Cloudy,1209
+WS023,Cavinti,Laguna,30,76.0,37.0,Light Rain,1255
+WS024,Los Baños,Laguna,28,83.0,14.0,Partly Cloudy,1103
+WS025,San Pedro,Laguna,29,65.0,3.0,Windy,284
+WS026,Famy,Laguna,24,70.0,43.0,Light Rain,1281
+WS027,Los Baños,Laguna,23,84.0,24.0,Moderate Rain,1018
+WS028,Paete,Laguna,30,76.0,35.0,Windy,83
+WS029,Mabitac,Laguna,23,77.0,,Cloudy,288
+WS030,Luisiana,Laguna,26,87.0,10.0,Light Rain,66
+WS031,Liliw,Laguna,26,92.0,11.0,Moderate Rain,277
+WS032,Alaminos,Laguna,26,92.0,38.0,Partly Cloudy,373
+WS033,San Pablo,Laguna,27,70.0,34.0,Windy,1146
+WS034,Biñan,Laguna,22,,31.0,Sunny,289
+WS035,Sta. Maria,Laguna,27,79.0,15.0,Sunny,553
+WS036,Santa Rosa,Laguna,31,65.0,5.0,Foggy,1055
+WS037,Calamba,Laguna,23,68.0,8.0,Foggy,1033
+WS038,Rizal,Laguna,30,70.0,16.0,Moderate Rain,1302
+WS039,Nagcarlan,Laguna,28,73.0,34.0,Windy,471
+WS040,Calauan,Laguna,26,85.0,42.0,Foggy,824
+WS041,San Pedro,Laguna,29,88.0,7.0,Partly Cloudy,520
+WS042,Cabuyao,Laguna,23,81.0,1.0,Moderate Rain,1194
+WS043,Bay,Laguna,25,74.0,0.0,Sunny,1352
+WS044,Victoria,Laguna,22,74.0,4.0,Sunny,736
+WS045,Pila,Laguna,23,92.0,15.0,Cloudy,1054
+WS046,Alaminos,Laguna,25,68.0,36.0,Moderate Rain,1028
+WS001,Calamba,Laguna,15,61.0,17.0,Partly Cloudy,1064

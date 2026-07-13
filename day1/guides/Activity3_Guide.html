@@ -7,15 +7,15 @@
 <style>
   body{font-family:"Segoe UI",system-ui,sans-serif;color:#1a202c;line-height:1.6;
     max-width:820px;margin:0 auto;padding:40px 28px}
-  h1{font-size:2rem;color:#0b69a3;border-bottom:3px solid #0b69a3;padding-bottom:.4rem}
-  h2{font-size:1.35rem;color:#0b69a3;margin-top:2rem;border-left:5px solid #38bdf8;padding-left:.6rem}
+  h1{font-size:2rem;color:#6A0F1A;border-bottom:3px solid #6A0F1A;padding-bottom:.4rem}
+  h2{font-size:1.35rem;color:#6A0F1A;margin-top:2rem;border-left:5px solid #F5C518;padding-left:.6rem}
   h3{font-size:1.1rem;margin-top:1.4rem;color:#111}
-  .kicker{color:#7c3aed;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.8rem}
+  .kicker{color:#6A0F1A;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.8rem}
   code,pre{font-family:"Consolas","Courier New",monospace}
-  pre{background:#0f172a;color:#e2e8f0;padding:14px 16px;border-radius:8px;overflow-x:auto;
+  pre{background:#2E0810;color:#F3E7E9;padding:14px 16px;border-radius:8px;overflow-x:auto;
     font-size:.9rem;white-space:pre-wrap;word-break:break-word}
-  .copy{font-size:.78rem;font-weight:700;color:#0b69a3;text-transform:uppercase;letter-spacing:.05em;margin:1rem 0 .3rem}
-  .see{background:#ecfdf5;border-left:4px solid #34d399;padding:.6rem .9rem;border-radius:6px;margin:.6rem 0;font-size:.95rem}
+  .copy{font-size:.78rem;font-weight:700;color:#6A0F1A;text-transform:uppercase;letter-spacing:.05em;margin:1rem 0 .3rem}
+  .see{background:#ecfdf5;border-left:4px solid #6A0F1A;padding:.6rem .9rem;border-radius:6px;margin:.6rem 0;font-size:.95rem}
   .tip{background:#fffbeb;border-left:4px solid #f59e0b;padding:.6rem .9rem;border-radius:6px;margin:.6rem 0;font-size:.95rem}
   .note{background:#eff6ff;border-left:4px solid #3b82f6;padding:.6rem .9rem;border-radius:6px;margin:.6rem 0}
   ul{margin:.4rem 0 .4rem 1.2rem}
@@ -54,7 +54,7 @@ summarize it, compare groups, look for relationships, and visualize the whole th
   <li>A <b>Google account</b> to use Google Colab.</li>
   <li><b>car_data.html</b> loaded into Colab — upload it (folder icon → upload) or use the optional download cell in Step 1.</li>
 </ul>
-<div class="note"><b>Reminder:</b> this is <b>simulated sample data</b> for training. The numbers are realistic but invented, so any pattern or recommendation here demonstrates the <b>method</b> — it is not real advice about CAR tourism.</div>
+<div class="note"><b>Reminder:</b> this is <b>simulated sample data</b> for training. The numbers are realistic but invented, so any pattern or recommendation here demonstrates the <b>method</b> — it is not real advice about Laguna tourism.</div>
 
 <p>Run each cell with <b>Shift + Enter</b>, top to bottom.</p>
 
@@ -188,7 +188,7 @@ plt.show()</pre>
 <p>Six clean charts summarizing the whole dataset.</p>
 <div class="copy">Copy this code</div>
 <pre>fig, axes = plt.subplots(2, 3, figsize=(18, 10))
-fig.suptitle('CAR Tourism EDA Dashboard (Simulated Sample Data)', fontsize=15, fontweight='bold')
+fig.suptitle('Laguna Tourism EDA Dashboard (Simulated Sample Data)', fontsize=15, fontweight='bold')
 
 # 1. Total visitors by province
 pv = df.groupby('Province')['Annual_Visitors'].sum().sort_values()
@@ -237,7 +237,7 @@ plt.show()</pre>
 
 <h3>Step 10 — Turning analysis into findings</h3>
 <p>Good analysts don't just make charts — they say what the numbers mean. This computes findings straight from the data.</p>
-<div class="note"><b>Big caveat:</b> the data is simulated, so these "findings" demonstrate <b>how</b> analysis leads to decisions. They are not real advice about CAR tourism.</div>
+<div class="note"><b>Big caveat:</b> the data is simulated, so these "findings" demonstrate <b>how</b> analysis leads to decisions. They are not real advice about Laguna tourism.</div>
 <div class="copy">Copy this code</div>
 <pre>top_prov = province_stats.index[0]
 low_prov = province_stats.index[-1]

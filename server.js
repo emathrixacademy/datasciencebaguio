@@ -1,6 +1,7 @@
 // PUP Santa Rosa — Data Science & Data Analytics — static site + attendance API (Express + Postgres)
 const express = require('express');
 const path = require('path');
+const crypto = require('crypto');
 const { Pool } = require('pg');
 
 const app = express();
@@ -8,6 +9,52 @@ app.set('trust proxy', true);            // Railway sits behind a proxy -> real 
 app.use(express.json({ limit: '1mb' }));
 
 const ROOT = __dirname;
+
+// ---- Server-side attendance session (signed, HttpOnly cookie) ----
+// Enforcement lives on the SERVER: content pages require a valid attendance cookie.
+// localStorage is only a UX fast-path; it never grants access on its own.
+const SESSION_COOKIE = 'pup_sess';
+const SESSION_MAX_AGE_MS = 3 * 60 * 60 * 1000; // 3h — matches the client idle auto-logout
+const SESSION_SECRET = process.env.SESSION_SECRET || process.env.ADMIN_TOKEN || 'pup-emathrix-dev-secret';
+const b64u = (s) => Buffer.from(s).toString('base64url');
+
+function signSession(email) {
+  const payload = b64u(String(email || '')) + '.' + Date.now();
+  const sig = crypto.createHmac('sha256', SESSION_SECRET).update(payload).digest('base64url');
+  return payload + '.' + sig;
+}
+function verifySession(token) {
+  if (!token || typeof token !== 'string') return null;
+  const parts = token.split('.');
+  if (parts.length !== 3) return null;
+  const payload = parts[0] + '.' + parts[1];
+  const expected = crypto.createHmac('sha256', SESSION_SECRET).update(payload).digest('base64url');
+  const a = Buffer.from(parts[2]); const b = Buffer.from(expected);
+  if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) return null;
+  const issued = Number(parts[1]);
+  if (!issued || (Date.now() - issued) > SESSION_MAX_AGE_MS) return null; // expired
+  try { return Buffer.from(parts[0], 'base64url').toString() || 'ok'; } catch (e) { return null; }
+}
+function parseCookies(req) {
+  const out = {};
+  (req.headers.cookie || '').split(';').forEach((c) => {
+    const i = c.indexOf('='); if (i < 0) return;
+    out[c.slice(0, i).trim()] = decodeURIComponent(c.slice(i + 1).trim());
+  });
+  return out;
+}
+function setSessionCookie(req, res, email) {
+  const secure = req.secure || req.headers['x-forwarded-proto'] === 'https'; // Secure on https (Railway), not local http
+  const bits = [
+    `${SESSION_COOKIE}=${signSession(email)}`,
+    'HttpOnly', 'Path=/', 'SameSite=Lax', `Max-Age=${Math.floor(SESSION_MAX_AGE_MS / 1000)}`,
+  ];
+  if (secure) bits.push('Secure');
+  res.append('Set-Cookie', bits.join('; '));
+}
+function clearSessionCookie(res) {
+  res.append('Set-Cookie', `${SESSION_COOKIE}=; HttpOnly; Path=/; SameSite=Lax; Max-Age=0`);
+}
 
 // ---- Backward-compatible short URLs (datasets moved under /datasets) ----
 const REWRITES = {
@@ -137,8 +184,10 @@ app.post('/api/attendance', async (req, res) => {
   if (!b.fullName || !b.email) {
     return res.status(400).json({ status: 'error', message: 'fullName and email are required' });
   }
+  // Issue the server-side attendance session cookie (this is what actually unlocks content).
+  setSessionCookie(req, res, b.email);
   if (!pool) {
-    // Site still works before the DB is attached.
+    // Site still works before the DB is attached (cookie set, row not stored).
     return res.json({ status: 'ok', stored: false, note: 'no database configured yet' });
   }
   try {
@@ -154,6 +203,21 @@ app.post('/api/attendance', async (req, res) => {
     console.error('[attendance] insert failed:', e.message);
     res.status(500).json({ status: 'error', message: 'could not store sign-in' });
   }
+});
+
+// Re-establish the session cookie for a returning device (localStorage fast-path) without re-typing.
+// Trusts the identity already captured at the gate; does NOT insert a new attendance row.
+app.post('/api/session/resume', (req, res) => {
+  const email = (req.body || {}).email;
+  if (!email) return res.status(400).json({ ok: false, message: 'email required' });
+  setSessionCookie(req, res, email);
+  res.json({ ok: true });
+});
+
+// Clear the session cookie (called on idle auto-logout) so attendance stays honest.
+app.post('/api/session/logout', (req, res) => {
+  clearSessionCookie(res);
+  res.json({ ok: true });
 });
 
 // ---- Study-session tracking (how long / how often a student uses the system) ----
@@ -432,6 +496,30 @@ app.get('/admin/attendance.json', async (req, res) => {
 });
 
 app.get('/api/health', (req, res) => res.json({ ok: true, db: hasDb }));
+
+// ---- Server-side attendance gate ----
+// Content pages require a valid attendance cookie. Public (no cookie): the gate itself, the 404,
+// static assets, /api/*, /admin/*, and /datasets/* (notebooks scrape those programmatically without a
+// cookie). Everything else bounces to the gate with ?return= so the student lands back after signing in.
+// This is what actually enforces attendance — localStorage alone can never unlock content.
+const PUBLIC_EXACT = new Set(['/', '/index.html', '/index', '/404.html', '/404', '/favicon.ico', '/go']);
+const PUBLIC_PREFIX = ['/assets/', '/api/', '/admin/', '/datasets/'];
+const ASSET_EXT = /\.(css|js|map|png|jpe?g|gif|svg|ico|webp|woff2?|ttf|eot|csv|txt)$/i;
+function isPublicPath(p) {
+  if (PUBLIC_EXACT.has(p)) return true;
+  if (PUBLIC_PREFIX.some((pre) => p.startsWith(pre))) return true;
+  if (REWRITES[p]) return true;               // short dataset aliases (/car_data, /laguna_data, …)
+  if (ASSET_EXT.test(p)) return true;         // static assets by extension (PDF stays gated)
+  return false;
+}
+app.use((req, res, next) => {
+  if (req.method !== 'GET' || isPublicPath(req.path)) return next();
+  const token = parseCookies(req)[SESSION_COOKIE];
+  if (verifySession(token)) return next();    // valid attendance session → serve
+  // No/!invalid cookie → bounce to the gate, remember where they wanted to go.
+  const back = encodeURIComponent(req.originalUrl || req.path);
+  return res.redirect('/index.html?return=' + back);
+});
 
 // ---- Static site (clean URLs + rewrites) ----
 app.use((req, res, next) => {

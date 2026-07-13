@@ -1,41 +1,41 @@
 Species ID,Species Name,Habitat,Province,Animal_Class,Population_Estimate,Sightings_2025,Survival_Score,Conservation_Status
-SPE001,Banaue Mammal,Banaue,Abra,Mammal,40229,920,3.4,Least Concern
-SPE002,Tadian Bird,Tadian,Benguet,Bird,17696,1970,3.1,Endangered
-SPE003,Tabuk City Amphibian,Tabuk City,Kalinga,Amphibian,46457,1814,3.1,Least Concern
-SPE004,Lagawe Amphibian,Lagawe,Apayao,Amphibian,12510,374,4.7,Endangered
-SPE005,Bauko Insect,Bauko,Mountain Province,Insect,4058,1435,3.7,Vulnerable
-SPE006,Lagawe Amphibian,Lagawe,Abra,Amphibian,20528,1849,4.6,Endangered
-SPE007,Bauko Reptile,Bauko,Abra,Reptile,17784,1372,4.4,Vulnerable
-SPE008,La Trinidad Insect,La Trinidad,Apayao,Insect,2164,863,4.9,Endangered
-SPE009,Mankayan Amphibian,Mankayan,Kalinga,Amphibian,26085,1358,4.8,Least Concern
-SPE010,Mankayan Reptile,Mankayan,Kalinga,Reptile,26081,1198,3.1,Endangered
-SPE011,Kiangan Insect,Kiangan,Kalinga,Insect,28458,1556,4.3,Endangered
-SPE012,Hungduan Mammal,Hungduan,Benguet,Mammal,29130,733,3.2,Vulnerable
-SPE013,La Trinidad Insect,La Trinidad,Abra,Insect,15696,825,3.0,Vulnerable
-SPE014,Bangued Mammal,Bangued,Abra,Mammal,35873,775,3.7,Vulnerable
-SPE015,Tadian Bird,Tadian,Mountain Province,Bird,29120,80,3.1,Least Concern
-SPE016,Bangued Mammal,Bangued,Mountain Province,Mammal,3463,404,3.8,Least Concern
-SPE017,Conner Mammal,Conner,Benguet,Mammal,32721,1454,4.0,Endangered
-SPE018,Mankayan Amphibian,Mankayan,Mountain Province,Amphibian,31256,1494,3.1,Endangered
-SPE019,Tadian Insect,Tadian,Benguet,Insect,17015,1935,3.2,Least Concern
-SPE020,Bauko Mammal,Bauko,Apayao,Mammal,22369,204,3.3,Endangered
-SPE021,Hungduan Reptile,Hungduan,Mountain Province,Reptile,11670,90,3.2,Least Concern
-SPE022,Tadian Mammal,Tadian,Mountain Province,Mammal,14228,1099,3.5,Least Concern
-SPE023,Tabuk City Reptile,Tabuk City,Benguet,Reptile,49367,204,4.2,Endangered
-SPE024,Bangued Reptile,Bangued,Ifugao,Reptile,7753,1510,4.8,Endangered
-SPE025,Tabuk City Bird,Tabuk City,Benguet,Bird,24806,1727,4.7,Least Concern
-SPE026,Bangued Amphibian,Bangued,Abra,Amphibian,41667,788,3.1,Endangered
-SPE027,Hungduan Reptile,Hungduan,Ifugao,Reptile,16369,1826,3.5,Vulnerable
-SPE028,Sagada Insect,Sagada,Mountain Province,Insect,10391,370,4.8,Endangered
-SPE029,Itogon Mammal,Itogon,Benguet,Mammal,32736,329,4.2,Least Concern
-SPE030,Pilar Mammal,Pilar,Mountain Province,Mammal,18208,1574,4.5,Least Concern
-SPE031,Conner Bird,Conner,Mountain Province,Bird,29085,1099,3.9,Vulnerable
-SPE032,Itogon Mammal,Itogon,Apayao,Mammal,46115,782,4.2,Least Concern
-SPE033,Tabuk City Insect,Tabuk City,Kalinga,Insect,42470,746,3.6,Endangered
-SPE034,Lagawe Reptile,Lagawe,Abra,Reptile,18253,1081,3.3,Endangered
-SPE035,Pilar Amphibian,Pilar,Mountain Province,Amphibian,8948,1999,4.1,Vulnerable
-SPE036,Lubuagan Mammal,Lubuagan,Apayao,Mammal,25395,1368,4.3,Least Concern
-SPE037,Tabuk City Mammal,Tabuk City,Benguet,Mammal,24934,697,3.5,Endangered
-SPE038,Bauko Bird,Bauko,Abra,Bird,36598,746,4.7,Endangered
-SPE039,Baguio City Reptile,Baguio City,Kalinga,Reptile,1480,237,4.9,Endangered
-SPE040,La Trinidad Mammal,La Trinidad,Mountain Province,Mammal,6510,1173,3.1,Least Concern
+SPE001,Los Baños Mammal,Los Baños,Laguna,Mammal,40229,920,3.4,Least Concern
+SPE002,Alaminos Bird,Alaminos,Laguna,Bird,17696,1970,3.1,Endangered
+SPE003,San Pablo Amphibian,San Pablo,Laguna,Amphibian,46457,1814,3.1,Least Concern
+SPE004,Famy Amphibian,Famy,Laguna,Amphibian,12510,374,4.7,Endangered
+SPE005,San Pedro Insect,San Pedro,Laguna,Insect,4058,1435,3.7,Vulnerable
+SPE006,Famy Amphibian,Famy,Laguna,Amphibian,20528,1849,4.6,Endangered
+SPE007,San Pedro Reptile,San Pedro,Laguna,Reptile,17784,1372,4.4,Vulnerable
+SPE008,Pangil Insect,Pangil,Laguna,Insect,2164,863,4.9,Endangered
+SPE009,Majayjay Amphibian,Majayjay,Laguna,Amphibian,26085,1358,4.8,Least Concern
+SPE010,Majayjay Reptile,Majayjay,Laguna,Reptile,26081,1198,3.1,Endangered
+SPE011,Paete Insect,Paete,Laguna,Insect,28458,1556,4.3,Endangered
+SPE012,Alaminos Mammal,Alaminos,Laguna,Mammal,29130,733,3.2,Vulnerable
+SPE013,Pangil Insect,Pangil,Laguna,Insect,15696,825,3.0,Vulnerable
+SPE014,San Pablo Mammal,San Pablo,Laguna,Mammal,35873,775,3.7,Vulnerable
+SPE015,Alaminos Bird,Alaminos,Laguna,Bird,29120,80,3.1,Least Concern
+SPE016,San Pablo Mammal,San Pablo,Laguna,Mammal,3463,404,3.8,Least Concern
+SPE017,Santa Cruz Mammal,Santa Cruz,Laguna,Mammal,32721,1454,4.0,Endangered
+SPE018,Majayjay Amphibian,Majayjay,Laguna,Amphibian,31256,1494,3.1,Endangered
+SPE019,Alaminos Insect,Alaminos,Laguna,Insect,17015,1935,3.2,Least Concern
+SPE020,San Pedro Mammal,San Pedro,Laguna,Mammal,22369,204,3.3,Endangered
+SPE021,Alaminos Reptile,Alaminos,Laguna,Reptile,11670,90,3.2,Least Concern
+SPE022,Alaminos Mammal,Alaminos,Laguna,Mammal,14228,1099,3.5,Least Concern
+SPE023,San Pablo Reptile,San Pablo,Laguna,Reptile,49367,204,4.2,Endangered
+SPE024,San Pablo Reptile,San Pablo,Laguna,Reptile,7753,1510,4.8,Endangered
+SPE025,San Pablo Bird,San Pablo,Laguna,Bird,24806,1727,4.7,Least Concern
+SPE026,San Pablo Amphibian,San Pablo,Laguna,Amphibian,41667,788,3.1,Endangered
+SPE027,Alaminos Reptile,Alaminos,Laguna,Reptile,16369,1826,3.5,Vulnerable
+SPE028,Pila Insect,Pila,Laguna,Insect,10391,370,4.8,Endangered
+SPE029,Rizal Mammal,Rizal,Laguna,Mammal,32736,329,4.2,Least Concern
+SPE030,Cabuyao Mammal,Cabuyao,Laguna,Mammal,18208,1574,4.5,Least Concern
+SPE031,Santa Cruz Bird,Santa Cruz,Laguna,Bird,29085,1099,3.9,Vulnerable
+SPE032,Rizal Mammal,Rizal,Laguna,Mammal,46115,782,4.2,Least Concern
+SPE033,San Pablo Insect,San Pablo,Laguna,Insect,42470,746,3.6,Endangered
+SPE034,Famy Reptile,Famy,Laguna,Reptile,18253,1081,3.3,Endangered
+SPE035,Cabuyao Amphibian,Cabuyao,Laguna,Amphibian,8948,1999,4.1,Vulnerable
+SPE036,Sta. Maria Mammal,Sta. Maria,Laguna,Mammal,25395,1368,4.3,Least Concern
+SPE037,San Pablo Mammal,San Pablo,Laguna,Mammal,24934,697,3.5,Endangered
+SPE038,San Pedro Bird,San Pedro,Laguna,Bird,36598,746,4.7,Endangered
+SPE039,Calamba Reptile,Calamba,Laguna,Reptile,1480,237,4.9,Endangered
+SPE040,Pangil Mammal,Pangil,Laguna,Mammal,6510,1173,3.1,Least Concern

@@ -79,10 +79,18 @@
     return 'home.html';
   }
 
-  // Already signed in on this device? Go straight to the return target (or hub).
-  if (localStorage.getItem('pup_attendance')) {
-    location.replace(safeReturn());
-  }
+  // Returning device fast-path: if we have a stored identity, re-establish the SERVER session cookie
+  // (access is granted by the cookie, not by localStorage), then continue to the requested page.
+  (function () {
+    var who = null;
+    try { who = JSON.parse(localStorage.getItem('pup_attendee') || 'null'); } catch (e) {}
+    if (!who || !who.email) return; // not signed in on this device — show the form
+    fetch('/api/session/resume', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: who.email, name: who.fullName || '' })
+    }).then(function () { location.replace(safeReturn()); })
+      .catch(function () { location.replace(safeReturn()); });
+  })();
 
   async function getGeo() {
     try {

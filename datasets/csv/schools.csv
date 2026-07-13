@@ -1,52 +1,52 @@
 School ID,School Name,Municipality,Province,Type,Enrollment,Teachers,Student_Teacher_Ratio,Year_Established
-SCH0001,Saint Tayum Institute,Tayum,Abra,College,1329,52.0,25.6,2000.0
-SCH0002,Saint Lamut Institute,Lamut,Ifugao,College,771,29.0,26.6,1998.0
-SCH0003,San Tuba Institute,Tuba,Benguet,High School,414,21.0,19.7,1978.0
-SCH0004,North Flora Academy,Flora,Apayao,High School,297,,18.6,
-SCH0005,San Sadanga Institute,Sadanga,Mountain Province,Elementary,167,8.0,20.9,2017.0
-SCH0006,Central Banaue Academy,Banaue,Ifugao,College,790,31.0,25.5,2004.0
-SCH0007,Mountain Santa Marcela Learning Center,Santa Marcela,Apayao,College,1718,72.0,23.9,2017.0
-SCH0008,North La Paz Learning Center,La Paz,Abra,Senior High,221,8.0,27.6,1962.0
-SCH0009,North Besao Learning Center,Besao,Mountain Province,Elementary,145,10.0,14.5,1975.0
-SCH0010,North Kabayan Academy,Kabayan,Benguet,,215,8.0,26.9,1985.0
-SCH0011,Central Lagawe Learning Center,Lagawe,Ifugao,High School,260,9.0,28.9,2021.0
-SCH0012,Holy Calanasan Institute,Calanasan,Apayao,High School,541,22.0,24.6,1971.0
-SCH0013,Saint Sagada Academy,Sagada,Mountain Province,Senior High,344,16.0,21.5,2013.0
-SCH0014,North Pinukpuk Elementary School,Pinukpuk,Kalinga,Elementary,157,8.0,19.6,1971.0
-SCH0015,San Kabugao Institute,Kabugao,Apayao,High School,598,,23.9,1993.0
-SCH0016,Mountain Tanudan Academy,Tanudan,Kalinga,Elementary,461,20.0,23.1,1972.0
-SCH0017,Holy Kabugao Elementary School,Kabugao,Apayao,Elementary,403,16.0,25.2,1981.0
-SCH0018,Holy Besao Academy,Besao,Mountain Province,High School,490,24.0,20.4,1966.0
-SCH0019,Holy Sabangan National High School,Sabangan,Mountain Province,Senior High,132,8.0,16.5,1988.0
-SCH0020,Saint Tayum National High School,Tayum,Abra,College,589,22.0,26.8,1959.0
-SCH0021,Saint Luna Elementary School,Luna,Apayao,High School,660,26.0,25.4,2001.0
-SCH0022,Holy Atok Learning Center,Atok,Benguet,High School,475,18.0,26.4,2007.0
-SCH0023,San Rizal Institute,Rizal,Kalinga,High School,462,18.0,25.7,
-SCH0024,San Pidigan Academy,Pidigan,Abra,College,1566,64.0,24.5,2003.0
-SCH0025,Holy Buguias Elementary School,Buguias,Benguet,High School,424,21.0,20.2,1984.0
-SCH0026,Holy Bangued Academy,Bangued,Abra,High School,628,28.0,22.4,1990.0
-SCH0027,Saint Pudtol Academy,Pudtol,Apayao,College,2746,112.0,24.5,1988.0
-SCH0028,Holy Manabo Elementary School,Manabo,Abra,Elementary,175,,15.9,2010.0
-SCH0029,Holy Pinukpuk Academy,Pinukpuk,Kalinga,Elementary,317,13.0,24.4,2010.0
-SCH0030,Saint Kabayan Elementary School,Kabayan,Benguet,High School,592,27.0,21.9,1995.0
-SCH0031,Mountain Tadian Institute,Tadian,Mountain Province,Elementary,273,12.0,22.8,1996.0
-SCH0032,Central Hingyon Institute,Hingyon,Ifugao,Senior High,175,8.0,21.9,1977.0
-SCH0033,Holy Pinukpuk Elementary School,Pinukpuk,Kalinga,Senior High,317,10.0,31.7,1981.0
-SCH0034,Central Hungduan National High School,Hungduan,Ifugao,Senior High,348,18.0,19.3,2020.0
-SCH0035,North Hungduan Learning Center,Hungduan,Ifugao,High School,306,14.0,21.9,1997.0
-SCH0036,San Tuba Academy,Tuba,Benguet,,225,10.0,22.5,1960.0
-SCH0037,Mountain Tayum Learning Center,Tayum,Abra,Elementary,353,18.0,19.6,1979.0
-SCH0038,San Sagada National High School,Sagada,Mountain Province,College,2574,106.0,24.3,1955.0
-SCH0039,Saint Bokod Learning Center,Bokod,Benguet,High School,400,21.0,19.0,1986.0
-SCH0040,Central Buguias Learning Center,Buguias,Benguet,High School,695,30.0,23.2,2019.0
-SCH0041,Central Hungduan Elementary School,Hungduan,Ifugao,College,1201,53.0,22.7,1986.0
-SCH0042,Central Besao Academy,Besao,Mountain Province,College,1529,63.0,24.3,
-SCH0043,San Manabo National High School,Manabo,Abra,Senior High,273,9.0,30.3,1984.0
-SCH0044,Central Hingyon Institute,Hingyon,Ifugao,High School,439,16.0,27.4,1997.0
-SCH0045,Central Pasil Institute,Pasil,Kalinga,College,805,33.0,24.4,1957.0
-SCH0046,Holy Pasil Institute,Pasil,Kalinga,College,574,25.0,23.0,2008.0
-SCH0047,Holy Rizal Institute,Rizal,Kalinga,High School,719,29.0,24.8,2017.0
-SCH0048,Central Bokod National High School,Bokod,Benguet,Senior High,317,12.0,26.4,1958.0
-SCH0049,San Mayoyao Institute,Mayoyao,Ifugao,Elementary,162,10.0,16.2,1978.0
-SCH0050,Central Sablan Elementary School,Sablan,Benguet,College,1890,76.0,24.9,1998.0
-SCH0001,Saint Tayum Institute,Tayum,Abra,College,1329,52.0,25.6,2000.0
+SCH0001,Saint Pagsanjan Institute,Pagsanjan,Laguna,College,1329,52.0,25.6,2000.0
+SCH0002,Saint Mabitac Institute,Mabitac,Laguna,College,771,29.0,26.6,1998.0
+SCH0003,San Los Baños Institute,Los Baños,Laguna,High School,414,21.0,19.7,1978.0
+SCH0004,North Nagcarlan Academy,Nagcarlan,Laguna,High School,297,,18.6,
+SCH0005,San Victoria Institute,Victoria,Laguna,Elementary,167,8.0,20.9,2017.0
+SCH0006,Central Los Baños Academy,Los Baños,Laguna,College,790,31.0,25.5,2004.0
+SCH0007,Mountain San Pedro Learning Center,San Pedro,Laguna,College,1718,72.0,23.9,2017.0
+SCH0008,North Pakil Learning Center,Pakil,Laguna,Senior High,221,8.0,27.6,1962.0
+SCH0009,North Cabuyao Learning Center,Cabuyao,Laguna,Elementary,145,10.0,14.5,1975.0
+SCH0010,North Kalayaan Academy,Kalayaan,Laguna,,215,8.0,26.9,1985.0
+SCH0011,Central Famy Learning Center,Famy,Laguna,High School,260,9.0,28.9,2021.0
+SCH0012,Holy Pila Institute,Pila,Laguna,High School,541,22.0,24.6,1971.0
+SCH0013,Saint Pila Academy,Pila,Laguna,Senior High,344,16.0,21.5,2013.0
+SCH0014,North Calamba Elementary School,Calamba,Laguna,Elementary,157,8.0,19.6,1971.0
+SCH0015,San Lumban Institute,Lumban,Laguna,High School,598,,23.9,1993.0
+SCH0016,Mountain Nagcarlan Academy,Nagcarlan,Laguna,Elementary,461,20.0,23.1,1972.0
+SCH0017,Holy Lumban Elementary School,Lumban,Laguna,Elementary,403,16.0,25.2,1981.0
+SCH0018,Holy Cabuyao Academy,Cabuyao,Laguna,High School,490,24.0,20.4,1966.0
+SCH0019,Holy Bay National High School,Bay,Laguna,Senior High,132,8.0,16.5,1988.0
+SCH0020,Saint Pagsanjan National High School,Pagsanjan,Laguna,College,589,22.0,26.8,1959.0
+SCH0021,Saint Cavinti Elementary School,Cavinti,Laguna,High School,660,26.0,25.4,2001.0
+SCH0022,Holy Santa Rosa Learning Center,Santa Rosa,Laguna,High School,475,18.0,26.4,2007.0
+SCH0023,San Rizal Institute,Rizal,Laguna,High School,462,18.0,25.7,
+SCH0024,San Biñan Academy,Biñan,Laguna,College,1566,64.0,24.5,2003.0
+SCH0025,Holy Victoria Elementary School,Victoria,Laguna,High School,424,21.0,20.2,1984.0
+SCH0026,Holy San Pablo Academy,San Pablo,Laguna,High School,628,28.0,22.4,1990.0
+SCH0027,Saint Los Baños Academy,Los Baños,Laguna,College,2746,112.0,24.5,1988.0
+SCH0028,Holy Magdalena Elementary School,Magdalena,Laguna,Elementary,175,,15.9,2010.0
+SCH0029,Holy Calamba Academy,Calamba,Laguna,Elementary,317,13.0,24.4,2010.0
+SCH0030,Saint Kalayaan Elementary School,Kalayaan,Laguna,High School,592,27.0,21.9,1995.0
+SCH0031,Mountain Alaminos Institute,Alaminos,Laguna,Elementary,273,12.0,22.8,1996.0
+SCH0032,Central Liliw Institute,Liliw,Laguna,Senior High,175,8.0,21.9,1977.0
+SCH0033,Holy Calamba Elementary School,Calamba,Laguna,Senior High,317,10.0,31.7,1981.0
+SCH0034,Central Alaminos National High School,Alaminos,Laguna,Senior High,348,18.0,19.3,2020.0
+SCH0035,North Alaminos Learning Center,Alaminos,Laguna,High School,306,14.0,21.9,1997.0
+SCH0036,San Los Baños Academy,Los Baños,Laguna,,225,10.0,22.5,1960.0
+SCH0037,Mountain Pagsanjan Learning Center,Pagsanjan,Laguna,Elementary,353,18.0,19.6,1979.0
+SCH0038,San Pila National High School,Pila,Laguna,College,2574,106.0,24.3,1955.0
+SCH0039,Saint Bay Learning Center,Bay,Laguna,High School,400,21.0,19.0,1986.0
+SCH0040,Central Victoria Learning Center,Victoria,Laguna,High School,695,30.0,23.2,2019.0
+SCH0041,Central Alaminos Elementary School,Alaminos,Laguna,College,1201,53.0,22.7,1986.0
+SCH0042,Central Cabuyao Academy,Cabuyao,Laguna,College,1529,63.0,24.3,
+SCH0043,San Magdalena National High School,Magdalena,Laguna,Senior High,273,9.0,30.3,1984.0
+SCH0044,Central Liliw Institute,Liliw,Laguna,High School,439,16.0,27.4,1997.0
+SCH0045,Central Santa Rosa Institute,Santa Rosa,Laguna,College,805,33.0,24.4,1957.0
+SCH0046,Holy Santa Rosa Institute,Santa Rosa,Laguna,College,574,25.0,23.0,2008.0
+SCH0047,Holy Rizal Institute,Rizal,Laguna,High School,719,29.0,24.8,2017.0
+SCH0048,Central Bay National High School,Bay,Laguna,Senior High,317,12.0,26.4,1958.0
+SCH0049,San Luisiana Institute,Luisiana,Laguna,Elementary,162,10.0,16.2,1978.0
+SCH0050,Central Calauan Elementary School,Calauan,Laguna,College,1890,76.0,24.9,1998.0
+SCH0001,Saint Pagsanjan Institute,Pagsanjan,Laguna,College,1329,52.0,25.6,2000.0

@@ -63,6 +63,37 @@ Example (browser or curl):
 https://<your-app>.up.railway.app/admin/study.csv?token=<ADMIN_TOKEN>
 ```
 
+## Server-side attendance gate (cookie session)
+
+Attendance is enforced **on the server**, not in the browser. Opening a content URL in a fresh incognito
+window (no cookie) **cannot** see content — it bounces to the sign-in gate. localStorage alone never
+unlocks anything.
+
+**Flow:**
+1. On successful sign-in (`POST /api/attendance`), the server sets a **signed, HttpOnly** cookie
+   `pup_sess` (HMAC-SHA256 over `email + issuedAt`, `SameSite=Lax`, `Secure` on https, `Max-Age = 3h`).
+   The attendance row is still written as before — the cookie is set in addition.
+2. **Gate middleware** guards every content route. Public (no cookie needed): the gate (`/`, `/index.html`),
+   `/404.html`, `/assets/*`, `/api/*`, `/admin/*`, `/datasets/*` (+ the short dataset aliases), and static
+   assets by extension. Everything else (home, week hubs, readings, activity pages, guides, presentations,
+   orientation) requires a valid `pup_sess` cookie; otherwise → **302 to `/index.html?return=<original>`**,
+   so after signing in the student lands back on the page they wanted.
+   - `/datasets/*` is intentionally **public** because the Week 1 notebooks fetch the portal
+     programmatically (`requests.get` / `urllib`) with no cookie — gating it would break the live-scrape lesson.
+3. **Returning device:** the gate page re-establishes the cookie silently via `POST /api/session/resume`
+   (trusts the stored identity; does not insert a new attendance row), then continues — no re-typing, no
+   redirect loop.
+4. **Idle auto-logout (3h):** the client clears localStorage **and** calls `POST /api/session/logout` to
+   clear the cookie, and the cookie's own `Max-Age` also expires at 3h — so an idle student must sign in
+   again, keeping attendance honest.
+5. **Secret:** `SESSION_SECRET` env (falls back to `ADMIN_TOKEN`, then a dev default). Set `SESSION_SECRET`
+   on Railway for production.
+
+**Degraded mode:** cookie signing/verification is self-contained (no DB needed), and sign-in sets the
+cookie even when the DB is detached — so the gate keeps working and no one is locked out. In a DB outage,
+attendance/study rows just aren't *recorded* (endpoints return `{stored:false}`), but the cookie gate still
+enforces sign-in. **Normal operation is DB-attached and fully enforced.**
+
 ## Purging test/junk rows (clean grading)
 
 Test entries (e.g. from audits) shouldn't pollute grading. A token-guarded endpoint deletes them from

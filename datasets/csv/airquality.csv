@@ -1,41 +1,41 @@
 Station ID,Station Name,Location,Province,Area_Type,PM25_Level,AQI,Air_Quality_Score,Health_Risk
-AIR001,Tabuk City Air Station,Tabuk City,Mountain Province,Rural,75,265,3.6,High
-AIR002,Bauko Air Station,Bauko,Abra,Industrial,140,266,2.8,High
-AIR003,Sagada Air Station,Sagada,Apayao,Roadside,84,285,3.0,Low
-AIR004,Hungduan Air Station,Hungduan,Apayao,Industrial,147,145,1.5,Low
-AIR005,Itogon Air Station,Itogon,Apayao,Rural,21,207,1.5,Moderate
-AIR006,Kabugao Air Station,Kabugao,Kalinga,Industrial,86,23,2.4,High
-AIR007,Mankayan Air Station,Mankayan,Kalinga,Roadside,104,114,3.7,Low
-AIR008,Tadian Air Station,Tadian,Mountain Province,Urban,21,96,1.4,Moderate
-AIR009,Baguio City Air Station,Baguio City,Benguet,Roadside,75,198,1.8,Low
-AIR010,Lubuagan Air Station,Lubuagan,Ifugao,Roadside,96,295,2.8,Moderate
-AIR011,Pilar Air Station,Pilar,Benguet,Urban,128,214,2.5,Moderate
-AIR012,Bontoc Air Station,Bontoc,Mountain Province,Rural,8,297,3.5,High
-AIR013,Itogon Air Station,Itogon,Mountain Province,Rural,131,267,1.1,Low
-AIR014,Mankayan Air Station,Mankayan,Ifugao,Industrial,113,279,2.6,Moderate
-AIR015,Pilar Air Station,Pilar,Ifugao,Urban,106,182,4.2,Moderate
-AIR016,Tabuk City Air Station,Tabuk City,Benguet,Rural,86,166,4.6,Low
-AIR017,Tadian Air Station,Tadian,Ifugao,Roadside,90,208,4.0,High
-AIR018,Bauko Air Station,Bauko,Benguet,Urban,63,266,1.4,Moderate
-AIR019,Sagada Air Station,Sagada,Kalinga,Urban,55,116,1.8,High
-AIR020,Sagada Air Station,Sagada,Benguet,Urban,116,290,3.7,Low
-AIR021,Banaue Air Station,Banaue,Ifugao,Urban,27,90,2.8,Low
-AIR022,Bangued Air Station,Bangued,Kalinga,Rural,33,191,2.5,High
-AIR023,Pilar Air Station,Pilar,Apayao,Urban,9,23,3.0,Moderate
-AIR024,Itogon Air Station,Itogon,Apayao,Rural,90,70,2.4,Moderate
-AIR025,Conner Air Station,Conner,Apayao,Rural,26,290,1.8,Low
-AIR026,Lagawe Air Station,Lagawe,Benguet,Rural,111,291,1.5,Moderate
-AIR027,Kiangan Air Station,Kiangan,Ifugao,Roadside,87,140,1.0,Low
-AIR028,Sagada Air Station,Sagada,Abra,Industrial,52,204,3.9,Low
-AIR029,Mankayan Air Station,Mankayan,Kalinga,Urban,131,249,3.4,High
-AIR030,Mankayan Air Station,Mankayan,Mountain Province,Industrial,62,41,2.1,Moderate
-AIR031,Baguio City Air Station,Baguio City,Apayao,Urban,34,116,3.6,Moderate
-AIR032,Itogon Air Station,Itogon,Abra,Roadside,15,141,3.7,Low
-AIR033,Bauko Air Station,Bauko,Abra,Roadside,24,274,1.8,Low
-AIR034,Hungduan Air Station,Hungduan,Mountain Province,Industrial,77,216,4.6,High
-AIR035,Hungduan Air Station,Hungduan,Abra,Roadside,121,247,3.6,Low
-AIR036,Tadian Air Station,Tadian,Ifugao,Rural,76,131,4.3,Low
-AIR037,Tabuk City Air Station,Tabuk City,Abra,Roadside,89,264,4.6,Moderate
-AIR038,Banaue Air Station,Banaue,Abra,Urban,39,287,2.7,Low
-AIR039,Bauko Air Station,Bauko,Benguet,Roadside,29,291,2.8,Low
-AIR040,Bontoc Air Station,Bontoc,Ifugao,Roadside,59,279,4.4,Low
+AIR001,San Pablo Air Station,San Pablo,Laguna,Rural,75,265,3.6,High
+AIR002,San Pedro Air Station,San Pedro,Laguna,Industrial,140,266,2.8,High
+AIR003,Pila Air Station,Pila,Laguna,Roadside,84,285,3.0,Low
+AIR004,Alaminos Air Station,Alaminos,Laguna,Industrial,147,145,1.5,Low
+AIR005,Rizal Air Station,Rizal,Laguna,Rural,21,207,1.5,Moderate
+AIR006,Lumban Air Station,Lumban,Laguna,Industrial,86,23,2.4,High
+AIR007,Majayjay Air Station,Majayjay,Laguna,Roadside,104,114,3.7,Low
+AIR008,Alaminos Air Station,Alaminos,Laguna,Urban,21,96,1.4,Moderate
+AIR009,Calamba Air Station,Calamba,Laguna,Roadside,75,198,1.8,Low
+AIR010,Sta. Maria Air Station,Sta. Maria,Laguna,Roadside,96,295,2.8,Moderate
+AIR011,Cabuyao Air Station,Cabuyao,Laguna,Urban,128,214,2.5,Moderate
+AIR012,Calauan Air Station,Calauan,Laguna,Rural,8,297,3.5,High
+AIR013,Rizal Air Station,Rizal,Laguna,Rural,131,267,1.1,Low
+AIR014,Majayjay Air Station,Majayjay,Laguna,Industrial,113,279,2.6,Moderate
+AIR015,Cabuyao Air Station,Cabuyao,Laguna,Urban,106,182,4.2,Moderate
+AIR016,San Pablo Air Station,San Pablo,Laguna,Rural,86,166,4.6,Low
+AIR017,Alaminos Air Station,Alaminos,Laguna,Roadside,90,208,4.0,High
+AIR018,San Pedro Air Station,San Pedro,Laguna,Urban,63,266,1.4,Moderate
+AIR019,Pila Air Station,Pila,Laguna,Urban,55,116,1.8,High
+AIR020,Pila Air Station,Pila,Laguna,Urban,116,290,3.7,Low
+AIR021,Los Baños Air Station,Los Baños,Laguna,Urban,27,90,2.8,Low
+AIR022,San Pablo Air Station,San Pablo,Laguna,Rural,33,191,2.5,High
+AIR023,Cabuyao Air Station,Cabuyao,Laguna,Urban,9,23,3.0,Moderate
+AIR024,Rizal Air Station,Rizal,Laguna,Rural,90,70,2.4,Moderate
+AIR025,Santa Cruz Air Station,Santa Cruz,Laguna,Rural,26,290,1.8,Low
+AIR026,Famy Air Station,Famy,Laguna,Rural,111,291,1.5,Moderate
+AIR027,Paete Air Station,Paete,Laguna,Roadside,87,140,1.0,Low
+AIR028,Pila Air Station,Pila,Laguna,Industrial,52,204,3.9,Low
+AIR029,Majayjay Air Station,Majayjay,Laguna,Urban,131,249,3.4,High
+AIR030,Majayjay Air Station,Majayjay,Laguna,Industrial,62,41,2.1,Moderate
+AIR031,Calamba Air Station,Calamba,Laguna,Urban,34,116,3.6,Moderate
+AIR032,Rizal Air Station,Rizal,Laguna,Roadside,15,141,3.7,Low
+AIR033,San Pedro Air Station,San Pedro,Laguna,Roadside,24,274,1.8,Low
+AIR034,Alaminos Air Station,Alaminos,Laguna,Industrial,77,216,4.6,High
+AIR035,Alaminos Air Station,Alaminos,Laguna,Roadside,121,247,3.6,Low
+AIR036,Alaminos Air Station,Alaminos,Laguna,Rural,76,131,4.3,Low
+AIR037,San Pablo Air Station,San Pablo,Laguna,Roadside,89,264,4.6,Moderate
+AIR038,Los Baños Air Station,Los Baños,Laguna,Urban,39,287,2.7,Low
+AIR039,San Pedro Air Station,San Pedro,Laguna,Roadside,29,291,2.8,Low
+AIR040,Calauan Air Station,Calauan,Laguna,Roadside,59,279,4.4,Low

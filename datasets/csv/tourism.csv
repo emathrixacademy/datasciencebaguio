@@ -1,41 +1,41 @@
 Site ID,Site Name,Location,Province,Type,Annual_Visitors,Entry_Fee_PHP,Rating,Accessibility
-TOU001,Kiangan Shrine,Kiangan,Ifugao,Religious,6367,0,3.9,Difficult
-TOU002,Tabuk City Monument,Tabuk City,Kalinga,Historical,43607,0,4.6,Difficult
-TOU003,Baguio City Museum,Baguio City,Benguet,Cultural,2335,150,3.3,Easy
-TOU004,Hingyon Rice Terraces,Hingyon,Ifugao,Natural,15284,100,4.4,Moderate
-TOU005,Dolores Heritage Village,Dolores,Abra,Cultural,8084,150,3.1,Moderate
-TOU006,Rizal Shrine,Rizal,Kalinga,Religious,47859,0,3.4,Difficult
-TOU007,Tadian Museum,Tadian,Mountain Province,Cultural,46691,50,4.7,Difficult
-TOU008,Mankayan Lake,Mankayan,Benguet,Natural,35913,100,4.3,Easy
-TOU009,Rizal Monument,Rizal,Kalinga,Historical,28528,100,3.2,Moderate
-TOU010,Tadian Monastery,Tadian,Mountain Province,Religious,11026,0,3.9,Difficult
-TOU011,Rizal Ancestral House,Rizal,Kalinga,Historical,36269,100,3.9,Difficult
-TOU012,Lubuagan Monument,Lubuagan,Kalinga,Historical,6679,50,4.8,Easy
-TOU013,Mayoyao Camping Site,Mayoyao,Ifugao,Adventure,25837,50,3.1,Moderate
-TOU014,Tayum Heritage Village,Tayum,Abra,Cultural,17931,50,3.6,Difficult
-TOU015,Besao Zipline,Besao,Mountain Province,Adventure,34857,20,3.2,Difficult
-TOU016,Lamut Zipline,Lamut,Ifugao,Adventure,46259,100,4.3,Moderate
-TOU017,Hungduan Falls,Hungduan,Ifugao,Natural,20283,20,3.8,Easy
-TOU018,Pudtol Hiking Trail,Pudtol,Apayao,Adventure,32015,150,4.1,Moderate
-TOU019,Sadanga War Memorial,Sadanga,Mountain Province,Historical,47062,100,3.5,Moderate
-TOU020,Dolores Heritage Village,Dolores,Abra,Cultural,8835,150,4.9,Difficult
-TOU021,La Paz Weaving Center,La Paz,Abra,Cultural,32732,50,4.4,Difficult
-TOU022,Lubuagan Cave,Lubuagan,Kalinga,Natural,20414,20,3.7,Moderate
-TOU023,Kabayan Heritage Village,Kabayan,Benguet,Cultural,3982,0,4.1,Difficult
-TOU024,Tayum Falls,Tayum,Abra,Natural,38621,50,3.9,Moderate
-TOU025,Conner Lake,Conner,Apayao,Natural,32308,0,4.6,Moderate
-TOU026,Lagawe Camping Site,Lagawe,Ifugao,Adventure,45987,0,3.3,Difficult
-TOU027,Kabugao Museum,Kabugao,Apayao,Cultural,37573,100,4.2,Difficult
-TOU028,Pilar Shrine,Pilar,Abra,Religious,20487,0,4.7,Moderate
-TOU029,Luna Zipline,Luna,Apayao,Adventure,40952,0,4.9,Easy
-TOU030,Bauko Ancestral House,Bauko,Mountain Province,Historical,6320,20,3.5,Difficult
-TOU031,Itogon Hot Spring,Itogon,Benguet,Natural,30524,150,3.9,Easy
-TOU032,Manabo Ancestral House,Manabo,Abra,Historical,30755,0,4.4,Moderate
-TOU033,Sadanga Heritage Village,Sadanga,Mountain Province,Cultural,8521,150,3.4,Easy
-TOU034,Santa Marcela Museum,Santa Marcela,Apayao,Cultural,4908,20,4.6,Difficult
-TOU035,Tadian Hiking Trail,Tadian,Mountain Province,Adventure,29780,0,3.9,Moderate
-TOU036,Sabangan Ancestral House,Sabangan,Mountain Province,Historical,36388,100,3.9,Difficult
-TOU037,Bokod Ancestral House,Bokod,Benguet,Historical,17408,0,3.2,Difficult
-TOU038,Pinukpuk Lake,Pinukpuk,Kalinga,Natural,38764,0,4.5,Easy
-TOU039,Mayoyao Shrine,Mayoyao,Ifugao,Religious,12894,0,5.0,Moderate
-TOU040,Tadian Church,Tadian,Mountain Province,Religious,31802,0,3.7,Moderate
+TOU001,Paete Shrine,Paete,Laguna,Religious,6367,0,3.9,Difficult
+TOU002,San Pablo Monument,San Pablo,Laguna,Historical,43607,0,4.6,Difficult
+TOU003,Calamba Museum,Calamba,Laguna,Cultural,2335,150,3.3,Easy
+TOU004,Liliw Rice Terraces,Liliw,Laguna,Natural,15284,100,4.4,Moderate
+TOU005,Pagsanjan Heritage Village,Pagsanjan,Laguna,Cultural,8084,150,3.1,Moderate
+TOU006,Rizal Shrine,Rizal,Laguna,Religious,47859,0,3.4,Difficult
+TOU007,Alaminos Museum,Alaminos,Laguna,Cultural,46691,50,4.7,Difficult
+TOU008,Majayjay Lake,Majayjay,Laguna,Natural,35913,100,4.3,Easy
+TOU009,Rizal Monument,Rizal,Laguna,Historical,28528,100,3.2,Moderate
+TOU010,Alaminos Monastery,Alaminos,Laguna,Religious,11026,0,3.9,Difficult
+TOU011,Rizal Ancestral House,Rizal,Laguna,Historical,36269,100,3.9,Difficult
+TOU012,Sta. Maria Monument,Sta. Maria,Laguna,Historical,6679,50,4.8,Easy
+TOU013,Luisiana Camping Site,Luisiana,Laguna,Adventure,25837,50,3.1,Moderate
+TOU014,Pagsanjan Heritage Village,Pagsanjan,Laguna,Cultural,17931,50,3.6,Difficult
+TOU015,Cabuyao Zipline,Cabuyao,Laguna,Adventure,34857,20,3.2,Difficult
+TOU016,Mabitac Zipline,Mabitac,Laguna,Adventure,46259,100,4.3,Moderate
+TOU017,Alaminos Falls,Alaminos,Laguna,Natural,20283,20,3.8,Easy
+TOU018,Los Baños Hiking Trail,Los Baños,Laguna,Adventure,32015,150,4.1,Moderate
+TOU019,Victoria War Memorial,Victoria,Laguna,Historical,47062,100,3.5,Moderate
+TOU020,Pagsanjan Heritage Village,Pagsanjan,Laguna,Cultural,8835,150,4.9,Difficult
+TOU021,Pakil Weaving Center,Pakil,Laguna,Cultural,32732,50,4.4,Difficult
+TOU022,Sta. Maria Cave,Sta. Maria,Laguna,Natural,20414,20,3.7,Moderate
+TOU023,Kalayaan Heritage Village,Kalayaan,Laguna,Cultural,3982,0,4.1,Difficult
+TOU024,Pagsanjan Falls,Pagsanjan,Laguna,Natural,38621,50,3.9,Moderate
+TOU025,Santa Cruz Lake,Santa Cruz,Laguna,Natural,32308,0,4.6,Moderate
+TOU026,Famy Camping Site,Famy,Laguna,Adventure,45987,0,3.3,Difficult
+TOU027,Lumban Museum,Lumban,Laguna,Cultural,37573,100,4.2,Difficult
+TOU028,Cabuyao Shrine,Cabuyao,Laguna,Religious,20487,0,4.7,Moderate
+TOU029,Cavinti Zipline,Cavinti,Laguna,Adventure,40952,0,4.9,Easy
+TOU030,San Pedro Ancestral House,San Pedro,Laguna,Historical,6320,20,3.5,Difficult
+TOU031,Rizal Hot Spring,Rizal,Laguna,Natural,30524,150,3.9,Easy
+TOU032,Magdalena Ancestral House,Magdalena,Laguna,Historical,30755,0,4.4,Moderate
+TOU033,Victoria Heritage Village,Victoria,Laguna,Cultural,8521,150,3.4,Easy
+TOU034,San Pedro Museum,San Pedro,Laguna,Cultural,4908,20,4.6,Difficult
+TOU035,Alaminos Hiking Trail,Alaminos,Laguna,Adventure,29780,0,3.9,Moderate
+TOU036,Bay Ancestral House,Bay,Laguna,Historical,36388,100,3.9,Difficult
+TOU037,Bay Ancestral House,Bay,Laguna,Historical,17408,0,3.2,Difficult
+TOU038,Calamba Lake,Calamba,Laguna,Natural,38764,0,4.5,Easy
+TOU039,Luisiana Shrine,Luisiana,Laguna,Religious,12894,0,5.0,Moderate
+TOU040,Alaminos Church,Alaminos,Laguna,Religious,31802,0,3.7,Moderate
