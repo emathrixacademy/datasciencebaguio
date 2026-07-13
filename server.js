@@ -56,6 +56,59 @@ function clearSessionCookie(res) {
   res.append('Set-Cookie', `${SESSION_COOKIE}=; HttpOnly; Path=/; SameSite=Lax; Max-Age=0`);
 }
 
+// ================= ADMIN AUTH (constant-time, fail-closed) =================
+// Admin access requires EITHER a valid signed admin cookie (from /admin/login with the
+// instructor email+password) OR a correct ADMIN_TOKEN (for curl/CSV). No valid credential ⇒
+// 403 and NO data, on EVERY admin data request. Credentials are stored as SHA-256 (no plaintext
+// in the repo); override any of these via Railway env vars in production.
+const ADMIN_COOKIE = 'pup_admin';
+const ADMIN_MAX_AGE_MS = 8 * 60 * 60 * 1000; // 8h admin session
+const ADMIN_SECRET = process.env.ADMIN_SECRET || process.env.SESSION_SECRET || process.env.ADMIN_TOKEN || 'pup-emathrix-dev-secret';
+const ADMIN_EMAIL_SHA = (process.env.ADMIN_EMAIL_SHA256 || '4846660c32484aedc0ccf0f25dcaae49e8c68a0c874d2881ea133ca3d246457e').toLowerCase();
+const ADMIN_PW_SHA = (process.env.ADMIN_PASSWORD_SHA256 || '4fa2ecd8a9ebf4e2cdd0f5d8d644e9bd7e0fd993a716efb420747cdbd43676b1').toLowerCase();
+
+const sha256hex = (s) => crypto.createHash('sha256').update(String(s)).digest('hex');
+function ctEqHex(a, b) { // constant-time compare of two equal-length hex strings
+  if (typeof a !== 'string' || typeof b !== 'string' || a.length !== b.length) return false;
+  try { return crypto.timingSafeEqual(Buffer.from(a), Buffer.from(b)); } catch (e) { return false; }
+}
+function signAdmin() {
+  const payload = 'admin.' + Date.now();
+  const sig = crypto.createHmac('sha256', ADMIN_SECRET).update(payload).digest('base64url');
+  return payload + '.' + sig;
+}
+function verifyAdminCookie(tok) {
+  if (!tok || typeof tok !== 'string') return false;
+  const p = tok.split('.'); if (p.length !== 3 || p[0] !== 'admin') return false;
+  const payload = p[0] + '.' + p[1];
+  const exp = crypto.createHmac('sha256', ADMIN_SECRET).update(payload).digest('base64url');
+  const a = Buffer.from(p[2]); const b = Buffer.from(exp);
+  if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) return false;
+  const iss = Number(p[1]);
+  return !!iss && (Date.now() - iss) <= ADMIN_MAX_AGE_MS;
+}
+function adminTokenOk(req) {
+  // Fail closed: if no ADMIN_TOKEN is configured, the token path grants nothing.
+  if (!process.env.ADMIN_TOKEN) return false;
+  const t = (req.query.token || req.get('x-admin-token') || '').toString().trim();
+  if (!t) return false;
+  return ctEqHex(sha256hex(t), sha256hex(process.env.ADMIN_TOKEN)); // hash → equal length → constant-time
+}
+// Gate for every admin DATA route. Returns true if authorized; else sends 403 and returns false.
+function requireAdmin(req, res) {
+  if (verifyAdminCookie(parseCookies(req)[ADMIN_COOKIE])) return true;
+  if (adminTokenOk(req)) return true;
+  res.status(403).json({ error: 'forbidden' });
+  return false;
+}
+function setAdminCookie(req, res) {
+  const secure = req.secure || req.headers['x-forwarded-proto'] === 'https';
+  const bits = [`${ADMIN_COOKIE}=${signAdmin()}`, 'HttpOnly', 'Path=/', 'SameSite=Lax',
+    `Max-Age=${Math.floor(ADMIN_MAX_AGE_MS / 1000)}`];
+  if (secure) bits.push('Secure');
+  res.append('Set-Cookie', bits.join('; '));
+}
+
 // ---- Backward-compatible short URLs (datasets moved under /datasets) ----
 const REWRITES = {
   // old short URLs (keep working so already-downloaded notebooks don't break)
@@ -374,11 +427,48 @@ app.get('/go', async (req, res) => {
   }
 });
 
-// ---- Admin: export submissions as CSV (protected by ADMIN_TOKEN) ----
+// ---- Admin login / logout (email + password → signed admin cookie) ----
+app.post('/admin/login', (req, res) => {
+  const b = req.body || {};
+  const email = String(b.email || '').trim().toLowerCase();
+  const pw = String(b.password || '');
+  const emailOk = ctEqHex(sha256hex(email), ADMIN_EMAIL_SHA);
+  const pwOk = ctEqHex(sha256hex(pw), ADMIN_PW_SHA);
+  if (!(emailOk && pwOk)) return res.status(401).json({ ok: false, error: 'invalid credentials' });
+  setAdminCookie(req, res);
+  res.json({ ok: true });
+});
+app.post('/admin/logout', (req, res) => {
+  res.append('Set-Cookie', `${ADMIN_COOKIE}=; HttpOnly; Path=/; SameSite=Lax; Max-Age=0`);
+  res.json({ ok: true });
+});
+
+// ---- Admin JSON feeds for the admin page (all guarded by requireAdmin) ----
+app.get('/admin/study.json', async (req, res) => {
+  if (!requireAdmin(req, res)) return;
+  if (!pool) return res.json({ rows: [] });
+  try {
+    const { rows } = await pool.query(
+      `SELECT student_email, student_name, total_seconds,
+              round(total_seconds/60.0,1) AS total_minutes, session_count, active_days, first_seen, last_seen
+         FROM study_totals ORDER BY total_seconds DESC NULLS LAST`);
+    res.json({ rows });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+app.get('/admin/submissions.json', async (req, res) => {
+  if (!requireAdmin(req, res)) return;
+  if (!pool) return res.json({ rows: [] });
+  try {
+    const { rows } = await pool.query(
+      `SELECT student_email, student_name, activity_key, submitted_link, submitted_at
+         FROM submissions ORDER BY submitted_at DESC`);
+    res.json({ rows });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+// ---- Admin: export submissions as CSV (protected) ----
 app.get('/admin/submissions.csv', async (req, res) => {
-  if (!process.env.ADMIN_TOKEN || req.query.token !== process.env.ADMIN_TOKEN) {
-    return res.status(403).send('Forbidden');
-  }
+  if (!requireAdmin(req, res)) return;
   if (!pool) return res.status(503).send('No database configured');
   try {
     const { rows } = await pool.query(
@@ -403,9 +493,7 @@ app.get('/admin/submissions.csv', async (req, res) => {
 // Pass ?email=someone@x to purge a specific student instead. Affects attendance,
 // study_sessions, and submissions.
 app.post('/admin/purge-test', async (req, res) => {
-  if (!process.env.ADMIN_TOKEN || req.query.token !== process.env.ADMIN_TOKEN) {
-    return res.status(403).json({ error: 'forbidden' });
-  }
+  if (!requireAdmin(req, res)) return;
   if (!pool) return res.status(503).json({ error: 'no database configured' });
   const exact = req.query.email;
   try {
@@ -427,9 +515,7 @@ app.post('/admin/purge-test', async (req, res) => {
 
 // ---- Admin: export per-student study totals as CSV (protected by ADMIN_TOKEN) ----
 app.get('/admin/study.csv', async (req, res) => {
-  if (!process.env.ADMIN_TOKEN || req.query.token !== process.env.ADMIN_TOKEN) {
-    return res.status(403).send('Forbidden');
-  }
+  if (!requireAdmin(req, res)) return;
   if (!pool) return res.status(503).send('No database configured');
   try {
     const { rows } = await pool.query(
@@ -458,9 +544,7 @@ app.get('/admin/study.csv', async (req, res) => {
 
 // ---- Admin: export attendance as CSV (protected by ADMIN_TOKEN) ----
 app.get('/admin/attendance.csv', async (req, res) => {
-  if (!process.env.ADMIN_TOKEN || req.query.token !== process.env.ADMIN_TOKEN) {
-    return res.status(403).send('Forbidden');
-  }
+  if (!requireAdmin(req, res)) return;
   if (!pool) return res.status(503).send('No database configured');
   try {
     const { rows } = await pool.query('SELECT * FROM attendance ORDER BY created_at');
@@ -483,9 +567,7 @@ app.get('/admin/attendance.csv', async (req, res) => {
 
 // ---- Admin: attendance as JSON (for the admin page) ----
 app.get('/admin/attendance.json', async (req, res) => {
-  if (!process.env.ADMIN_TOKEN || req.query.token !== process.env.ADMIN_TOKEN) {
-    return res.status(403).json({ error: 'forbidden' });
-  }
+  if (!requireAdmin(req, res)) return;
   if (!pool) return res.status(503).json({ error: 'no database configured' });
   try {
     const { rows } = await pool.query('SELECT * FROM attendance ORDER BY created_at DESC');
@@ -502,7 +584,8 @@ app.get('/api/health', (req, res) => res.json({ ok: true, db: hasDb }));
 // static assets, /api/*, /admin/*, and /datasets/* (notebooks scrape those programmatically without a
 // cookie). Everything else bounces to the gate with ?return= so the student lands back after signing in.
 // This is what actually enforces attendance — localStorage alone can never unlock content.
-const PUBLIC_EXACT = new Set(['/', '/index.html', '/index', '/404.html', '/404', '/favicon.ico', '/go']);
+const PUBLIC_EXACT = new Set(['/', '/index.html', '/index', '/404.html', '/404', '/favicon.ico', '/go',
+  '/admin', '/admin.html']); // admin SHELL is reachable; its DATA is guarded by requireAdmin
 const PUBLIC_PREFIX = ['/assets/', '/api/', '/admin/', '/datasets/'];
 const ASSET_EXT = /\.(css|js|map|png|jpe?g|gif|svg|ico|webp|woff2?|ttf|eot|csv|txt)$/i;
 function isPublicPath(p) {

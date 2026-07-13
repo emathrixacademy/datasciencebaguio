@@ -63,6 +63,31 @@ Example (browser or curl):
 https://<your-app>.up.railway.app/admin/study.csv?token=<ADMIN_TOKEN>
 ```
 
+## Admin access & security (hardened)
+
+Admin data is protected **server-side on every request** — there is no client-only check and no data is
+embedded in `admin.html` (view-source shows only the empty shell + code). Access requires **one** of:
+
+- **Instructor login** at `/admin.html`: `POST /admin/login {email,password}` verified server-side with a
+  **constant-time** SHA-256 compare; on success it sets a signed **HttpOnly** admin cookie `pup_admin`
+  (8h). `admin.html` fetches data (attendance / study time / activity submissions) only after that cookie
+  exists; the JSON/CSV feeds return **403** without it.
+- **`ADMIN_TOKEN`** (for curl/CSV), compared **constant-time** (`crypto.timingSafeEqual` over SHA-256 of
+  the token). **Fail closed:** if `ADMIN_TOKEN` is not set, the token path grants nothing (login path still works).
+
+Every admin route — `/admin/attendance.(csv|json)`, `/admin/study.(csv|json)`,
+`/admin/submissions.(csv|json)`, `POST /admin/purge-test` — goes through one `requireAdmin(req,res)`
+guard. Wrong/missing credential → `403`, no rows. Verified: no-token, wrong-token, and wrong-login all
+return 403/401 with empty bodies; only a valid login or the correct token returns data.
+
+**Credentials & secrets (set these in Railway env for production):**
+- `ADMIN_EMAIL_SHA256` / `ADMIN_PASSWORD_SHA256` — SHA-256 of the instructor email/password (defaults are
+  baked in as **hashes**, never plaintext; override to rotate the password).
+- `ADMIN_SECRET` (or `SESSION_SECRET`) — **must** be a strong, dedicated secret. It signs the admin cookie;
+  if left at the built-in dev fallback, an attacker who reads the public repo could forge an admin cookie.
+  Setting it is required to keep the admin login trustworthy.
+- `ADMIN_TOKEN` — strong, dedicated value if you use the CSV/curl path.
+
 ## Server-side attendance gate (cookie session)
 
 Attendance is enforced **on the server**, not in the browser. Opening a content URL in a fresh incognito

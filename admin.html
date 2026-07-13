@@ -3,89 +3,187 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Attendance Admin — eMathrix Education</title>
+<title>Admin — eMathrix Education</title>
 <style>
-  :root{--bg:#FFFFFF;--card:#FFFFFF;--line:#E7D7DA;--accent:#6A0F1A;--good:#6A0F1A;--text:#241017;--muted:#6B5B60;}
+  :root{--maroon:#6A0F1A;--maroon-dark:#4A0A12;--yellow:#F5C518;--line:#E7D7DA;--gray:#F2F2F2;--text:#241017;--muted:#6B5B60;}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:4vh 4vw}
-  h1{font-size:1.6rem;margin-bottom:.3rem}
-  .accent{color:var(--accent)}
+  body{font-family:"Segoe UI",system-ui,sans-serif;background:#fff;color:var(--text);min-height:100vh;padding:4vh 4vw}
+  h1{font-size:1.6rem;margin-bottom:.2rem;color:var(--maroon)}
   .muted{color:var(--muted);font-size:.92rem}
-  .bar{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:1.2rem 0}
-  input{background:#FFFFFF;border:1px solid var(--line);border-radius:9px;padding:.6rem .8rem;color:var(--text);font-size:.95rem;min-width:280px;outline:none}
-  input:focus{border-color:var(--accent)}
-  button,a.btn{background:var(--accent);color:#06283d;border:none;border-radius:9px;padding:.6rem 1.1rem;font-size:.95rem;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block}
-  a.btn.ghost{background:var(--card);color:var(--text);border:1px solid var(--line)}
-  button:hover,a.btn:hover{filter:brightness(1.08)}
-  .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:.7rem 1.1rem;font-weight:700}
-  .stat b{color:var(--good);font-size:1.3rem}
-  table{width:100%;border-collapse:collapse;margin-top:1rem;font-size:.88rem}
-  th,td{border:1px solid var(--line);padding:.5rem .6rem;text-align:left;vertical-align:top}
-  th{background:#6A0F1A;color:#fff;position:sticky;top:0}
-  tr:nth-child(even){background:rgba(255,255,255,.02)}
-  .wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
-  .status{margin-top:.8rem;font-size:.9rem;color:var(--muted)}
-  .err{color:#fca5a5}
-  .pill{font-size:.72rem;font-weight:700;border-radius:999px;padding:.1rem .55rem;background:rgba(52,211,153,.15);color:var(--good);border:1px solid var(--good)}
+  /* login card */
+  .login{max-width:380px;margin:8vh auto 0;background:#fff;border:1px solid var(--line);border-radius:16px;
+    padding:1.6rem;box-shadow:0 10px 30px rgba(106,15,26,.08)}
+  .login .badge{display:inline-block;background:var(--yellow);color:var(--maroon-dark);border:1px solid var(--maroon);
+    border-radius:999px;padding:.15rem .7rem;font-size:.75rem;font-weight:800;margin-bottom:.8rem}
+  label{display:block;font-size:.85rem;font-weight:600;margin:.7rem 0 .3rem}
+  input{width:100%;background:#fff;border:1px solid var(--line);border-radius:9px;padding:.6rem .8rem;font-size:.95rem;outline:none}
+  input:focus{border-color:var(--maroon);box-shadow:0 0 0 3px rgba(245,197,24,.35)}
+  button{background:var(--maroon);color:#fff;border:none;border-radius:9px;padding:.6rem 1.1rem;font-size:.95rem;
+    font-weight:800;cursor:pointer;box-shadow:inset 0 -3px 0 var(--yellow)}
+  button:hover{background:var(--maroon-dark)}
+  button.ghost{background:#fff;color:var(--maroon);border:1px solid var(--maroon);box-shadow:none}
+  .full{width:100%;margin-top:1.1rem}
+  .err{color:#b91c1c;font-size:.9rem;margin-top:.6rem;min-height:1.1em}
+  /* dashboard */
+  #dash{display:none}
+  .bar{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:1rem 0}
+  .tabs{display:flex;gap:.4rem;flex-wrap:wrap;margin:1rem 0 .4rem}
+  .tab{background:var(--gray);border:1px solid var(--line);border-radius:999px;padding:.4rem 1rem;font-weight:700;cursor:pointer}
+  .tab.on{background:var(--maroon);color:#fff;border-color:var(--maroon)}
+  .stat{background:var(--gray);border:1px solid var(--line);border-radius:12px;padding:.5rem 1rem;font-weight:700}
+  .stat b{color:var(--maroon)}
+  table{width:100%;border-collapse:collapse;margin-top:.6rem;font-size:.85rem}
+  th,td{border:1px solid var(--line);padding:.45rem .6rem;text-align:left;vertical-align:top}
+  th{background:var(--maroon);color:#fff;position:sticky;top:0}
+  tr:nth-child(even){background:var(--gray)}
+  .wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;max-height:70vh}
+  a.dl{background:#fff;border:1px solid var(--maroon);color:var(--maroon);border-radius:9px;padding:.5rem .9rem;
+    text-decoration:none;font-weight:700;font-size:.9rem}
+  a.link{color:var(--maroon);font-weight:600;word-break:break-all}
+  .status{color:var(--muted);font-size:.88rem;margin:.5rem 0}
+  .view{display:none}.view.on{display:block}
 </style>
 <link rel="stylesheet" href="assets/pup-theme.css">
 </head>
 <body>
-  <h1>Attendance <span class="accent">Admin</span></h1>
-  <div class="muted">Sign-ins recorded at the class website. Enter your admin token to load the records.</div>
 
-  <div class="bar">
-    <input id="token" type="password" placeholder="Admin token" autocomplete="off">
-    <button id="loadBtn">Load records</button>
-    <a class="btn ghost" id="csvBtn" href="#" target="_blank">⬇ Download CSV</a>
-    <div class="stat">Total sign-ins: <b id="count">—</b></div>
+  <!-- LOGIN (no data is present or fetched until the server verifies these credentials) -->
+  <div class="login" id="login">
+    <div class="badge">eMathrix Education · Admin</div>
+    <h1>Admin sign in</h1>
+    <div class="muted">Instructor access only. Records load only after the server verifies your credentials.</div>
+    <label for="email">Admin email</label>
+    <input id="email" type="email" autocomplete="username" placeholder="you@example.com">
+    <label for="pw">Password</label>
+    <input id="pw" type="password" autocomplete="current-password" placeholder="••••••••">
+    <button class="full" id="loginBtn">Sign in</button>
+    <div class="err" id="err"></div>
   </div>
 
-  <div class="status" id="status"></div>
-  <div class="wrap"><table id="tbl"><thead><tr>
-    <th>#</th><th>Recorded (server)</th><th>Full name</th><th>Email</th><th>Contact</th>
-    <th>Date</th><th>Time</th><th>IP</th><th>City</th><th>Region</th><th>Country</th>
-  </tr></thead><tbody id="rows"></tbody></table></div>
+  <!-- DASHBOARD (revealed only after a valid server login) -->
+  <div id="dash">
+    <h1>Admin <span style="color:var(--muted);font-weight:400;font-size:1rem">· eMathrix Education</span></h1>
+    <div class="bar">
+      <div class="stat">Sign-ins: <b id="cAtt">—</b></div>
+      <div class="stat">Students tracked: <b id="cStudy">—</b></div>
+      <div class="stat">Submissions: <b id="cSub">—</b></div>
+      <button class="ghost" id="refresh">↻ Refresh</button>
+      <button class="ghost" id="logout">Sign out</button>
+    </div>
+    <div class="tabs">
+      <div class="tab on" data-v="att">Attendance</div>
+      <div class="tab" data-v="study">Study time</div>
+      <div class="tab" data-v="sub">Activity submissions (links)</div>
+    </div>
+    <div class="status" id="status"></div>
+
+    <div class="view on" id="v-att">
+      <a class="dl" href="/admin/attendance.csv" target="_blank">⬇ attendance.csv</a>
+      <div class="wrap"><table><thead><tr>
+        <th>#</th><th>Recorded</th><th>Full name</th><th>Email</th><th>Contact</th>
+        <th>Date</th><th>Time</th><th>IP</th><th>City</th><th>Region</th><th>Country</th>
+      </tr></thead><tbody id="rowsAtt"></tbody></table></div>
+    </div>
+
+    <div class="view" id="v-study">
+      <a class="dl" href="/admin/study.csv" target="_blank">⬇ study_totals.csv</a>
+      <div class="wrap"><table><thead><tr>
+        <th>Email</th><th>Name</th><th>Total min</th><th>Sessions</th><th>Active days</th><th>First seen</th><th>Last seen</th>
+      </tr></thead><tbody id="rowsStudy"></tbody></table></div>
+    </div>
+
+    <div class="view" id="v-sub">
+      <a class="dl" href="/admin/submissions.csv" target="_blank">⬇ submissions.csv</a>
+      <div class="wrap"><table><thead><tr>
+        <th>Email</th><th>Name</th><th>Activity</th><th>Submitted link</th><th>When</th>
+      </tr></thead><tbody id="rowsSub"></tbody></table></div>
+    </div>
+  </div>
 
 <script>
   const $ = (id) => document.getElementById(id);
-  // allow ?token=... in the URL, else use the input
-  const urlToken = new URLSearchParams(location.search).get('token');
-  if (urlToken) $('token').value = urlToken;
+  const esc = (s) => (s==null?'':String(s)).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
-  function esc(s){ return (s==null?'':String(s)).replace(/[&<>]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
-
-  async function load(){
-    const token = $('token').value.trim();
-    const status = $('status');
-    if(!token){ status.className='status err'; status.textContent='Enter your admin token first.'; return; }
-    status.className='status'; status.textContent='Loading…';
-    $('csvBtn').href = '/admin/attendance.csv?token=' + encodeURIComponent(token);
-    try{
-      const r = await fetch('/admin/attendance.json?token=' + encodeURIComponent(token));
-      if(r.status===403){ status.className='status err'; status.textContent='Wrong token (forbidden).'; return; }
-      if(!r.ok){ status.className='status err'; status.textContent='Error: '+r.status; return; }
-      const data = await r.json();
-      $('count').textContent = data.count;
-      const tb = $('rows'); tb.innerHTML='';
-      data.rows.forEach((x,i)=>{
-        const tr=document.createElement('tr');
-        tr.innerHTML = `<td>${data.count-i}</td><td>${esc(x.created_at)}</td><td>${esc(x.full_name)}</td>`+
-          `<td>${esc(x.email)}</td><td>${esc(x.contact)}</td><td>${esc(x.sign_date)}</td>`+
-          `<td>${esc(x.sign_time)}</td><td>${esc(x.ip)}</td><td>${esc(x.city)}</td>`+
-          `<td>${esc(x.region)}</td><td>${esc(x.country)}</td>`;
-        tb.appendChild(tr);
+  async function login() {
+    const email = $('email').value.trim(), password = $('pw').value;
+    $('err').textContent = '';
+    if (!email || !password) { $('err').textContent = 'Enter email and password.'; return; }
+    $('loginBtn').disabled = true;
+    try {
+      const r = await fetch('/admin/login', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
       });
-      status.className='status'; status.textContent = 'Loaded '+data.count+' record(s) · '+new Date().toLocaleString();
-      sessionStorage.setItem('pup_admin_token', token);
-    }catch(e){ status.className='status err'; status.textContent='Network error: '+e.message; }
+      $('loginBtn').disabled = false;
+      if (!r.ok) { $('err').textContent = 'Invalid credentials.'; return; }
+      $('login').style.display = 'none';
+      $('dash').style.display = 'block';
+      loadAll();
+    } catch (e) { $('loginBtn').disabled = false; $('err').textContent = 'Network error.'; }
   }
 
-  $('loadBtn').addEventListener('click', load);
-  $('token').addEventListener('keydown', e=>{ if(e.key==='Enter') load(); });
-  const saved = sessionStorage.getItem('pup_admin_token') || sessionStorage.getItem('dict_admin_token');
-  if(saved){ $('token').value = saved; }
-  if($('token').value){ load(); }
+  // These fetches carry the HttpOnly admin cookie automatically; the server returns 403 without it.
+  async function getJSON(url) {
+    const r = await fetch(url, { credentials: 'same-origin' });
+    if (r.status === 403) { throw new Error('forbidden'); }
+    if (!r.ok) throw new Error('error ' + r.status);
+    return r.json();
+  }
+
+  async function loadAll() {
+    $('status').textContent = 'Loading…';
+    try {
+      const [att, study, sub] = await Promise.all([
+        getJSON('/admin/attendance.json'),
+        getJSON('/admin/study.json'),
+        getJSON('/admin/submissions.json'),
+      ]);
+      // Attendance
+      const aRows = att.rows || [];
+      $('cAtt').textContent = att.count != null ? att.count : aRows.length;
+      $('rowsAtt').innerHTML = aRows.map((x,i)=>`<tr><td>${aRows.length-i}</td><td>${esc(x.created_at)}</td>`+
+        `<td>${esc(x.full_name)}</td><td>${esc(x.email)}</td><td>${esc(x.contact)}</td><td>${esc(x.sign_date)}</td>`+
+        `<td>${esc(x.sign_time)}</td><td>${esc(x.ip)}</td><td>${esc(x.city)}</td><td>${esc(x.region)}</td><td>${esc(x.country)}</td></tr>`).join('');
+      // Study
+      const sRows = study.rows || [];
+      $('cStudy').textContent = sRows.length;
+      $('rowsStudy').innerHTML = sRows.map(x=>`<tr><td>${esc(x.student_email)}</td><td>${esc(x.student_name)}</td>`+
+        `<td>${esc(x.total_minutes)}</td><td>${esc(x.session_count)}</td><td>${esc(x.active_days)}</td>`+
+        `<td>${esc(x.first_seen)}</td><td>${esc(x.last_seen)}</td></tr>`).join('');
+      // Submissions (activity links)
+      const bRows = sub.rows || [];
+      $('cSub').textContent = bRows.length;
+      $('rowsSub').innerHTML = bRows.map(x=>{
+        const link = String(x.submitted_link||'');
+        const a = /^https?:\/\//i.test(link) ? `<a class="link" href="${esc(link)}" target="_blank" rel="noopener">${esc(link)}</a>` : esc(link);
+        return `<tr><td>${esc(x.student_email)}</td><td>${esc(x.student_name)}</td><td>${esc(x.activity_key)}</td><td>${a}</td><td>${esc(x.submitted_at)}</td></tr>`;
+      }).join('');
+      $('status').textContent = 'Loaded · ' + new Date().toLocaleString();
+    } catch (e) {
+      if (e.message === 'forbidden') { // session expired → back to login
+        $('dash').style.display = 'none'; $('login').style.display = 'block';
+        $('err').textContent = 'Session expired — sign in again.';
+      } else { $('status').textContent = 'Error: ' + e.message; }
+    }
+  }
+
+  $('loginBtn').addEventListener('click', login);
+  $('pw').addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
+  $('email').addEventListener('keydown', e => { if (e.key === 'Enter') $('pw').focus(); });
+  $('refresh').addEventListener('click', loadAll);
+  $('logout').addEventListener('click', async () => {
+    await fetch('/admin/logout', { method: 'POST', credentials: 'same-origin' });
+    $('dash').style.display = 'none'; $('login').style.display = 'block';
+    $('email').value=''; $('pw').value=''; $('err').textContent='Signed out.';
+  });
+  document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+    document.querySelectorAll('.view').forEach(x=>x.classList.remove('on'));
+    t.classList.add('on'); $('v-'+t.dataset.v).classList.add('on');
+  }));
+
+  // Try an existing admin session silently; if none, the login form stays (no data shown).
+  getJSON('/admin/attendance.json').then(() => { $('login').style.display='none'; $('dash').style.display='block'; loadAll(); }).catch(()=>{});
 </script>
 </body>
 </html>
